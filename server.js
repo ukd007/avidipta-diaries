@@ -21,10 +21,13 @@ app.use(session({
 app.use(express.static(path.join(__dirname,'public')));
 
 //Import Routes
-const authRoutes=require('./routes/auth');
-app.use('/',authRoutes);
+//const authRoutes=require('middleware/auth');
+//app.use('/',authRoutes);
 
 //Start Server
 app.listen(8080,()=>{
     console.log('Server listening on 8080');
 })
+app.get("/",(req,res)=>{
+  res.render("users/profilepage.ejs");
+});
