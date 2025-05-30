@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Profile Page</title>
+  <title>Cricket Stats</title>
 </head>
 <body>
-   1+2 
-   <%=1+2%>
+   <h1>Profiles</h1>
+<% players.forEach(player => { %>
+  <p>Player Profile: <%= player.names %></p>
+<% }); %>
+
 </body>
 </html>
