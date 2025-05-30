@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 
 //View Engine Setup
 app.set("view engine", "ejs");
-app.set('views', [path.join(__dirname, 'views'),path.join(__dirname, 'views/users')]);
+app.set('views', [path.join(__dirname, 'views'),path.join(__dirname, 'views/users'),path.join(__dirname, 'views/admin')]);
 
 //Middleware
 // app.use(express.urlencoded({ extended: false }));
