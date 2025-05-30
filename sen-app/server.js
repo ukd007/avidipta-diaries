@@ -29,7 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Import Routes
 //const authRoutes=require('middleware/auth');
 //app.use('/',authRoutes);
-
 /*app.get("/", (req, res) => {
   res.render("profilepage");
 });*/
