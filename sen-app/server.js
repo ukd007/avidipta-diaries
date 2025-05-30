@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
+const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 
@@ -11,7 +12,12 @@ app.get('/', (req, res) => {
 
 //View Engine Setup
 app.set("view engine", "ejs");
-app.set('views', [path.join(__dirname, 'views'),path.join(__dirname, 'views/users'),path.join(__dirname, 'views/admin')]);
+app.use(expressLayouts);
+const viewsArray = [path.join(__dirname, 'views'),
+path.join(__dirname, 'views/users'),
+path.join(__dirname, 'views/admin'),
+path.join(__dirname, 'views/partials')]
+app.set('views', viewsArray);
 
 //Middleware
 // app.use(express.urlencoded({ extended: false }));
@@ -54,6 +60,22 @@ app.get('/profilepage', (req, res) => {
 
 app.get('/cricket', (req, res) => {
   res.render('users/profilepage');
+});
+
+//AUTHENTICATION TO BE DONE AFTER LOGIN SYSTEM IS MADE
+app.get('/admin', (req, res) => {
+  res.render('admin/dashboard', {
+    layout: 'partials/bootstrap',
+    title: 'Admin Dashboard',
+  });
+});
+
+
+app.get('/admin/scorerapp', (req, res) => {
+  res.render('admin/scorerapp', {
+  layout: 'partials/bootstrap',
+  title: 'Scorer App'
+});
 });
 
 //Start Server
