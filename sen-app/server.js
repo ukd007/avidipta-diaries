@@ -5,39 +5,29 @@ const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.render('homepage');  // or res.send('Hello World') to test
-});
-
-
-//View Engine Setup
+// View Engine Setup
 app.set("view engine", "ejs");
 app.use(expressLayouts);
-const viewsArray = [path.join(__dirname, 'views'),
-path.join(__dirname, 'views/users'),
-path.join(__dirname, 'views/admin'),
-path.join(__dirname, 'views/partials')]
+
+const viewsArray = [
+  path.join(__dirname, 'views'),
+  path.join(__dirname, 'views/users'),
+  path.join(__dirname, 'views/admin'),
+  path.join(__dirname, 'views/partials')
+];
 app.set('views', viewsArray);
 
-//Middleware
-// app.use(express.urlencoded({ extended: false }));
-// app.use(session({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: { secure: false },
-
-//}));
-
-//Static Files
+// Static Files
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Import Routes
-//const authRoutes=require('middleware/auth');
-//app.use('/',authRoutes);
-/*app.get("/", (req, res) => {
-  res.render("profilepage");
-});*/
+// ROUTES
+
+// Homepage (login page)
+app.get('/', (req, res) => {
+  res.render('homepage', { layout: false });
+});
+
+// Profile Page
 app.get('/profilepage', (req, res) => {
   const players = [
     { names: "Anaranya" },
@@ -54,24 +44,25 @@ app.get('/profilepage', (req, res) => {
     { names: "Sashwat" },
     { names: "Udayendu" },
   ];
-  res.render("profilepage", { players }); // 👈 Fix the path here
+  res.render("profilepage", { players, layout: false });
 });
 
-
+// Redirect to Profile Page
 app.get('/cricket', (req, res) => {
   res.redirect('users/profilepage');
 });
 
-//LOGIN PAGE [ homepage.ejs]
+// Login Submit → Redirect to Home Page
 app.post('/login', (req, res) => {
   res.redirect('/home');
 });
 
-//LOGIN PAGE REDIRECTING TO [home.ejs]
+// Home Page (after login)
 app.get('/home', (req, res) => {
-  res.render('home'); 
+  res.render('home', { layout: false });
 });
-//AUTHENTICATION TO BE DONE AFTER LOGIN SYSTEM IS MADE
+
+// Admin Dashboard (uses layout)
 app.get('/admin', (req, res) => {
   res.render('admin/dashboard', {
     layout: 'partials/bootstrap',
@@ -79,16 +70,15 @@ app.get('/admin', (req, res) => {
   });
 });
 
-
+// Scorer App Page (uses layout)
 app.get('/admin/scorerapp', (req, res) => {
   res.render('admin/scorerapp', {
-  layout: 'partials/bootstrap',
-  title: 'Scorer App'
-});
+    layout: 'partials/bootstrap',
+    title: 'Scorer App'
+  });
 });
 
-//Start Server
+// Start Server
 app.listen(8080, () => {
-  console.log('Server listening on 8080');
-})
-  ;
+  console.log('Server listening on http://localhost:8080');
+});
