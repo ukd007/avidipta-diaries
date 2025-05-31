@@ -1,12 +1,35 @@
-/* Full-screen background and form centering */
-body {
-  height: 100vh;
+/* Ensure the body takes full height */
+html, body {
+  height: 100%;
   margin: 0;
-  background: url('images/bgimg2-Picsart-AiImageEnhancer.jpg') no-repeat center center/cover;
+  padding: 0;
+  overflow: hidden; /* Optional: prevent scrollbars */
+}
+
+/* Fullscreen video background */
+.video-background {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  z-index: -1; /* Behind everything */
+}
+
+.video-background video {
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: contain;
+}
+.form-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Arial, sans-serif;
 }
 
 /* Form styling */
@@ -67,6 +90,10 @@ button:hover {
 span.psw {
   float: right;
   padding-top: 16px;
+}
+.avatar{
+  width:300px;
+  height:auto;
 }
 
 /* Mobile responsiveness */
