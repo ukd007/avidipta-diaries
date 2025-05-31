@@ -54,13 +54,23 @@ app.get('/profilepage', (req, res) => {
     { names: "Sashwat" },
     { names: "Udayendu" },
   ];
-  res.render("users/profilepage", { players }); // 👈 Fix the path here
+  res.render("profilepage", { players }); // 👈 Fix the path here
 });
+
 
 app.get('/cricket', (req, res) => {
-  res.render('users/profilepage');
+  res.redirect('users/profilepage');
 });
 
+//LOGIN PAGE [ homepage.ejs]
+app.post('/login', (req, res) => {
+  res.redirect('/home');
+});
+
+//LOGIN PAGE REDIRECTING TO [home.ejs]
+app.get('/home', (req, res) => {
+  res.render('home'); 
+});
 //AUTHENTICATION TO BE DONE AFTER LOGIN SYSTEM IS MADE
 app.get('/admin', (req, res) => {
   res.render('admin/dashboard', {
