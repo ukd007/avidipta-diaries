@@ -20,32 +20,26 @@ app.set('views', viewsArray);
 // Static Files
 app.use(express.static(path.join(__dirname, 'public')));
 
+//MIDDLEWARE
+app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'anudayenduanaranyapartnership',     // replace with a real secret string
+  resave: false,                 // recommended false to avoid unnecessary saves
+  saveUninitialized: false,      // recommended false to not save empty sessions
+  cookie: {
+    secure: false                // set to true if using HTTPS (SSL)
+  }
+}));
 // ROUTES
 
 // Homepage (login page)
 app.get('/', (req, res) => {
-  res.render('homepage', { layout: false });
+  res.render('loginpage', { layout: false });
 });
 
 // Profile Page
-app.get('/profilepage', (req, res) => {
-  const players = [
-    { names: "Anaranya" },
-    { names: "Aranyak" },
-    { names: "Adesh" },
-    { names: "Angshu" },
-    { names: "Bibaswan" },
-    { names: "Ishan" },
-    { names: "Mayukh" },
-    { names: "Rudraksh" },
-    { names: "Swapnesh" },
-    { names: "Sayan" },
-    { names: "Sahendra" },
-    { names: "Sashwat" },
-    { names: "Udayendu" },
-  ];
-  res.render("profilepage", { players, layout: false });
-});
+const authRoutes=require('./routes/auth');
+app.use('/',authRoutes);
 
 // Redirect to Profile Page
 app.get('/cricket', (req, res) => {
@@ -62,13 +56,6 @@ app.get('/home', (req, res) => {
   res.render('home', { layout: false });
 });
 
-// Admin Dashboard (uses layout)
-app.get('/admin', (req, res) => {
-  res.render('admin/dashboard', {
-    layout: 'partials/bootstrap',
-    title: 'Admin Dashboard',
-  });
-});
 
 // Scorer App Page (uses layout)
 app.get('/admin/scorerapp', (req, res) => {

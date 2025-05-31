@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 const fs = require('fs');
 
-const caCert = fs.readFileSync('ca.pem');
+const caCert = fs.readFileSync('./config/ca.pem');
 
 const connection = mysql.createConnection({
     host: 'mysql-3cce6bb-our-60c4.g.aivencloud.com',
