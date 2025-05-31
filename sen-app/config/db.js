@@ -1,15 +1,26 @@
-const mysql=require('mysql2');
+const mysql = require('mysql2');
+const fs = require('fs');
 
-const db=mysql.createConnection({
-    host:'hosting host',
-    user:'hosting user',
-    password:'hosting password',
-    database: 'hosting db',
+const caCert = fs.readFileSync('ca.pem');
+
+const connection = mysql.createConnection({
+    host: 'mysql-3cce6bb-our-60c4.g.aivencloud.com',
+    port: 21893,
+    user: 'avnadmin',
+    password: 'AVNS_mRuJWqpte6kVpPA6zT1',
+    database: 'avidipta_diaries',
+    ssl: {
+        ca: caCert
+    }
 });
 
-db.connect(err=>{
-    if(err)throw err;
-    console.log('MYSQL connected');
+
+connection.connect(err => {
+  if (err) {
+    console.error('MySQL connection error:', err);
+  } else {
+    console.log('Connected to Aiven MySQL');
+  }
 });
 
-module.exports=db;
+module.exports = connection;
