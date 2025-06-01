@@ -5,9 +5,7 @@
                 <div class="user-card">
                     <div class="profile-pic-frame">
                         <img src="/profilepics/<%= user.profile_pic || 'default.png' %>"
-                            alt="Profile picture of <%= user.username %>" class="profile-pic"
-                            data-offset-x="<%= user.profile_pic_offset_x || 0 %>"
-                            data-offset-y="<%= user.profile_pic_offset_y || 0 %>" draggable="false" />
+                            alt="Profile picture of <%= user.username %>" class="profile-pic" draggable="false" />
                     </div>
                     <h5>
                         <%= user.username %>
