@@ -1,0 +1,112 @@
+html,
+body {
+  padding-top:30px; 
+  margin: 0;
+  background-color: rgb(224, 221, 221);
+}
+.top-bar {
+  background-color: #71c042; 
+  color: rgb(0, 0, 0);              
+  padding:5px 10px;    
+  font-family: 'Roboto', sans-serif;   
+  text-align: center;        
+  font-weight: bold;
+  font-size: 24px;
+  position: fixed;           
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;             
+  box-sizing: border-box;
+}
+.rounded-box {
+  width: 200px;
+  height:55px;
+  position: fixed;         
+  top: 60px;              
+  left: 50%;              
+  transform: translateX(-50%); 
+  background-color: #e9e49f;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 30px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 10000;         
+  white-space: nowrap;    
+}
+.score-box{
+  width: 280px;
+  height:50px;
+  position: fixed;         
+  top: 71px;              
+  left: 36%; 
+  z-index: 100000;
+  font-family: 'Roboto', sans-serif; 
+}
+.arrow{
+    width: 50px;
+  height:auto;
+  position: fixed;         
+  top: -2px;              
+  left: 5px; 
+  right: 5px;
+  z-index: 100000;
+  transform: rotate(180deg);
+}
+.bar{
+    width: 40px;
+  height:auto;
+  position: fixed;         
+  top: 3px;              
+  left: 390px; 
+  right: 5px;
+  z-index: 100000;
+}
+.box-2 {
+  width: 100px;
+  height:50px;
+  position: fixed;         
+  top: 65px;              
+  left: 55px;              
+  transform: translateX(-50%); 
+  background-color: #e9e49f;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 30px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 10000;         
+  white-space: nowrap;  
+}
+.team-left{
+  width: 300px;
+  height:50px;
+  position: fixed;         
+  top: 80px;              
+  left: 29px; 
+  z-index: 100000;
+  font-family: 'Roboto', sans-serif; 
+}
+.box-3 {
+  width: 100px;
+  height:45px;
+  position: fixed;         
+  top: 67px;              
+  left: 385px;              
+  transform: translateX(-50%); 
+  background-color: #e9e49f;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 30px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 10000;         
+  white-space: nowrap;  
+}
+.crr{
+  width: 300px;
+  height:50px;
+  position: fixed;         
+  top: 77px;              
+  left: 350px; 
+  z-index: 100000;
+  font-family: 'Roboto', sans-serif; 
+}
