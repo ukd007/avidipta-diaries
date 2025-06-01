@@ -1,70 +1,120 @@
-<h2>Edit Profile Picture Position for <%= user.username %></h2>
-
-<form method="POST" action="/admin/users/<%= user.id %>/edit">
-  <div class="profile-pic-frame" id="profileFrame" style="width:150px; height:150px; border-radius:50%; overflow:hidden; position:relative; border:1px solid #ccc;">
-    <img 
-      src="/profilepics/<%= user.profile_pic %>" 
-      id="profileImg" 
-      data-x="<%= user.picOffsetX || 0 %>" 
-      data-y="<%= user.picOffsetY || 0 %>" 
-      alt="Profile Picture"
-    />
-  </div>
-
-  <input type="hidden" name="picOffsetX" id="picOffsetX" value="<%= user.picOffsetX || 0 %>">
-  <input type="hidden" name="picOffsetY" id="picOffsetY" value="<%= user.picOffsetY || 0 %>">
-
-  <button type="submit" class="btn btn-success mt-3">Save Changes</button>
-</form>
-
-<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
-<script>
-  const img = document.getElementById('profileImg');
-  const inputX = document.getElementById('picOffsetX');
-  const inputY = document.getElementById('picOffsetY');
-
-  // Initialize position from data attributes
-  let posX = parseInt(img.dataset.x) || 0;
-  let posY = parseInt(img.dataset.y) || 0;
-  img.style.transform = `translate(${posX}px, ${posY}px)`;
-
-  interact(img).draggable({
-    listeners: {
-      move(event) {
-        posX += event.dx;
-        posY += event.dy;
-
-        img.style.transform = `translate(${posX}px, ${posY}px)`;
-
-        // Update hidden inputs so form submits new offset
-        inputX.value = posX;
-        inputY.value = posY;
-      }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Profile Picture</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
     }
-  });
-  interact(img).draggable({
-  // Enable inertial throwing
-  inertia: true,
-  // Keep the element within the parent container
-  modifiers: [
-    interact.modifiers.restrictRect({
-      restriction: 'parent',
-      endOnly: true
-    })
-  ],
-  // Enable autoScroll if needed
-  autoScroll: true,
-  listeners: {
-    move(event) {
-      posX += event.dx;
-      posY += event.dy;
 
-      img.style.transform = `translate(${posX}px, ${posY}px)`;
-
-      inputX.value = posX;
-      inputY.value = posY;
+    #previewContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-height: 400px;
+      overflow: hidden;
+      margin: 20px auto;
     }
-  }
-});
 
-</script>
+    #previewImage {
+      max-width: 100%;
+      height: auto;
+      display: none;
+    }
+
+    .cropper-view-box,
+    .cropper-face {
+      border-radius: 50% !important;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Edit Profile for <%= user.username %></h2>
+
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="image" id="fileInput" accept="image/*" required />
+    <div id="previewContainer">
+      <img id="previewImage" src="#" alt="Preview" />
+    </div>
+    <button type="submit" class="btn">Crop & Upload</button>
+  </form>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <script>
+    let cropper;
+    const fileInput = document.getElementById('fileInput');
+    const previewImage = document.getElementById('previewImage');
+    const uploadForm = document.getElementById('uploadForm');
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        previewImage.src = reader.result;
+        previewImage.style.display = 'block';
+
+        if (cropper) {
+          cropper.destroy();
+        }
+
+        cropper = new Cropper(previewImage, {
+          aspectRatio: 1,
+          viewMode: 1,
+          dragMode: 'move',
+          autoCropArea: 0.7,
+          cropBoxResizable: false,
+          cropBoxMovable: true,
+          ready() {
+            cropper.setCropBoxData({ width: 200, height: 200 });
+          }
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+
+    uploadForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!cropper) return alert('Please select and crop an image');
+
+      cropper.getCroppedCanvas({
+        width: 200,
+        height: 200
+      }).toBlob(blob => {
+        const formData = new FormData();
+        formData.append('croppedImage', blob);
+
+        fetch(`/admin/users/<%= user.id %>/edit`, {
+          method: 'POST',
+          body: formData
+        })
+        .then(res => {
+          if (res.ok) {
+            alert('Image updated!');
+            window.location.href = '/admin/users';
+          } else {
+            alert('Upload failed.');
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
