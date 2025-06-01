@@ -1,5 +1,5 @@
 const cloudinary = require('cloudinary');
-np
+
 cloudinary.config({
   cloud_name: 'dpsrh6vgp',
   api_key: '788943964476456',
