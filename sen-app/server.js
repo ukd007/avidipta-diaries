@@ -32,30 +32,17 @@ app.use(session({
 }));
 // ROUTES
 
-// Homepage (login page)
+// login page
 app.get('/', (req, res) => {
   res.render('loginpage', { layout: false });
 });
+// Authentication
+const authRoutes = require('./routes/auth');
+app.use('/', authRoutes);
 
-// Profile Page
-const authRoutes=require('./routes/auth');
-app.use('/',authRoutes);
-
-// Redirect to Profile Page
-app.get('/cricket', (req, res) => {
-  res.redirect('users/profilepage');
-});
-
-// Login Submit → Redirect to Home Page
-app.post('/login', (req, res) => {
-  res.redirect('/home');
-});
-
-// Home Page (after login)
-app.get('/home', (req, res) => {
-  res.render('home', { layout: false });
-});
-
+//ADMIN ONLY
+const userRoutes = require('./routes/adminRoutes');
+app.use('/', userRoutes);
 
 // Scorer App Page (uses layout)
 app.get('/admin/scorerapp', (req, res) => {

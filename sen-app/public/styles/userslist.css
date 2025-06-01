@@ -1,0 +1,20 @@
+.profile-pic-frame {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background: #f0f0f0; /* optional, just to see the frame */
+}
+
+.profile-pic {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 150px;  /* or width: 150px if you want fixed width */
+  object-fit: cover;
+  user-select: none;
+  cursor: grab;
+  /* initially center the image */
+  transform: translate(-50%, -50%);
+}

@@ -1,0 +1,70 @@
+<h2>Edit Profile Picture Position for <%= user.username %></h2>
+
+<form method="POST" action="/admin/users/<%= user.id %>/edit">
+  <div class="profile-pic-frame" id="profileFrame" style="width:150px; height:150px; border-radius:50%; overflow:hidden; position:relative; border:1px solid #ccc;">
+    <img 
+      src="/profilepics/<%= user.profile_pic %>" 
+      id="profileImg" 
+      data-x="<%= user.picOffsetX || 0 %>" 
+      data-y="<%= user.picOffsetY || 0 %>" 
+      alt="Profile Picture"
+    />
+  </div>
+
+  <input type="hidden" name="picOffsetX" id="picOffsetX" value="<%= user.picOffsetX || 0 %>">
+  <input type="hidden" name="picOffsetY" id="picOffsetY" value="<%= user.picOffsetY || 0 %>">
+
+  <button type="submit" class="btn btn-success mt-3">Save Changes</button>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+<script>
+  const img = document.getElementById('profileImg');
+  const inputX = document.getElementById('picOffsetX');
+  const inputY = document.getElementById('picOffsetY');
+
+  // Initialize position from data attributes
+  let posX = parseInt(img.dataset.x) || 0;
+  let posY = parseInt(img.dataset.y) || 0;
+  img.style.transform = `translate(${posX}px, ${posY}px)`;
+
+  interact(img).draggable({
+    listeners: {
+      move(event) {
+        posX += event.dx;
+        posY += event.dy;
+
+        img.style.transform = `translate(${posX}px, ${posY}px)`;
+
+        // Update hidden inputs so form submits new offset
+        inputX.value = posX;
+        inputY.value = posY;
+      }
+    }
+  });
+  interact(img).draggable({
+  // Enable inertial throwing
+  inertia: true,
+  // Keep the element within the parent container
+  modifiers: [
+    interact.modifiers.restrictRect({
+      restriction: 'parent',
+      endOnly: true
+    })
+  ],
+  // Enable autoScroll if needed
+  autoScroll: true,
+  listeners: {
+    move(event) {
+      posX += event.dx;
+      posY += event.dy;
+
+      img.style.transform = `translate(${posX}px, ${posY}px)`;
+
+      inputX.value = posX;
+      inputY.value = posY;
+    }
+  }
+});
+
+</script>
