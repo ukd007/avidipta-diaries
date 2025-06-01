@@ -22,3 +22,17 @@ html, body {
   min-height: 100%;
   object-fit: cover;
 }
+
+.profile-pic-small {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.profile-pic-large {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+}
