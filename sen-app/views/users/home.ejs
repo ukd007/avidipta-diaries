@@ -43,13 +43,13 @@
           <!-- Navbar profile icon -->
           <!-- Navbar -->
           <a href="#" class="dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="/profilepics/<%= user.profile_pic || 'default.png' %>" alt="Profile" class="profile-pic-small">
+            <img src="<%= user.profile_pic%>" alt="Profile" class="profile-pic-small">
           </a>
 
           <!-- Dropdown -->
           <ul class="dropdown-menu dropdown-menu-end text-center">
             <li>
-              <img src="/profilepics/<%= user.profile_pic || 'default.png' %>" alt="Profile" class="profile-pic-large">
+              <img src="<%= user.profile_pic%>" alt="Profile" class="profile-pic-large">
             </li>
             <li><strong>
                 <%= user.username %>

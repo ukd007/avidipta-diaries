@@ -41,8 +41,8 @@ const authRoutes = require('./routes/auth');
 app.use('/', authRoutes);
 
 //ADMIN ONLY
-const userRoutes = require('./routes/adminRoutes');
-app.use('/', userRoutes);
+const adminRoutes = require('./routes/adminRoutes');
+app.use('/', adminRoutes);
 
 // Scorer App Page (uses layout)
 app.get('/admin/scorerapp', (req, res) => {
