@@ -9,7 +9,7 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'profilepics',
+    folder: 'profile_pics',
     format: 'jpg',
     public_id: (req) => `user_${req.params.id}_${Date.now()}`, // unique public_id
     transformation: [{ width: 500, height: 500, crop: "limit" }],
@@ -37,6 +37,7 @@ router.get('/admin/users', (req, res) => {
 });
 
 // Show edit form for one user
+// Show edit form for one user
 router.get('/admin/users/:id/edit', (req, res) => {
   const userId = parseInt(req.params.id, 10);
   if (isNaN(userId)) {
@@ -56,10 +57,20 @@ router.get('/admin/users/:id/edit', (req, res) => {
 
     const user = results[0];
 
+    const message = req.session.message || null;
+    const error = req.session.error || null;
+
+    // Clear messages after reading
+    req.session.message = null;
+    req.session.error = null;
+
     res.render('usereditform.ejs', {
       layout: 'partials/bootstrap',
       pageCSS: '/styles/usereditform.css',
       user,
+      message,
+      error,
+      req, // if you need access to the whole request (optional)
     });
   });
 });
@@ -68,14 +79,16 @@ router.get('/admin/users/:id/edit', (req, res) => {
 router.post('/admin/users/:id/edit', upload.single('croppedImage'), (req, res) => {
   const userId = parseInt(req.params.id, 10);
   if (isNaN(userId)) {
-    return res.status(400).send('Invalid User ID');
+    req.session.error = 'Invalid User ID';
+    return res.redirect(`/usereditform/${req.params.id}`);
   }
 
   if (!req.file || !req.file.path) {
-    return res.status(400).send('No image uploaded');
+    req.session.error = 'No image uploaded';
+    return res.redirect(`/usereditform/${req.params.id}`);
   }
 
-  const profilePicUrl = req.file.path; // Cloudinary image URL
+  const profilePicUrl = req.file.path;
 
   const q = `
     UPDATE users
@@ -86,11 +99,13 @@ router.post('/admin/users/:id/edit', upload.single('croppedImage'), (req, res) =
   db.query(q, [profilePicUrl, userId], (err, result) => {
     if (err) {
       console.error(err);
-      return res.status(500).send('Database Error');
+      req.session.error = 'Database Error';
+      return res.redirect(`/usereditform/${req.params.id}`);
     }
-    res.status(200).json({ success: true, message: 'Image updated', url: profilePicUrl });
+
+    req.session.message = 'Image updated successfully';
+    res.redirect(`/usereditform/${req.params.id}`);
   });
 });
-
 
 module.exports = router;

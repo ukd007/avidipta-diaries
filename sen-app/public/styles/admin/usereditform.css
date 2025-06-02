@@ -1,0 +1,58 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 40px;
+}
+
+h2 {
+  text-align: center;
+}
+
+.profile-pic-frame {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background: #f0f0f0; /* optional */
+  margin: 0 auto 20px;
+}
+
+.profile-pic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  user-select: none;
+  cursor: grab;
+  min-width: 150px;
+  min-height: 150px;
+}
+
+#previewContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 400px;
+  overflow: hidden;
+  margin: 20px auto;
+}
+
+#previewImage {
+  max-width: 100%;
+  height: auto;
+  display: none;
+}
+
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50% !important;
+}
+
+.btn {
+  padding: 10px 16px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
+}

@@ -1,3 +1,13 @@
+<!-- Bootstrap Navbar with Back Button -->
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <a href="/admin/dashboard" class="navbar-brand d-flex align-items-center">
+      <span class="material-icons">arrow_back</span>
+      <span class="ms-2">Back</span>
+    </a>
+  </div>
+</nav>
+
 <div class="container py-4">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <% users.forEach(user=> { %>
@@ -16,18 +26,3 @@
             <% }); %>
     </div>
 </div>
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        const imgs = document.querySelectorAll('.profile-pic');
-
-        imgs.forEach(img => {
-            const offsetX = parseFloat(img.dataset.offsetX) || 0;
-            const offsetY = parseFloat(img.dataset.offsetY) || 0;
-
-            // Combine centering (-50%, -50%) + user offset in px
-            img.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px))`;
-        });
-    });
-
-
-</script>
