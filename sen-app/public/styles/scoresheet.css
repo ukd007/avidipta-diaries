@@ -287,7 +287,7 @@ body {
   cursor: pointer;
   position: fixed;
    top: 572px;              
-  left: 30px; 
+  left: 28px; 
   z-index: 1000000;
   text-transform: uppercase;
   font-family:'Roboto';
@@ -297,7 +297,7 @@ body {
   height:40px;
   position: fixed;         
   top: 565px;              
-  left: 65px;              
+  left: 62px;              
   transform: translateX(-50%); 
   background-color: #4cd3aa;
   color: white;
@@ -325,7 +325,7 @@ body {
   cursor: pointer;
   position: fixed;
    top: 572px;              
-  left: 125px; 
+  left: 135px; 
   z-index: 1000000;
   text-transform: uppercase;
   font-family:'Roboto';
@@ -353,4 +353,87 @@ body {
   left: 275px; 
   right: 5px;
   z-index: 10000;
+}
+.retire-btn{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: inherit;
+  cursor: pointer;
+  position: fixed;
+   top: 572px;              
+  left: 328px; 
+  z-index: 100000;
+  text-transform: uppercase;
+  font-family:'Roboto';
+}
+.retire-box{
+   width: 110px;
+  height:40px;
+  position: fixed;         
+  top: 565px;              
+  left: 374px;              
+  transform: translateX(-50%); 
+  background-color: #4cd3aa;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 10000;         
+  white-space: nowrap; 
+}
+.retire-icon{
+    width: 38px;
+  height:auto;
+  position: fixed;         
+  top: 566px;              
+  left: 393px; 
+  right: 5px;
+  z-index: 10000000;
+  opacity: 80%;
+}
+.wicket-box {
+  background-color: #ffffff; 
+  color: rgb(0, 0, 0);              
+  padding:27px 80px;    
+  font-family: 'Roboto', sans-serif;   
+  text-align: center;        
+  font-weight: bold;
+  font-size: 24px;
+  position: fixed;           
+  top: 615px;
+  left: 10px;
+  width: 200px;
+  z-index: 1000;  
+  height:200px;           
+  box-sizing: border-box;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.run-box {
+  background-color: #ffffff; 
+  color: rgb(0, 0, 0);              
+  padding:27px 80px;    
+  font-family: 'Roboto', sans-serif;   
+  text-align: center;        
+  font-weight: bold;
+  font-size: 24px;
+  position: fixed;           
+  top: 615px;
+  left: 225px;
+  width: 200px;
+  z-index: 1000;  
+  height:200px;           
+  box-sizing: border-box;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.form-check{
+  width:100px;
+  position: relative;
+  top:140px;
+  left:50px;
+  z-index: 10000000;
+  transform: scale(1.3); 
 }
