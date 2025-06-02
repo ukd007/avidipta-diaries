@@ -4,45 +4,81 @@
 <img src="images/arrow.png"class="arrow" alt="arrow"></img>
 <img src="images/bar.png"class="bar" alt="bar"></img>
 <div class="top-bar">
+</div>
+<div class="team-top">
   <h2><%= team1 %> vs <%= team2 %></h2>
 </div>
-
 <div class="rounded-box">
 </div>
-<div class="score-box">
-  <h1>0 - 0 (0.0)</h1>
+<div class="runs-wickets">
+  <h1>0 - 0</h1>
 </div>
-
+<div class="overs">
+  <h1>(0.0)</h1>
+</div>
+<!--
 <div class="box-2">
-</div>
+</div>-->
 <div class="team-left">
     <span><%= team1 %></span>
 </div>
 
-<div class="box-3">
-</div>
+<!--<div class="box-3">
+</div>-->
 <div class="crr">
     <span>CRR - 0.0</span>
 </div>
 
-<!--
-<table>
-  <tr>
-    <th>Batsman</th><th>R</th><th>B</th><th>4s</th><th>6s</th><th>SR</th>
-  </tr>
-  <tr>
-    <td><%= batsman1 %>*</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0.0</td>
-  </tr>
-  <tr>
-    <td><%= batsman2 %></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0.0</td>
-  </tr>
-</table>
 
-<table>
-  <tr>
-    <th>Bowler</th><th>O</th><th>M</th><th>R</th><th>W</th><th>Eco</th>
-  </tr>
-  <tr>
-    <td><%= bowler %></td><td>0.0</td><td>0</td><td>0</td><td>0</td><td>0.0</td>
-  </tr>
+<table class="score-table">
+  <thead>
+    <tr>
+      <th>Batsman</th>
+      <th>R</th>
+      <th>B</th>
+      <th>4s</th>
+      <th>6s</th>
+      <th>SR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>A*</strong></td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <td><strong>B</strong></td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<table class="ball-table">
+  <thead>
+    <tr>
+      <th>Bowler</th>
+      <th>O</th>
+      <th>M</th>
+      <th>R</th>
+      <th>W</th>
+      <th>Eco</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>C</strong></td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
 </table>
