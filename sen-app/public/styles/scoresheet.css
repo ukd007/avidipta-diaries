@@ -3,6 +3,7 @@ body {
   padding-top:30px; 
   margin: 0;
   background-color: rgb(234, 232, 232);
+  overscroll-behavior: none;
 }
 .top-bar {
   background-color: #75f371; 

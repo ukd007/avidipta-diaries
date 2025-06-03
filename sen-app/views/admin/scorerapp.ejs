@@ -1,8 +1,11 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/styles/scorerapp.css">
 <nav class="navbar bg-primary">
     <div class="container-fluid justify-content-center">
         <span class="navbar-brand mb-0 h1 text-white">Cricket Scorer</span>
     </div>
 </nav>
+  <div class="form-wrapper">
 <h2>Enter Match Details</h2>
 <form action="/start-match" method="post">
   <label for="team1">Team 1 Name:</label><br>
@@ -27,6 +30,7 @@
 
   <button type="submit">Start Match</button>
 </form>
+</div>
 
 <script>
   function updateTossOptions() {
