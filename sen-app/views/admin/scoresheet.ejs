@@ -15,191 +15,230 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="javascript:history.back()">
-          <img src="images/arrow.png" class="img-fluid arrow w-25 w-sm-20 w-md-10 w-lg-5" alt="Back">
-        </a>
-        <img src="images/bar.png" class="img-fluid bar w-25 w-sm-20 w-md-10 w-lg-5" alt="bar">
-        <div class="top-bar flex-grow-1"></div>
+      <div class="top-bar-container position-relative">
+        <!-- Fixed green bar in the background -->
+        <div class="top-bar"></div>
+
+        <!-- Overlay content on top of the bar -->
+        <div
+          class="d-flex justify-content-between align-items-center px-3 py-2 top-bar-content position-relative"
+        >
+          <a href="javascript:history.back()" class="ms-0">
+            <img
+              src="images/arrow.png"
+              class="img-fluid arrow"
+              style="width: 30px"
+              alt="Back"
+            />
+          </a>
+
+          <div class="team-title text-center flex-grow-1">
+            <%= team1 %> vs <%= team2 %>
+          </div>
+
+          <img
+            src="images/bar.png"
+            class="img-fluid bar"
+            style="width: 30px"
+            alt="Bar"
+          />
+        </div>
       </div>
 
-      <div class="team-top text-center mb-4">
-        <h2><%= team1 %> vs <%= team2 %></h2>
-      </div>
+  <div class="container position-relative mb-4">
+  <div class="rounded-box"></div>
 
-      <div class="position-relative text-center mb-4">
-        <div class="rounded-box"></div>
-        <div class="runs-wickets">
-          <h1>0 - 0</h1>
-        </div>
-        <div class="overs">
-          <h1>(0.0)</h1>
-        </div>
-        <div class="team-left">
-          <span><%= team1 %></span>
-        </div>
-        <div class="crr">
-          <span>CRR - 0.0</span>
-        </div>
-      </div>
+  <div class="row align-items-center text-center text-md-start">
+    <!-- Team Left -->
+    <div class="col-6 col-md-3 order-1 order-md-1 team-left">
+      <span><%= team1 %></span>
     </div>
 
-    <div class="col-12 mb-4">
-      <table class="table table-bordered table-striped text-center score-table">
-        <thead>
-          <tr>
-            <th>Batsman</th>
-            <th>R</th>
-            <th>B</th>
-            <th>4s</th>
-            <th>6s</th>
-            <th>SR</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>A*</strong></td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0.0</td>
-          </tr>
-          <tr>
-            <td><strong>B</strong></td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0.0</td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Runs Wickets Centered -->
+    <div class="col-12 col-md-3 order-3 order-md-2 runs-wickets d-flex justify-content-center">
+      <h1>0 - 0</h1>
     </div>
 
-    <div class="col-12 mb-4">
-      <table class="table table-bordered table-striped text-center ball-table">
-        <thead>
-          <tr>
-            <th>Bowler</th>
-            <th>O</th>
-            <th>M</th>
-            <th>R</th>
-            <th>W</th>
-            <th>Eco</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>C</strong></td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Overs -->
+    <div class="col-6 col-md-3 order-2 order-md-3 overs d-flex justify-content-center justify-content-md-start">
+      <h1>(0.0)</h1>
     </div>
 
-    <div class="col-12 mb-4">
-      <div
-        class="over-container d-flex flex-wrap align-items-center justify-content-center"
-      >
-        <div class="label me-3">This Over:</div>
-        <div class="balls d-flex flex-wrap">
-          <div class="ball p-2 border rounded m-1">0</div>
-          <div class="ball p-2 border rounded m-1">0</div>
-          <div class="ball p-2 border rounded m-1">0</div>
-          <div class="ball p-2 border rounded m-1">0</div>
-          <div class="ball p-2 border rounded m-1">0</div>
-          <div class="ball p-2 border rounded m-1">0</div>
-        </div>
-        <button type="button" class="btn btn-warning ms-3">Undo</button>
+    <!-- CRR (aligned right) -->
+    <div class="col-6 col-md-3 order-4 order-md-4 crr d-flex justify-content-end pe-3">
+      <span>CRR - 0.0</span>
+    </div>
+  </div>
+</div>
+
+
+      <div class="col-12 mb-4">
+        <table
+          class="table table-bordered table-striped text-center score-table"
+        >
+          <thead>
+            <tr>
+              <th>Batsman</th>
+              <th>R</th>
+              <th>B</th>
+              <th>4s</th>
+              <th>6s</th>
+              <th>SR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>A*</strong></td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0.0</td>
+            </tr>
+            <tr>
+              <td><strong>B</strong></td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0.0</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="d-flex justify-content-around mt-3">
-        <button type="button" class="btn btn-info swap-btn">
-          Swap Batsman
-        </button>
-        <button type="button" class="btn btn-danger retire-btn">Retire</button>
-      </div>
-      <div class="wicket-box"></div>
-      <div class="run-box"></div>
-    </div>
 
-    <div class="col-12 mb-4">
-      <div class="row">
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="defaultCheck1"
-            />
-            <label class="form-check-label" for="defaultCheck1">Wicket</label>
+      <div class="col-12 mb-4">
+        <table
+          class="table table-bordered table-striped text-center ball-table"
+        >
+          <thead>
+            <tr>
+              <th>Bowler</th>
+              <th>O</th>
+              <th>M</th>
+              <th>R</th>
+              <th>W</th>
+              <th>Eco</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>C</strong></td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-12 mb-4">
+        <div
+          class="over-container d-flex flex-wrap align-items-center justify-content-center"
+        >
+          <div class="label me-3">This Over:</div>
+          <div class="balls d-flex flex-wrap">
+            <div class="ball p-2 border rounded m-1">0</div>
+            <div class="ball p-2 border rounded m-1">0</div>
+            <div class="ball p-2 border rounded m-1">0</div>
+            <div class="ball p-2 border rounded m-1">0</div>
+            <div class="ball p-2 border rounded m-1">0</div>
+            <div class="ball p-2 border rounded m-1">0</div>
           </div>
+          <button type="button" class="btn btn-warning ms-3">Undo</button>
         </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="defaultCheck2"
-            />
-            <label class="form-check-label" for="defaultCheck2">Wide</label>
+        <div class="d-flex justify-content-around mt-3">
+          <button type="button" class="btn btn-info swap-btn">
+            Swap Batsman
+          </button>
+          <button type="button" class="btn btn-danger retire-btn">
+            Retire
+          </button>
+        </div>
+        <div class="wicket-box"></div>
+        <div class="run-box"></div>
+      </div>
+
+      <div class="col-12 mb-4">
+        <div class="row">
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="defaultCheck1"
+              />
+              <label class="form-check-label" for="defaultCheck1">Wicket</label>
+            </div>
           </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="defaultCheck3"
-            />
-            <label class="form-check-label" for="defaultCheck3">No ball</label>
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="defaultCheck2"
+              />
+              <label class="form-check-label" for="defaultCheck2">Wide</label>
+            </div>
           </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="defaultCheck4"
-            />
-            <label class="form-check-label" for="defaultCheck4">Six Out</label>
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="defaultCheck3"
+              />
+              <label class="form-check-label" for="defaultCheck3"
+                >No ball</label
+              >
+            </div>
           </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-3">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="defaultCheck5"
-            />
-            <label class="form-check-label" for="defaultCheck5"
-              >Bow. Ret.</label
-            >
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="defaultCheck4"
+              />
+              <label class="form-check-label" for="defaultCheck4"
+                >Six Out</label
+              >
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="defaultCheck5"
+              />
+              <label class="form-check-label" for="defaultCheck5"
+                >Bow. Ret.</label
+              >
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-12 mb-4">
-      <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-        <button class="btn btn-outline-primary zero-run">0</button>
-        <button class="btn btn-outline-primary one-run">1</button>
-        <button class="btn btn-outline-primary two-run">2</button>
-        <button class="btn btn-outline-primary three-run">3</button>
-        <button class="btn btn-outline-primary four-run">4</button>
-        <button class="btn btn-outline-primary five-run">5</button>
-        <button class="btn btn-outline-primary six-run">6</button>
-        <button class="btn btn-outline-primary seven-run">7</button>
-        <button class="btn btn-outline-primary eight-run">8</button>
+      <div class="col-12 mb-4">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+          <button class="btn btn-outline-primary zero-run">0</button>
+          <button class="btn btn-outline-primary one-run">1</button>
+          <button class="btn btn-outline-primary two-run">2</button>
+          <button class="btn btn-outline-primary three-run">3</button>
+          <button class="btn btn-outline-primary four-run">4</button>
+          <button class="btn btn-outline-primary five-run">5</button>
+          <button class="btn btn-outline-primary six-run">6</button>
+          <button class="btn btn-outline-primary seven-run">7</button>
+          <button class="btn btn-outline-primary eight-run">8</button>
+        </div>
       </div>
     </div>
   </div>

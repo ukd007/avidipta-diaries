@@ -8,17 +8,33 @@ body {
 /* Arrow and Bar Images */
 .arrow {
   transform: rotate(180deg);
-
-  z-index: 10;
-
 }
-
 .bar {
   position: relative;
-  z-index: 10;
 }
-
-/* Top Bar */
+.top-bar {
+    background-color: #75f371;
+    height: 45px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0; /* Background layer */
+}
+.top-bar-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+.team-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+}
+/* Top Bar prev
 .top-bar {
      background-color: #75f371; 
   color: rgb(0, 0, 0);              
@@ -33,18 +49,18 @@ body {
   width: 100%;             
   box-sizing: border-box;
   z-index: 0;
-}
+}*/
 
 
 
 
 /* Score Elements */
 .rounded-box {
-    width: 90%;
+    width: 95%;
     max-width: 425px;
     height: 55px;
-    position: absolute;
-    top: 0;
+    position: absolute; /* Keep this to keep it floating and centered */
+    top: -50px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #f7f787;
@@ -56,54 +72,79 @@ body {
     white-space: nowrap;
 }
 
-.runs-wickets {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
+/* Remove absolute positioning on these to make them flow responsively */
+.runs-wickets
+ {
+    position: static; /* override absolute */
     text-align: center;
-    z-index: 100000;
     font-family: 'Roboto', sans-serif;
-}
-
-.overs {
-    position: absolute;
-    top: 25px;
-    left: 20px;
-    z-index: 100000;
-    font-family: 'Roboto', sans-serif;
-}
-.overs h1 {
-    font-size: 20px;
-}
-
-.team-top {
-    font-family: 'Roboto', sans-serif;
-    font-weight: bold;
     z-index: 100000;
 }
-.team-top h2 {
-    font-size: 21px;
-}
-
-.team-left {
-    position: absolute;
-    top: 25px;
-    right: 20px;
-    z-index: 100000;
+.overs{
+    position: static; /* override absolute */
     font-family: 'Roboto', sans-serif;
-    text-align: right;
+    z-index: 100000;
 }
-
+.team-left{
+     position: static; /* override absolute */
+    text-align: left;
+    font-family: 'Roboto', sans-serif;
+    z-index: 100000;
+    margin-left:-10px; 
+}
 .crr {
-    position: absolute;
-    top: 45px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100000;
-    font-family: 'Roboto', sans-serif;
+    
+  font-family: 'Roboto', sans-serif;
 }
+.crr span {
+  padding-right:-20px;
+}
+
+/* Make sure .runs-wickets text is bigger and prominent */
+.runs-wickets h1 {
+    font-size: 2.5rem; /* responsive font size */
+    margin: 0;
+}
+
+/* Slightly smaller for overs */
+.overs h1 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+/* For the team name */
+.team-left span {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+/* CRR style */
+.crr span {
+    font-size: 1rem;
+    display: block;
+}
+
+/* Container for flex layout */
+.position-relative.text-center.mb-4 > .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 70px; /* space for the rounded-box */
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .runs-wickets h1 {
+        font-size: 2rem;
+    }
+    .overs h1,
+    .team-left span,
+    .crr span {
+        font-size: 1rem;
+    }
+}
+
 
 /* Tables */
 .score-table,
