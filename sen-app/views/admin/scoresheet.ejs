@@ -1,161 +1,206 @@
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles/scoresheet.css">
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="/styles/scoresheet.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Bootstrap CSS -->
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<a href="javascript:history.back()">
-  <img src="images/arrow.png" class="arrow" alt="Back">
-</a>
-<img src="images/bar.png"class="bar" alt="bar"></img>
-<div class="top-bar">
-</div>
-<div class="team-top">
-  <h2><%= team1 %> vs <%= team2 %></h2>
-</div>
-<div class="rounded-box">
-</div>
-<div class="runs-wickets">
-  <h1>0 - 0</h1>
-</div>
-<div class="overs">
-  <h1>(0.0)</h1>
-</div>
-<!--
-<div class="box-2">
-</div>-->
-<div class="team-left">
-    <span><%= team1 %></span>
-</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="javascript:history.back()">
+          <img src="images/arrow.png" class="img-fluid arrow w-25 w-sm-20 w-md-10 w-lg-5" alt="Back">
+        </a>
+        <img src="images/bar.png" class="img-fluid bar w-25 w-sm-20 w-md-10 w-lg-5" alt="bar">
+        <div class="top-bar flex-grow-1"></div>
+      </div>
 
-<!--<div class="box-3">
-</div>-->
-<div class="crr">
-    <span>CRR - 0.0</span>
-</div>
+      <div class="team-top text-center mb-4">
+        <h2><%= team1 %> vs <%= team2 %></h2>
+      </div>
 
+      <div class="position-relative text-center mb-4">
+        <div class="rounded-box"></div>
+        <div class="runs-wickets">
+          <h1>0 - 0</h1>
+        </div>
+        <div class="overs">
+          <h1>(0.0)</h1>
+        </div>
+        <div class="team-left">
+          <span><%= team1 %></span>
+        </div>
+        <div class="crr">
+          <span>CRR - 0.0</span>
+        </div>
+      </div>
+    </div>
 
-<table class="score-table">
-  <thead>
-    <tr>
-      <th>Batsman</th>
-      <th>R</th>
-      <th>B</th>
-      <th>4s</th>
-      <th>6s</th>
-      <th>SR</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>A*</strong></td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <td><strong>B</strong></td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
-<table class="ball-table">
-  <thead>
-    <tr>
-      <th>Bowler</th>
-      <th>O</th>
-      <th>M</th>
-      <th>R</th>
-      <th>W</th>
-      <th>Eco</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>C</strong></td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
+    <div class="col-12 mb-4">
+      <table class="table table-bordered table-striped text-center score-table">
+        <thead>
+          <tr>
+            <th>Batsman</th>
+            <th>R</th>
+            <th>B</th>
+            <th>4s</th>
+            <th>6s</th>
+            <th>SR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>A*</strong></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.0</td>
+          </tr>
+          <tr>
+            <td><strong>B</strong></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0.0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-<div class="over-container">
-  <div class="label">This Over:</div>
-  <div class="balls">
-    <div class="ball">0</div>
-    <div class="ball">0</div>
-    <div class="ball">0</div>
-    <div class="ball">0</div>
-    <div class="ball">0</div>
-    <div class="ball">0</div>
+    <div class="col-12 mb-4">
+      <table class="table table-bordered table-striped text-center ball-table">
+        <thead>
+          <tr>
+            <th>Bowler</th>
+            <th>O</th>
+            <th>M</th>
+            <th>R</th>
+            <th>W</th>
+            <th>Eco</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>C</strong></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-12 mb-4">
+      <div
+        class="over-container d-flex flex-wrap align-items-center justify-content-center"
+      >
+        <div class="label me-3">This Over:</div>
+        <div class="balls d-flex flex-wrap">
+          <div class="ball p-2 border rounded m-1">0</div>
+          <div class="ball p-2 border rounded m-1">0</div>
+          <div class="ball p-2 border rounded m-1">0</div>
+          <div class="ball p-2 border rounded m-1">0</div>
+          <div class="ball p-2 border rounded m-1">0</div>
+          <div class="ball p-2 border rounded m-1">0</div>
+        </div>
+        <button type="button" class="btn btn-warning ms-3">Undo</button>
+      </div>
+      <div class="d-flex justify-content-around mt-3">
+        <button type="button" class="btn btn-info swap-btn">
+          Swap Batsman
+        </button>
+        <button type="button" class="btn btn-danger retire-btn">Retire</button>
+      </div>
+      <div class="wicket-box"></div>
+      <div class="run-box"></div>
+    </div>
+
+    <div class="col-12 mb-4">
+      <div class="row">
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck1"
+            />
+            <label class="form-check-label" for="defaultCheck1">Wicket</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck2"
+            />
+            <label class="form-check-label" for="defaultCheck2">Wide</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck3"
+            />
+            <label class="form-check-label" for="defaultCheck3">No ball</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck4"
+            />
+            <label class="form-check-label" for="defaultCheck4">Six Out</label>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck5"
+            />
+            <label class="form-check-label" for="defaultCheck5"
+              >Bow. Ret.</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mb-4">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+        <button class="btn btn-outline-primary zero-run">0</button>
+        <button class="btn btn-outline-primary one-run">1</button>
+        <button class="btn btn-outline-primary two-run">2</button>
+        <button class="btn btn-outline-primary three-run">3</button>
+        <button class="btn btn-outline-primary four-run">4</button>
+        <button class="btn btn-outline-primary five-run">5</button>
+        <button class="btn btn-outline-primary six-run">6</button>
+        <button class="btn btn-outline-primary seven-run">7</button>
+        <button class="btn btn-outline-primary eight-run">8</button>
+      </div>
+    </div>
   </div>
-
- <button type="button" class="undo-btn">Undo</button>
- </div>
-<div class="undo-box">
 </div>
-<img src="images/undo.png"class="undo-icon" alt="undo-img"></img>
- <button type="button" class="swap-btn">Swap Batsman</button>
- </div>
-<div class="swap-box">
-</div>
-<img src="images/swap.png"class="swap-icon" alt="swap-img"></img>
- <button type="button" class="retire-btn">Retire</button>
- </div>
-<div class="retire-box">
-</div>
-<img src="images/retire.png"class="retire-icon" alt="retire-img"></img>
- </div>
-<div class="wicket-box">
-</div>
- </div>
-<div class="run-box">
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-  <label class="form-check-label" for="defaultCheck1">
-    Wicket
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-  <label class="form-check-label" for="defaultCheck1">
-    Wide
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-  No ball
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-  <label class="form-check-label" for="defaultCheck1">
-    Six Out
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-  <label class="form-check-label" for="defaultCheck1">
-    Bow. Ret.
-  </label>
-</div>
- 
- 
-    <button class="zero-run">0</button>
-    <button class="one-run">1</button>
-    <button class="two-run">2</button>
-    <button class="three-run">3</button>
-    <button class="four-run">4</button>
-    <button class="five-run">5</button>
-    <button class="six-run">6</button>
-    <button class="seven-run">7</button>
-    <button class="eight-run">8</button>
-    
-  
