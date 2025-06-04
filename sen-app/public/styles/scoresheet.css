@@ -327,8 +327,8 @@ body {
 /* Styles for all individual run buttons */
 .zero-run, .one-run, .two-run, .three-run, .four-run,
 .five-run, .six-run, .seven-run, .eight-run {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     background-color: #74fcb5;
     color: #333;
     border: none;
