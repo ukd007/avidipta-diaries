@@ -1,5 +1,5 @@
 // utils/summer25Stats.js
-const db = require('../../config/db');
+const db = require('../config/db');
 
 function getSummer25Stats(userId, callback) {
     const q1 = `SELECT * FROM batstats_summer25 WHERE id = ?`;
