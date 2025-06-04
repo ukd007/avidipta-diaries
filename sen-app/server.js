@@ -45,7 +45,7 @@ const adminRoutes = require('./routes/adminRoutes');
 app.use('/', adminRoutes);
 const userRoutes = require('./routes/userRoutes');
 app.use('/', userRoutes);
-const updateRoutes=require('./routes/manualStatsUpdate');
+const updateRoutes=require('./routes/profileData/manualStatsUpdate');
 app.use('/',updateRoutes);
 // Scorer App Page (uses layout)
 app.get('/admin/scorerapp', (req, res) => {
