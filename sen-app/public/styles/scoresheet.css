@@ -2,7 +2,7 @@
 html,
 body {
     margin: 0;
-    background-color: rgb(234, 232, 232);
+    background-color: rgb(255, 255, 255);
     /*overscroll-behavior: none;*/
 }
 /* Arrow and Bar Images */
@@ -55,95 +55,104 @@ body {
 
 
 /* Score Elements */
+/* Custom CSS for the score display */
+
 .rounded-box {
-    width: 95%;
-    max-width: 425px;
-    height: 55px;
-    position: absolute; /* Keep this to keep it floating and centered */
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #f7f787;
-    color: #333;
-    padding: 15px 30px;
-    border-radius: 30px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    z-index: 10000;
-    white-space: nowrap;
+  background-color: #ffffa7; /* Light yellow background */
+  border-radius: 40px; /* Rounded corners */
+  padding: 5px 10px; /* Adjust padding as needed */
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Vertically align items */
+  justify-content: space-between; /* Distribute items horizontally */
+  width: 100%; /* Take full width of its container */
+  box-sizing: border-box; /* Include padding in element's total width and height */
+  position: absolute;
+  top: 10px;
+  left: 0;
+  height: 65px;
 }
 
-/* Remove absolute positioning on these to make them flow responsively */
-.runs-wickets
- {
-    position: static; /* override absolute */
-    text-align: center;
-    font-family: 'Roboto', sans-serif;
-    z-index: 100000;
-}
-.overs{
-    position: static; /* override absolute */
-    font-family: 'Roboto', sans-serif;
-    z-index: 100000;
-}
-.team-left{
-     position: static; /* override absolute */
-    text-align: left;
-    font-family: 'Roboto', sans-serif;
-    z-index: 100000;
-    margin-left:-10px; 
-}
-.crr {
-    
-  font-family: 'Roboto', sans-serif;
-}
-.crr span {
-  padding-right:-20px;
+.container.position-relative {
+  padding: 0; 
+  height: 80px; /* Approximate height based on the image */
+  margin-bottom: 25px; /* Adjust margin as needed */
 }
 
-/* Make sure .runs-wickets text is bigger and prominent */
-.runs-wickets h1 {
-    font-size: 2.5rem; /* responsive font size */
-    margin: 0;
+.grid {
+  position: relative;
+  z-index: 1; /* Ensure the grid content is above the .rounded-box */
+  display: flex; /* Use flexbox for the main grid alignment */
+  align-items: center; /* Vertically align items within the grid */
+  width: 100%;
+  height: 100%; /* Take full height of its relative parent */
 }
 
-/* Slightly smaller for overs */
-.overs h1 {
-    font-size: 1.25rem;
-    margin: 0;
+.grid > div {
+  display: flex; /* Make grid columns flex containers */
+  align-items: center; /* Vertically center content within columns */
 }
 
-/* For the team name */
-.team-left span {
-    font-weight: bold;
-    font-size: 1.25rem;
+/* Team Left */
+.g-col-6:nth-child(1),
+.g-col-md-4:nth-child(1) {
+  flex-basis: 30%; 
+  justify-content: flex-start; 
+  padding-left: 25px; 
+  font-size: 1.3em; 
+  font-weight: bold; 
 }
 
-/* CRR style */
-.crr span {
-    font-size: 1rem;
-    display: block;
+/* Runs Wickets Centered */
+.g-col-6:nth-child(2),
+.g-col-md-4:nth-child(2) {
+  flex-basis: 25%; /* Adjust width for "0 - 0" */
+  justify-content: center; /* Center "0 - 0" */
+  font-size: 2.2em; /* Larger font size for runs */
+  font-weight: bold;
 }
 
-/* Container for flex layout */
-.position-relative.text-center.mb-4 > .row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 70px; /* space for the rounded-box */
+/* Overs */
+.g-col-6:nth-child(3),
+.g-col-md-4:nth-child(3) {
+  flex-basis: 15%; /* Adjust width for "(0.0)" */
+  justify-content: flex-start; /* Align to the left (closer to runs) */
+  font-size: 1.2em; /* Adjust font size */
+  font-weight: bold;
+  padding-left: 5px; /* Small padding to separate from runs */
 }
 
-/* Responsive adjustments */
-@media (max-width: 576px) {
-    .runs-wickets h1 {
-        font-size: 2rem;
-    }
-    .overs h1,
-    .team-left span,
-    .crr span {
-        font-size: 1rem;
-    }
+/* CRR (aligned right) */
+.g-col-6:nth-child(4),
+.g-col-md-4:nth-child(4) {
+  flex-basis: 30%; /* Adjust width for "CRR - 0.0" */
+  justify-content: flex-end; /* Align text to the right */
+  padding-right: 25px; /* Add some right padding */
+  font-size: 1.1em; /* Adjust font size */
+  font-weight: bold;
 }
+
+/* Small adjustments for smaller screens if necessary, though Bootstrap's grid handles much of this */
+@media (max-width: 767.98px) {
+  .g-col-6:nth-child(1),
+  .g-col-6:nth-child(2),
+  .g-col-6:nth-child(3),
+  .g-col-6:nth-child(4) {
+    flex-basis: auto; /* Let Bootstrap handle sizing */
+    width: auto;
+  }
+
+  .grid {
+    flex-wrap: nowrap; 
+    justify-content: space-between;
+  }
+
+  /* Re-adjust individual widths for small screens if they are kept in one line */
+  .g-col-6:nth-child(1) { flex-basis: 30%; font-size: 0.9em; padding-left: 15px; padding-top: 10px; }
+  .g-col-6:nth-child(2) { flex-basis: 25%; font-size: 1.8em; padding-top: 20px; padding-left:20px ;}
+  .g-col-6:nth-child(3) { flex-basis: 10%; font-size: 0.5em; padding-left: 0px; padding-top: 20px; }
+  .g-col-6:nth-child(4) { flex-basis: 30%; font-size: 0.9em; padding-right: 15px;padding-top: 12px; }
+}
+
 
 
 /* Tables */
@@ -156,7 +165,7 @@ body {
     font-family: 'Roboto', sans-serif;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     margin: 20px auto;
-    background: white;
+    background: white; /* <-- THIS IS THE CULPRIT FOR THE WHITE BACKGROUND! */
 }
 
 .score-table th,
@@ -169,24 +178,24 @@ body {
 }
 
 .score-table thead th {
-    text-align: left;
+    text-align: left; /* This will be overridden by text-center from Bootstrap for other cols */
     font-weight: 500;
-    border-bottom: 2px dashed #bbb;
+    border-bottom: 2px dashed #bbb; /* <-- Dashed line, not dotted as in reference */
 }
 
 .score-table thead th:not(:first-child) {
-    padding-left: 15px;
+    padding-left: 15px; /* This conflicts with our goal of centering these columns */
 }
 
 .score-table td:first-child,
 .score-table th:first-child,
 .ball-table td:first-child,
 .ball-table th:first-child {
-    text-align: left;
+    text-align: left; /* Correct for the first column */
 }
 
 .ball-table thead th {
-    text-align: right;
+    text-align: right; /* Specific to ball-table, not score-table */
     font-weight: 500;
     border-bottom: 2px dashed #bbb;
 }
