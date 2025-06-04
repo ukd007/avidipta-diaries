@@ -1,12 +1,42 @@
+/* General Body and HTML styles */
 html,
 body {
-  padding-top:30px; 
-  margin: 0;
-  background-color: rgb(234, 232, 232);
-  overscroll-behavior: none;
+    margin: 0;
+    background-color: rgb(255, 255, 255);
+    /*overscroll-behavior: none;*/
+}
+/* Arrow and Bar Images */
+.arrow {
+  transform: rotate(180deg);
+}
+.bar {
+  position: relative;
 }
 .top-bar {
-  background-color: #75f371; 
+    background-color: #75f371;
+    height: 45px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0; /* Background layer */
+}
+.top-bar-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+.team-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+}
+/* Top Bar prev
+.top-bar {
+     background-color: #75f371; 
   color: rgb(0, 0, 0);              
   padding:27px 80px;    
   font-family: 'Roboto', sans-serif;   
@@ -16,569 +46,300 @@ body {
   position: fixed;           
   top: -5px;
   left: 0;
-  width: 100%;
-  z-index: 1000;             
+  width: 100%;             
   box-sizing: border-box;
-}
+  z-index: 0;
+}*/
+
+
+
+
+/* Score Elements */
+/* Custom CSS for the score display */
+
 .rounded-box {
-  width: 425px;
-  height:55px;
-  position: fixed;         
-  top: 60px;              
-  left: 218px;              
-  transform: translateX(-50%); 
-  background-color: #f7f787;
-  color: white;
-  padding: 15px 30px;
-  border-radius: 30px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  z-index: 10000;         
-  white-space: nowrap;    
+  background-color: #ffffa7; /* Light yellow background */
+  border-radius: 40px; /* Rounded corners */
+  padding: 5px 10px; /* Adjust padding as needed */
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Vertically align items */
+  justify-content: space-between; /* Distribute items horizontally */
+  width: 100%; /* Take full width of its container */
+  box-sizing: border-box; /* Include padding in element's total width and height */
+  position: absolute;
+  top: 10px;
+  left: 0;
+  height: 65px;
 }
-.runs-wickets{
-  width: 280px;
-  height:50px;
-  position: fixed;         
-  top: 71px;              
-  left: 38%; 
-  z-index: 100000;
-  font-family: 'Roboto', sans-serif; 
-}
-.overs{
-  width: 150px;
-  height:50px;
-  position: fixed;         
-  top: 76px;              
-  left: 235px; 
-  z-index: 100000;
-  font-family: 'Roboto', sans-serif; 
-}
-.overs h1 {
-  font-size: 20px;
-}
-.arrow{
-    width: 45px;
-  height:auto;
-  position: fixed;         
-  top: 1px;              
-  left: 5px; 
-  right: 5px;
-  z-index: 100000;
-  transform: rotate(180deg);
-}
-.bar{
-    width: 38px;
-  height:auto;
-  position: fixed;         
-  top: 5px;              
-  left: 390px; 
-  right: 5px;
-  z-index: 100000;
-}
-/* TEAM LEFT BOX*/
 
-/*.box-2 {
-  width: 100px;
-  height:50px;
-  position: fixed;         
-  top: 65px;              
-  left: 55px;              
-  transform: translateX(-50%); 
-  background-color: #e9e49f;
-  color: white;
-  padding: 15px 30px;
-  border-radius: 30px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  z-index: 10000;         
-  white-space: nowrap;  
-}*/
-.team-top{
-  width: 300px;
-  height:45px;
-  position: fixed; 
-  font-family: 'Roboto', sans-serif;           
-  font-weight: bold;        
-  top: 12px;              
-  left: 56px; 
-  z-index: 100000;
+.container.position-relative {
+  padding: 0; 
+  height: 80px; /* Approximate height based on the image */
+  margin-bottom: 25px; /* Adjust margin as needed */
 }
-.team-top h2 {
-  font-size: 21px;
-}
-.team-left{
-  width: 300px;
-  height:50px;
-  position: fixed;         
-  top: 77px;              
-  left: 29px; 
-  z-index: 100000;
-  font-family: 'Roboto', sans-serif; 
-}
-.crr{
-  width: 300px;
-  height:50px;
-  position: fixed;         
-  top: 77px;              
-  left: 340px; 
-  z-index: 100000;
-  font-family: 'Roboto', sans-serif; 
-}
-/*CRR BOX*/
 
-/*.box-3 {
-  width: 100px;
-  height:45px;
-  position: fixed;         
-  top: 67px;              
-  left: 385px;              
-  transform: translateX(-50%); 
-  background-color: #e9e49f;
-  color: white;
-  padding: 15px 30px;
-  border-radius: 30px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  z-index: 10000;         
-  white-space: nowrap;  
-}*/
-.score-table {
-  top:65px;
-  position:relative;
-  width: 420px;
-  max-width: 500px;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 12px;
-  overflow: hidden;
-  font-family: 'Roboto', sans-serif;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  margin: 20px auto;
-  background: white;
+.grid {
+  position: relative;
+  z-index: 1; /* Ensure the grid content is above the .rounded-box */
+  display: flex; /* Use flexbox for the main grid alignment */
+  align-items: center; /* Vertically align items within the grid */
+  width: 100%;
+  height: 100%; /* Take full height of its relative parent */
+}
+
+.grid > div {
+  display: flex; /* Make grid columns flex containers */
+  align-items: center; /* Vertically center content within columns */
+}
+
+/* Team Left */
+.g-col-6:nth-child(1),
+.g-col-md-4:nth-child(1) {
+  flex-basis: 30%; 
+  justify-content: flex-start; 
+  padding-left: 25px; 
+  font-size: 1.3em; 
+  font-weight: bold; 
+}
+
+/* Runs Wickets Centered */
+.g-col-6:nth-child(2),
+.g-col-md-4:nth-child(2) {
+  flex-basis: 25%; /* Adjust width for "0 - 0" */
+  justify-content: center; /* Center "0 - 0" */
+  font-size: 2.2em; /* Larger font size for runs */
+  font-weight: bold;
+}
+
+/* Overs */
+.g-col-6:nth-child(3),
+.g-col-md-4:nth-child(3) {
+  flex-basis: 15%; /* Adjust width for "(0.0)" */
+  justify-content: flex-start; /* Align to the left (closer to runs) */
+  font-size: 1.2em; /* Adjust font size */
+  font-weight: bold;
+  padding-left: 5px; /* Small padding to separate from runs */
+}
+
+/* CRR (aligned right) */
+.g-col-6:nth-child(4),
+.g-col-md-4:nth-child(4) {
+  flex-basis: 30%; /* Adjust width for "CRR - 0.0" */
+  justify-content: flex-end; /* Align text to the right */
+  padding-right: 25px; /* Add some right padding */
+  font-size: 1.1em; /* Adjust font size */
+  font-weight: bold;
+}
+
+/* Small adjustments for smaller screens if necessary, though Bootstrap's grid handles much of this */
+@media (max-width: 767.98px) {
+  .g-col-6:nth-child(1),
+  .g-col-6:nth-child(2),
+  .g-col-6:nth-child(3),
+  .g-col-6:nth-child(4) {
+    flex-basis: auto; /* Let Bootstrap handle sizing */
+    width: auto;
+  }
+
+  .grid {
+    flex-wrap: nowrap; 
+    justify-content: space-between;
+  }
+
+  /* Re-adjust individual widths for small screens if they are kept in one line */
+  .g-col-6:nth-child(1) { flex-basis: 30%; font-size: 0.9em; padding-left: 15px; padding-top: 10px; }
+  .g-col-6:nth-child(2) { flex-basis: 25%; font-size: 1.8em; padding-top: 20px; padding-left:20px ;}
+  .g-col-6:nth-child(3) { flex-basis: 10%; font-size: 0.5em; padding-left: 0px; padding-top: 20px; }
+  .g-col-6:nth-child(4) { flex-basis: 30%; font-size: 0.9em; padding-right: 15px;padding-top: 12px; }
+}
+
+
+
+/* Tables */
+.score-table,
+.ball-table {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+    background: white; /* <-- THIS IS THE CULPRIT FOR THE WHITE BACKGROUND! */
 }
 
 .score-table th,
-.score-table td {
-  padding: 12px;
-  text-align: center;
-  color: #333;
-  font-size: 16px;
+.score-table td,
+.ball-table th,
+.ball-table td {
+    padding: 12px;
+    color: #333;
+    font-size: 16px;
 }
 
 .score-table thead th {
-  text-align: left;
-  font-weight: 500;
-  border-bottom: 2px dashed #bbb;
-    
+    text-align: left; /* This will be overridden by text-center from Bootstrap for other cols */
+    font-weight: 500;
+    border-bottom: 2px dashed #bbb; /* <-- Dashed line, not dotted as in reference */
 }
+
 .score-table thead th:not(:first-child) {
-  padding-left: 15px;
-  margin-left: -12px; /* try -4px to -12px depending on how far you want */
+    padding-left: 15px; /* This conflicts with our goal of centering these columns */
 }
 
 .score-table td:first-child,
-.score-table th:first-child {
-  text-align: left;
-}
-.score-table th:nth-child(2),
-.score-table th:nth-child(3),
-.score-table th:nth-child(4),
-.score-table th:nth-child(5),
-.score-table th:nth-child(6),
-.score-table td:nth-child(2),
-.score-table td:nth-child(3),
-.score-table td:nth-child(4),
-.score-table td:nth-child(5),
-.score-table td:nth-child(6) {
-  text-align: right;
-  padding-left: 10;
-  padding-right:20;
-}
-.ball-table {
-  top:65px;
-  position:relative;
-  width: 420px;
-  max-width: 500px;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 12px;
-  overflow: hidden;
-  font-family: 'Roboto', sans-serif;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  margin: 20px auto;
-  background: white;
-}
-.ball-table th,
-.ball-table td {
-  padding: 12px;
-  text-align: center;
-  color: #333;
-  font-size: 16px;
-   text-align: right;
-  padding-left: 20;
-  padding-right:30;
-}
-.ball-table thead th {
-  text-align: right;
-  font-weight: 500;
-  border-bottom: 2px dashed #bbb;
-  
-    
-}
+.score-table th:first-child,
 .ball-table td:first-child,
 .ball-table th:first-child {
-  text-align: left;
+    text-align: left; /* Correct for the first column */
 }
 
+.ball-table thead th {
+    text-align: right; /* Specific to ball-table, not score-table */
+    font-weight: 500;
+    border-bottom: 2px dashed #bbb;
+}
+
+/* Over Container and Balls */
 .over-container {
-  position: relative;
-  width:420px;
-  height:130px;
-  top: 61px;
-  left: px;
-  display: flex;
-  border-collapse: separate;
-  border-spacing: 0;
-  flex-direction: column; 
-  align-items: flex-start; 
-  background: white;
-  border-radius: 12px;
-  padding: 10px 20px;
-  
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  font-family: Arial, sans-serif;
+    width: 95%; /* Adjust width */
+    max-width: 420px;
+    background: white;
+    border-radius: 12px;
+    padding: 15px; /* Increased padding */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+    margin: 20px auto; /* Center with vertical spacing */
+    display: flex; /* Use flexbox for internal layout */
+    flex-direction: column; /* Stack label and balls vertically */
+    align-items: flex-start; /* Align items to the start */
 }
 
 .label {
-  font-weight: bold;
-  font-size: 18px;
-  margin-bottom: 10px;
-  width: 100%;         /* ensures it spans the full row */
-  text-align: left;    /* aligns text to the left */
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: left;
 }
 
-
 .balls {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap; /* optional: allows wrapping if too many balls */
+    gap: 10px; /* Reduced gap */
+    margin-bottom: 15px; /* Space before Undo button */
+    display: flex; /* Ensure balls are flex items */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    width: 100%; /* Take full width of parent */
+    justify-content: flex-start; /* Align balls to the start */
 }
 
 .ball {
-  width: 30px;
-  height: 30px;
-  background-color: #ccf5c8;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  font-size: 18px;
+    width: 38px; /* Larger ball size */
+    height: 38px;
+    background-color: #ccf5c8;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex; /* Center number inside circle */
+    justify-content: center;
+    align-items: center;
 }
 
-.over-container {
-  margin-left: 9px;
-  margin-right: 0;
+.over-container button.btn-warning { /* Targeting the existing undo button in your HTML */
+    display: none; /* Hide the old undo button in over-container */
 }
 
-.undo-btn{
-  background-color: transparent;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  color: inherit;
-  cursor: pointer;
-  position: fixed;
-   top: 572px;              
-  left: 28px; 
-  z-index: 1000000;
-  text-transform: uppercase;
-  font-family:'Roboto';
+/* Grouping for the 3 main action buttons */
+.action-buttons-group { /* New class for the d-flex div wrapping these buttons */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 95%; /* Adjust width */
+    max-width: 420px;
+    margin: 20px auto; /* Center and add vertical space */
+    gap: 10px; /* Space between buttons */
 }
-.undo-box{
-   width: 100px;
-  height:40px;
-  position: fixed;         
-  top: 565px;              
-  left: 62px;              
-  transform: translateX(-50%); 
-  background-color: #4cd3aa;
-  color: white;
-  padding: 15px 30px;
-  border-radius: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  z-index: 10000;         
-  white-space: nowrap; 
+
+/* Action Buttons */
+.undo-btn,
+.swap-btn,
+.retire-btn {
+    background-color: #4cd3aa;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family:'Roboto';
+    z-index: 1000000;
 }
-.undo-icon{
-    width: 38px;
-  height:auto;
-  position: fixed;         
-  top: 566px;              
-  left: 77px; 
-  right: 5px;
-  z-index: 10000;
-}
-.swap-btn{
-  background-color: transparent;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  color: inherit;
-  cursor: pointer;
-  position: fixed;
-   top: 572px;              
-  left: 135px; 
-  z-index: 1000000;
-  text-transform: uppercase;
-  font-family:'Roboto';
-}
-.swap-box{
-   width: 190px;
-  height:40px;
-  position: fixed;         
-  top: 565px;              
-  left: 217px;              
-  transform: translateX(-50%); 
-  background-color: #4cd3aa;
-  color: white;
-  padding: 15px 30px;
-  border-radius: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  z-index: 10000;         
-  white-space: nowrap; 
-}
-.swap-icon{
-    width: 38px;
-  height:auto;
-  position: fixed;         
-  top: 566px;              
-  left: 275px; 
-  right: 5px;
-  z-index: 10000;
-}
-.retire-btn{
-  background-color: transparent;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  color: inherit;
-  cursor: pointer;
-  position: fixed;
-   top: 572px;              
-  left: 328px; 
-  z-index: 100000;
-  text-transform: uppercase;
-  font-family:'Roboto';
-}
-.retire-box{
-   width: 110px;
-  height:40px;
-  position: fixed;         
-  top: 565px;              
-  left: 374px;              
-  transform: translateX(-50%); 
-  background-color: #4cd3aa;
-  color: white;
-  padding: 15px 30px;
-  border-radius: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  z-index: 10000;         
-  white-space: nowrap; 
-}
-.retire-icon{
-    width: 38px;
-  height:auto;
-  position: fixed;         
-  top: 566px;              
-  left: 393px; 
-  right: 5px;
-  z-index: 10000000;
-  opacity: 80%;
-}
-.wicket-box {
-  background-color: #ffffff; 
-  color: rgb(0, 0, 0);              
-  padding:27px 80px;    
-  font-family: 'Roboto', sans-serif;   
-  text-align: center;        
-  font-weight: bold;
-  font-size: 24px;
-  position: fixed;           
-  top: 615px;
-  left: 10px;
-  width: 200px;
-  z-index: 1000;  
-  height:200px;           
-  box-sizing: border-box;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
+
+/* Wicket and Run Boxes */
+.wicket-box,
 .run-box {
-  background-color: #ffffff; 
-  color: rgb(0, 0, 0);              
-  padding:27px 80px;    
-  font-family: 'Roboto', sans-serif;   
-  text-align: center;        
-  font-weight: bold;
-  font-size: 24px;
-  position: fixed;           
-  top: 615px;
-  left: 225px;
-  width: 200px;
-  z-index: 1000;  
-  height:200px;           
-  box-sizing: border-box;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    display: none; /* Hide these if they are empty placeholders not in use */
 }
-.form-check{
-  width:100px;
-  position: relative;
-  top:140px;
-  left:50px;
-  z-index: 10000000;
-  transform: scale(1.3); 
+
+
+.white-box-container { /* New class for the white boxes surrounding checkboxes and run buttons */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    padding: 15px; /* Padding inside the white box */
+    margin: 20px auto; /* Center and add vertical space */
+    width: 95%; /* Adjust width */
+    max-width: 420px; /* Max width for single column */
 }
-.zero-run{
-  width:45px;
-  height:45px;
-   background-color: #74fcb5;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  position: relative;
-  top:10px;
-  left:240px;
-  z-index: 100000000000;
-  box-sizing: border-box;
-  border-radius: 100px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-weight: bold;
+
+/* Form Checks - inside a white box */
+.form-check {
+    width: 100%;
+    z-index: 10000000;
+    transform: scale(1.1); /* Slightly smaller scale */
+    margin-bottom: 0.75rem; /* Vertical spacing */
+    display: flex; /* Use flex to align checkbox and label */
+    align-items: center;
+    padding-left: 0; /* Remove default padding for custom alignment */
 }
-.one-run{
-  width:45px;
-  height:45px;
-   background-color: #74fcb5;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  position: relative;
-  top:10px;
-  left:255px;
-  z-index: 100000000000;
-  box-sizing: border-box;
-  border-radius: 100px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-weight: bold;
+.form-check-input {
+    margin-right: 0.75rem; /* Space between checkbox and label */
+    margin-left: 0; /* Align input to the very left of its parent */
 }
-.two-run{
-  width:45px;
-  height:45px;
-   background-color: #74fcb5;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  position: relative;
-  top:10px;
-  left:270px;
-  z-index: 100000000000;
-  box-sizing: border-box;
-  border-radius: 100px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-weight: bold;
+.form-check-label {
+    font-size: 15px; /* Adjust label font size */
 }
-.three-run{
-  width:45px;
-  height:45px;
-   background-color: #74fcb5;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  position: relative;
-  top:70px;
-  left:94px;
-  z-index: 100000000000;
-  box-sizing: border-box;
-  border-radius: 100px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-weight: bold;
+
+/* Run Buttons - inside a white box, in a grid */
+.run-buttons-grid { /* Class for the white box containing run buttons */
+    /* No specific styles needed here, its container .white-box-container handles styling */
 }
-.four-run{
-  width:45px;
-  height:45px;
-   background-color: #74fcb5;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  position: relative;
-  top:70px;
-  left:108px;
-  z-index: 100000000000;
-  box-sizing: border-box;
-  border-radius: 100px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-weight: bold;
+
+.d-grid.gap-2.d-md-flex.justify-content-md-center {
+    /* Your existing HTML for run buttons has this. We need to override it for a grid */
+    display: grid !important; /* Force grid layout */
+    grid-template-columns: repeat(3, 1fr); /* 3 columns, equal width */
+    gap: 10px; /* Gap between grid items */
+    justify-items: center; /* Center buttons within their grid cells */
+    padding: 5px; /* Small padding inside the run button grid */
 }
-.five-run{
-  width:45px;
-  height:45px;
-   background-color: #74fcb5;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  position: relative;
-  top:70px;
-  left:123px;
-  z-index: 100000000000;
-  box-sizing: border-box;
-  border-radius: 100px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-weight: bold;
+
+.zero-run, .one-run, .two-run, .three-run, .four-run,
+.five-run, .six-run, .seven-run, .eight-run {
+    width: 55px; /* Larger circular buttons */
+    height: 55px;
+    background-color: #74fcb5; /* Green background */
+    color: #333; /* Darker text */
+    border: none;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin: auto; removed, grid handles centering */
 }
-.six-run{
-  width:45px;
-  height:45px;
-   background-color: #74fcb5;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  position: relative;
-  top:132px;
-  left:-52px;
-  z-index: 100000000000;
-  box-sizing: border-box;
-  border-radius: 100px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-weight: bold;
-}
-.seven-run{
-  width:45px;
-  height:45px;
-   background-color: #74fcb5;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  position: relative;
-  top:132px;
-  left:-38px;
-  z-index: 1000000000000;
-  box-sizing: border-box;
-  border-radius: 100px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-weight: bold;
-}
-.eight-run{
-  width:45px;
-  height:45px;
-   background-color: #74fcb5;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  position: relative;
-  top:86px;
-  left:368px;
-  z-index: 100000000000;
-  box-sizing: border-box;
-  border-radius: 100px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-weight: bold;
-}
+
