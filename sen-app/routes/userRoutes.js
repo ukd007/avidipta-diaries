@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
-const getSummer25Stats = require('../utils/summer25Stats.js');
+const getSummer25Stats = require('../utils/summer25Stats');
 
 router.get('/users/profile/:id', (req, res) => {
     const userId = parseInt(req.params.id, 10);
