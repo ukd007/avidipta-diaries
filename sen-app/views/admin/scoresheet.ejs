@@ -57,11 +57,11 @@
           </div>
           <!-- Runs Wickets Centered -->
           <div class="g-col-6 g-col-md-4">
-            <h1>0 - 0</h1>
+            <h1><span class="score-display"></span> </h1>
           </div>
           <!-- Overs -->
           <div class="g-col-6 g-col-md-4">
-            <h1>(0.0)</h1>
+           <h1> <span class="over-display"> (0.0) </span></h1>
           </div>
           <!-- CRR (aligned right) -->
           <div class="g-col-6 g-col-md-4">
@@ -89,15 +89,16 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong>A*</strong></td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0.0</td>
-              </tr>
+                  <td><strong class="bat1-name">A</strong></td>
+                  <td class="bat-runs">0</td>
+                  <td class="bat-balls">0</td>
+                  <td class="bat-4s">0</td>
+                  <td class="bat-6s">0</td>
+                  <td class="bat-sr">0.0</td>
+                </tr>
+
               <tr>
-                <td><strong>B</strong></td>
+                <td><strong class="bat2-name">B</strong></td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
@@ -125,11 +126,11 @@
             <tbody>
               <tr>
                 <td><strong>C</strong></td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
+                <td class="bow-overs">0</td>
+                <td class="bow-maidens">0</td>
+                <td class="bow-runs">0</td>
+                <td class="bow-wickets">0</td>
+                <td class="bow-eco">0.0</td>
               </tr>
             </tbody>
           </table>
@@ -138,19 +139,11 @@
         <!--THIRD SECTION  ENDS [BATTING & BOWLING]-->
 
         <!-- FOURTH SECTION STARTS [THIS OVER]-->
-        <div
-          class="over-container d-flex flex-wrap align-items-center justify-content-centre"
-        >
-          <div class="label me-3">This Over:</div>
-          <div class="balls d-flex flex-wrap">
-            <div class="ball p-2 border rounded m-1">0</div>
-            <div class="ball p-2 border rounded m-1">0</div>
-            <div class="ball p-2 border rounded m-1">0</div>
-            <div class="ball p-2 border rounded m-1">0</div>
-            <div class="ball p-2 border rounded m-1">0</div>
-            <div class="ball p-2 border rounded m-1">0</div>
-          </div>
-        </div>
+        <div class="over-container d-flex flex-wrap align-items-center justify-content-center">
+  <div class="label me-3">This Over:</div>
+  <div class="balls d-flex flex-wrap" id="over-summary"></div>
+</div>
+
 
         <!--FOURTH SECTIONS ENDS-->
 
@@ -264,34 +257,33 @@
             <div class="run-button-overall-wrapper">
               <div class="row justify-content-center g-2">
                 <div class="col-auto">
-                  <button class="btn btn-outline-primary zero-run">0</button>
+                  <button class="btn btn-outline-primary run-btn" data-run="0">0</button>
                 </div>
                 <div class="col-auto">
-                  <button class="btn btn-outline-primary one-run">1</button>
+                  <button class="btn btn-outline-primary run-btn" data-run="1">1</button>
                 </div>
                 <div class="col-auto">
-                  <button class="btn btn-outline-primary two-run">2</button>
+                  <button class="btn btn-outline-primary run-btn" data-run="2">2</button>
                 </div>
                 <div class="col-auto">
-                  <button class="btn btn-outline-primary three-run">3</button>
+                  <button class="btn btn-outline-primary run-btn" data-run="3">3</button>
                 </div>
                 <div class="col-auto">
-                  <button class="btn btn-outline-primary four-run">4</button>
+                  <button class="btn btn-outline-primary run-btn" data-run="4">4</button>
                 </div>
                 <div class="col-auto">
-                  <button class="btn btn-outline-primary five-run">5</button>
+                  <button class="btn btn-outline-primary run-btn" data-run="5">5</button>
                 </div>
                 <div class="col-auto">
-                  <button class="btn btn-outline-primary six-run">6</button>
+                  <button class="btn btn-outline-primary run-btn" data-run="6">6</button>
                 </div>
               </div>
-
               <div class="row justify-content-center g-2 mt-2">
                 <div class="col-auto">
-                  <button class="btn btn-outline-primary seven-run">7</button>
+                 <button class="btn btn-outline-primary run-btn" data-run="7">7</button>
                 </div>
                 <div class="col-auto">
-                  <button class="btn btn-outline-primary eight-run">8</button>
+                  <button class="btn btn-outline-primary run-btn" data-run="8">8</button>
                 </div>
               </div>
             </div>
@@ -303,3 +295,194 @@
     </div>
   </div>
 </div>
+
+<!--FUNTIONALITY-->
+<script>
+let batsman1 = { name: "A", runs: 0, balls: 0, fours: 0, sixes: 0 };
+let batsman2 = { name: "B", runs: 0, balls: 0, fours: 0, sixes: 0 };
+
+let onStrike = batsman1;
+let nonStriker = batsman2;
+
+let totalRuns = 0;
+let wickets = 0;
+let overBalls = 0;
+let bowlerOvers = 0;
+let bowlerRuns = 0;
+
+const historyStack = [];
+
+function updateBatsmanUI() {
+  document.querySelector(".bat1-name").textContent =
+    batsman1 === onStrike ? batsman1.name + "*" : batsman1.name;
+  document.querySelector(".bat2-name").textContent =
+    batsman2 === onStrike ? batsman2.name + "*" : batsman2.name;
+
+  const rows = document.querySelectorAll(".score-table tbody tr");
+
+  rows[0].children[1].textContent = batsman1.runs;
+  rows[0].children[2].textContent = batsman1.balls;
+  rows[0].children[3].textContent = batsman1.fours;
+  rows[0].children[4].textContent = batsman1.sixes;
+  rows[0].children[5].textContent =
+    batsman1.balls > 0 ? ((batsman1.runs / batsman1.balls) * 100).toFixed(1) : "0.0";
+
+  rows[1].children[1].textContent = batsman2.runs;
+  rows[1].children[2].textContent = batsman2.balls;
+  rows[1].children[3].textContent = batsman2.fours;
+  rows[1].children[4].textContent = batsman2.sixes;
+  rows[1].children[5].textContent =
+    batsman2.balls > 0 ? ((batsman2.runs / batsman2.balls) * 100).toFixed(1) : "0.0";
+}
+
+function updateScoreboard() {
+  document.querySelector(".score-display").textContent = `${totalRuns} - ${wickets}`;
+  document.querySelector(".over-display").textContent = `(${bowlerOvers}.${overBalls})`;
+}
+
+function updateBowlerStats() {
+  document.querySelector(".bow-runs").textContent = bowlerRuns;
+  document.querySelector(".bow-overs").textContent = `${bowlerOvers}.${overBalls}`;
+  const totalBalls = bowlerOvers * 6 + overBalls;
+  const economy = (bowlerRuns / (totalBalls / 6)).toFixed(1);
+  document.querySelector(".bow-eco").textContent = isNaN(economy) ? "0.0" : economy;
+}
+
+function saveState() {
+  historyStack.push({
+    batsman1: { ...batsman1 },
+    batsman2: { ...batsman2 },
+    onStrikeName: onStrike.name,
+    totalRuns,
+    wickets,
+    overBalls,
+    bowlerOvers,
+    bowlerRuns,
+    overHTML: document.getElementById("over-summary").innerHTML
+  });
+}
+
+function restoreState() {
+  if (historyStack.length === 0) return alert("Nothing to undo!");
+
+  const prev = historyStack.pop();
+
+  batsman1 = { ...prev.batsman1 };
+  batsman2 = { ...prev.batsman2 };
+  onStrike = batsman1.name === prev.onStrikeName ? batsman1 : batsman2;
+  nonStriker = onStrike === batsman1 ? batsman2 : batsman1;
+
+  totalRuns = prev.totalRuns;
+  wickets = prev.wickets;
+  overBalls = prev.overBalls;
+  bowlerOvers = prev.bowlerOvers;
+  bowlerRuns = prev.bowlerRuns;
+
+  document.getElementById("over-summary").innerHTML = prev.overHTML;
+
+  updateBatsmanUI();
+  updateScoreboard();
+  updateBowlerStats();
+}
+
+function handleRun(run) {
+  saveState();
+
+  const isWicket = document.getElementById("defaultCheck1").checked;
+  const isWide = document.getElementById("defaultCheck2").checked;
+  const isNoBall = document.getElementById("defaultCheck3").checked;
+
+  let extra = 0;
+  let ballText = "";
+
+  if (isWide || isNoBall) {
+    extra = 1;
+    totalRuns += extra + run;
+    bowlerRuns += extra + run;
+
+    onStrike.runs += run;
+    if (run > 0) {
+      if (run === 4) onStrike.fours++;
+      if (run === 6) onStrike.sixes++;
+    }
+
+    ballText = (isWide ? "Wd" : "Nb") + (run > 0 ? "+" + run : "");
+  } else {
+    totalRuns += run;
+    onStrike.runs += run;
+    onStrike.balls++;
+    bowlerRuns += run;
+
+    if (run === 4) onStrike.fours++;
+    if (run === 6) onStrike.sixes++;
+
+    overBalls++;
+    ballText = isWicket ? "W" : run;
+
+    if (run % 2 === 1) {
+      [onStrike, nonStriker] = [nonStriker, onStrike];
+    }
+
+    if (isWicket) {
+      wickets++;
+      onStrike.runs = 0;
+      onStrike.balls = 0;
+      onStrike.fours = 0;
+      onStrike.sixes = 0;
+      document.getElementById("defaultCheck1").checked = false;
+    }
+
+    if (overBalls === 6) {
+      overBalls = 0;
+      bowlerOvers++;
+      [onStrike, nonStriker] = [nonStriker, onStrike];
+      document.getElementById("over-summary").innerHTML = "";
+    }
+  }
+
+  const ballDiv = document.createElement("div");
+  ballDiv.className = "ball p-2 border rounded m-1";
+  ballDiv.textContent = ballText;
+  document.getElementById("over-summary").appendChild(ballDiv);
+
+  // Reset all checkboxes
+  document.getElementById("defaultCheck1").checked = false;
+  document.getElementById("defaultCheck2").checked = false;
+  document.getElementById("defaultCheck3").checked = false;
+
+  updateBatsmanUI();
+  updateScoreboard();
+  updateBowlerStats();
+}
+
+document.querySelectorAll(".run-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    handleRun(parseInt(button.dataset.run));
+  });
+});
+
+document.querySelector(".undo-btn").addEventListener("click", restoreState);
+
+document.querySelector(".swap-btn").addEventListener("click", () => {
+  saveState();
+  [onStrike, nonStriker] = [nonStriker, onStrike];
+  updateBatsmanUI();
+});
+
+document.querySelector(".retire-btn").addEventListener("click", () => {
+  saveState();
+  onStrike.runs = 0;
+  onStrike.balls = 0;
+  onStrike.fours = 0;
+  onStrike.sixes = 0;
+  [onStrike, nonStriker] = [nonStriker, onStrike];
+  updateBatsmanUI();
+});
+
+// Initialize
+updateBatsmanUI();
+updateScoreboard();
+updateBowlerStats();
+</script>
+
+
