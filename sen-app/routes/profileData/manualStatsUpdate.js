@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db');
+const db = require('../../config/db');
 const {
   updateBattingStats,
   updateBowlingStats,
   updateFieldingStats
-} = require('../config/manualStatsUpdate');
+} = require('../../config/manualStatsUpdate');
 
 // Batting stats update
 router.post('/update-batting', (req, res) => {

@@ -37,7 +37,6 @@ router.get('/admin/users', (req, res) => {
 });
 
 // Show edit form for one user
-// Show edit form for one user
 router.get('/admin/users/:id/edit', (req, res) => {
   const userId = parseInt(req.params.id, 10);
   if (isNaN(userId)) {
@@ -64,7 +63,7 @@ router.get('/admin/users/:id/edit', (req, res) => {
     req.session.message = null;
     req.session.error = null;
 
-    res.render('usereditform.ejs', {
+    res.render('usereditform', {
       layout: 'partials/bootstrap',
       pageCSS: '/styles/usereditform.css',
       user,
