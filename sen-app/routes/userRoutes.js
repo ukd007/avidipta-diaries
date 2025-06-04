@@ -2,44 +2,39 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
-const getSummer25Stats = require('../utils/summer25Stats');
+
+//Utility Functions
+const getprofileStats = require('../utils/profileStats');
 
 router.get('/users/profile/:id', (req, res) => {
     const userId = parseInt(req.params.id, 10);
+    const tests = ['summer25', 'winter24', 'summer24']
 
-    const q1 = `SELECT * FROM users WHERE id = ?`;
+    const q = `SELECT * from users WHERE id=?`
 
-    db.query(q1, userId, (err, userResults) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Database error');
-        }
-
-        if (userResults.length === 0) {
-            return res.render('home', { error: "User Not Found" });
-        }
+    db.query(q, userId, async (err, userResults) => {
+        if (err || userResults.length === 0) return res.send("User Not Found");
 
         const user = userResults[0];
 
-        getSummer25Stats(userId, (err, stats, errorMsg) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).send('Database error');
-            }
+        const stats = {};
 
-            if (!stats) {
-                return res.render('home', { error: errorMsg });
-            }
+        let pending = tests.length;
 
-            return res.render('profilePage', {
-                layout: false,
-                user,
-                batStats: stats.batStats,
-                bowlStats: stats.bowlStats,
-                fieldStats: stats.fieldStats
-            });
+        tests.forEach((testName) => {
+            getprofileStats(userId, testName, (err, data) => {
+                stats[testName] = data || {};
+                console.log(stats);
+            if (--pending === 0) {
+                return res.render('profilePage', {
+                    layout: false,
+                    user,
+                    stats
+                });
+            }
         });
     });
+});
 });
 
 module.exports = router;
