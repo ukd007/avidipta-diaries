@@ -45,100 +45,101 @@
         </div>
       </div>
 
- <!--SECOND SECTION -->
+      <!--SECOND SECTION -->
 
-  <div class="container position-relative mb-4">
-  <div class="rounded-box"></div>
+      <div class="container position-relative mb-4">
+        <div class="rounded-box"></div>
 
-  <div class="grid text-center">
-  <!--Team Left -->
-  <div class="g-col-6 g-col-md-4">
-    <span><%= team1 %></span>
-  </div>
-  <!-- Runs Wickets Centered -->
-  <div class="g-col-6 g-col-md-4">
-    <h1>0 - 0</h1>
-  </div>
-  <!-- Overs -->
-  <div class="g-col-6 g-col-md-4">
-    <h1>(0.0)</h1>
-  </div>
-  <!-- CRR (aligned right) -->
-  <div class="g-col-6 g-col-md-4">
-    <span>CRR - 0.0</span>
-  </div>
+        <div class="grid text-center">
+          <!--Team Left -->
+          <div class="g-col-6 g-col-md-4">
+            <span><%= team1 %></span>
+          </div>
+          <!-- Runs Wickets Centered -->
+          <div class="g-col-6 g-col-md-4">
+            <h1>0 - 0</h1>
+          </div>
+          <!-- Overs -->
+          <div class="g-col-6 g-col-md-4">
+            <h1>(0.0)</h1>
+          </div>
+          <!-- CRR (aligned right) -->
+          <div class="g-col-6 g-col-md-4">
+            <span>CRR - 0.0</span>
+          </div>
+        </div>
 
-  </div>
+        <!--SECOND SECTION ENDS -->
 
-  <!--SECOND SECTION ENDS -->
+        <!--THIRD SECTION [BATTING & BOWLING]-->
 
-  <!--THIRD SECTION [BATTING]-->
+        <div class="col-12 mb-4">
+          <table
+            class="table table-bordered table-striped text-center score-table"
+          >
+            <thead>
+              <tr>
+                <th>Batsman</th>
+                <th>R</th>
+                <th>B</th>
+                <th>4s</th>
+                <th>6s</th>
+                <th>SR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>A*</strong></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0.0</td>
+              </tr>
+              <tr>
+                <td><strong>B</strong></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0.0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
- <div class="col-12 mb-4">
-        <table
-          class="table table-bordered table-striped text-center score-table"
-        >
-          <thead>
-            <tr>
-              <th>Batsman</th>
-              <th>R</th>
-              <th>B</th>
-              <th>4s</th>
-              <th>6s</th>
-              <th>SR</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>A*</strong></td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0.0</td>
-            </tr>
-            <tr>
-              <td><strong>B</strong></td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0.0</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div class="col-12 mb-4">
+          <table
+            class="table table-bordered table-striped text-center ball-table"
+          >
+            <thead>
+              <tr>
+                <th>Bowler</th>
+                <th>O</th>
+                <th>M</th>
+                <th>R</th>
+                <th>W</th>
+                <th>Eco</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>C</strong></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <div class="col-12 mb-4">
-        <table
-          class="table table-bordered table-striped text-center ball-table"
-        >
-          <thead>
-            <tr>
-              <th>Bowler</th>
-              <th>O</th>
-              <th>M</th>
-              <th>R</th>
-              <th>W</th>
-              <th>Eco</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>C</strong></td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <!--THIRD SECTION  ENDS [BATTING & BOWLING]-->
 
-      <div class="col-12 mb-4">
+        <!-- FOURTH SECTION STARTS [THIS OVER]-->
         <div
-          class="over-container d-flex flex-wrap align-items-center justify-content-center"
+          class="over-container d-flex flex-wrap align-items-center justify-content-centre"
         >
           <div class="label me-3">This Over:</div>
           <div class="balls d-flex flex-wrap">
@@ -149,97 +150,154 @@
             <div class="ball p-2 border rounded m-1">0</div>
             <div class="ball p-2 border rounded m-1">0</div>
           </div>
-          <button type="button" class="btn btn-warning ms-3">Undo</button>
         </div>
-        <div class="d-flex justify-content-around mt-3">
-          <button type="button" class="btn btn-info swap-btn">
-            Swap Batsman
-          </button>
-          <button type="button" class="btn btn-danger retire-btn">
-            Retire
-          </button>
-        </div>
-        <div class="wicket-box"></div>
-        <div class="run-box"></div>
-      </div>
 
-      <div class="col-12 mb-4">
-        <div class="row">
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="defaultCheck1"
-              />
-              <label class="form-check-label" for="defaultCheck1">Wicket</label>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="defaultCheck2"
-              />
-              <label class="form-check-label" for="defaultCheck2">Wide</label>
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="defaultCheck3"
-              />
-              <label class="form-check-label" for="defaultCheck3"
-                >No ball</label
+        <!--FOURTH SECTIONS ENDS-->
+
+        <!--FIFTH SECTION STARTS-->
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12 mb-2">
+              <div
+                class="d-flex button-group-horizontal justify-content-center gap-4"
               >
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="defaultCheck4"
-              />
-              <label class="form-check-label" for="defaultCheck4"
-                >Six Out</label
-              >
-            </div>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="defaultCheck5"
-              />
-              <label class="form-check-label" for="defaultCheck5"
-                >Bow. Ret.</label
-              >
+                <button type="button" class="btn btn-info undo-btn">
+                  Undo
+                </button>
+                <button type="button" class="btn btn-info swap-btn">
+                  Swap Batsman
+                </button>
+                <button type="button" class="btn btn-info retire-btn">
+                  Retire
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+<!--FIFTH SECTION ENDS-->
 
-      <div class="col-12 mb-4">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-          <button class="btn btn-outline-primary zero-run">0</button>
-          <button class="btn btn-outline-primary one-run">1</button>
-          <button class="btn btn-outline-primary two-run">2</button>
-          <button class="btn btn-outline-primary three-run">3</button>
-          <button class="btn btn-outline-primary four-run">4</button>
-          <button class="btn btn-outline-primary five-run">5</button>
-          <button class="btn btn-outline-primary six-run">6</button>
-          <button class="btn btn-outline-primary seven-run">7</button>
-          <button class="btn btn-outline-primary eight-run">8</button>
+<!--SIXTH SECTION STARTS-->
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12 mb-2">
+              <div
+                class="d-flex button-group-horizontal justify-content-center gap-4"
+              >
+                <div class="wicket-box"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mb-4">
+            <div class="row">
+              <div class="col-6 col-md-4 col-lg-3">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck1"
+                  />
+                  <label class="form-check-label" for="defaultCheck1"
+                    >Wicket</label
+                  >
+                </div>
+              </div>
+              <div class="col-6 col-md-4 col-lg-3">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck2"
+                  />
+                  <label class="form-check-label" for="defaultCheck2"
+                    >Wide</label
+                  >
+                </div>
+              </div>
+              <div class="col-6 col-md-4 col-lg-3">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck3"
+                  />
+                  <label class="form-check-label" for="defaultCheck3"
+                    >No ball</label
+                  >
+                </div>
+              </div>
+              <div class="col-6 col-md-4 col-lg-3">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck4"
+                  />
+                  <label class="form-check-label" for="defaultCheck4"
+                    >Six Out</label
+                  >
+                </div>
+              </div>
+              <div class="col-6 col-md-4 col-lg-3">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="defaultCheck5"
+                  />
+                  <label class="form-check-label" for="defaultCheck5"
+                    >Bow. Ret.</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+<!--SIXTH SECTION ENDS-->
+
+<!--LAST SECTION STARTS-->
+          <div class="container">
+            <div class="run-button-overall-wrapper">
+              <div class="row justify-content-center g-2">
+                <div class="col-auto">
+                  <button class="btn btn-outline-primary zero-run">0</button>
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-primary one-run">1</button>
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-primary two-run">2</button>
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-primary three-run">3</button>
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-primary four-run">4</button>
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-primary five-run">5</button>
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-primary six-run">6</button>
+                </div>
+              </div>
+
+              <div class="row justify-content-center g-2 mt-2">
+                <div class="col-auto">
+                  <button class="btn btn-outline-primary seven-run">7</button>
+                </div>
+                <div class="col-auto">
+                  <button class="btn btn-outline-primary eight-run">8</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--LAST SECTION ENDS-->
         </div>
       </div>
     </div>

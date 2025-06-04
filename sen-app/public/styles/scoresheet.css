@@ -202,17 +202,19 @@ body {
 
 /* Over Container and Balls */
 .over-container {
-    width: 95%; /* Adjust width */
+    width: 95%;
+    height:160px;
     max-width: 420px;
-    background: white;
+    background: rgb(251, 251, 251);
     border-radius: 12px;
-    padding: 15px; /* Increased padding */
+    padding: 15px; 
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     font-family: Arial, sans-serif;
-    margin: 20px auto; /* Center with vertical spacing */
-    display: flex; /* Use flexbox for internal layout */
-    flex-direction: column; /* Stack label and balls vertically */
-    align-items: flex-start; /* Align items to the start */
+    margin: 20px auto; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-start; 
+    position: relative;
 }
 
 .label {
@@ -224,7 +226,7 @@ body {
 }
 
 .balls {
-    gap: 10px; /* Reduced gap */
+    gap: 8px; /* Reduced gap */
     margin-bottom: 15px; /* Space before Undo button */
     display: flex; /* Ensure balls are flex items */
     flex-wrap: wrap; /* Allow wrapping on small screens */
@@ -233,8 +235,8 @@ body {
 }
 
 .ball {
-    width: 38px; /* Larger ball size */
-    height: 38px;
+    width: 30px; 
+    height: 30px;
     background-color: #ccf5c8;
     border-radius: 50%;
     font-weight: bold;
@@ -244,10 +246,6 @@ body {
     align-items: center;
 }
 
-.over-container button.btn-warning { /* Targeting the existing undo button in your HTML */
-    display: none; /* Hide the old undo button in over-container */
-}
-
 /* Grouping for the 3 main action buttons */
 .action-buttons-group { /* New class for the d-flex div wrapping these buttons */
     display: flex;
@@ -255,7 +253,7 @@ body {
     align-items: center;
     width: 95%; /* Adjust width */
     max-width: 420px;
-    margin: 20px auto; /* Center and add vertical space */
+    margin-top: 100px ; /* Center and add vertical space */
     gap: 10px; /* Space between buttons */
 }
 
@@ -265,7 +263,7 @@ body {
 .retire-btn {
     background-color: #4cd3aa;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 30px;
     border-radius: 20px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     border: none;
@@ -274,7 +272,11 @@ body {
     text-transform: uppercase;
     font-family:'Roboto';
     z-index: 1000000;
-}
+     flex-shrink: 0;
+     flex-wrap: nowrap; /* Explicitly tell it NOT to wrap */
+    overflow-x: auto; 
+   }
+ 
 
 /* Wicket and Run Boxes */
 .wicket-box,
@@ -311,35 +313,38 @@ body {
     font-size: 15px; /* Adjust label font size */
 }
 
-/* Run Buttons - inside a white box, in a grid */
-.run-buttons-grid { /* Class for the white box containing run buttons */
-    /* No specific styles needed here, its container .white-box-container handles styling */
-}
 
 .d-grid.gap-2.d-md-flex.justify-content-md-center {
     /* Your existing HTML for run buttons has this. We need to override it for a grid */
     display: grid !important; /* Force grid layout */
     grid-template-columns: repeat(3, 1fr); /* 3 columns, equal width */
-    gap: 10px; /* Gap between grid items */
+    gap: 20px; /* Gap between grid items */
     justify-items: center; /* Center buttons within their grid cells */
     padding: 5px; /* Small padding inside the run button grid */
 }
 
+/* Styles for all individual run buttons */
 .zero-run, .one-run, .two-run, .three-run, .four-run,
 .five-run, .six-run, .seven-run, .eight-run {
-    width: 55px; /* Larger circular buttons */
-    height: 55px;
-    background-color: #74fcb5; /* Green background */
-    color: #333; /* Darker text */
+    width: 45px;
+    height: 45px;
+    background-color: #74fcb5;
+    color: #333;
     border: none;
     outline: none;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     border-radius: 50%;
     font-weight: bold;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* margin: auto; removed, grid handles centering */
+    font-size: 25px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-shrink: 0;
+    white-space: nowrap;
+
 }
 
+.run-button-overall-wrapper {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
