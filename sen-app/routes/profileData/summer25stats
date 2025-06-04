@@ -2,22 +2,22 @@
 const db = require('../../config/db');
 
 function getSummer25Stats(userId, callback) {
-    const q2 = `SELECT * FROM batstats_summer25 WHERE id = ?`;
-    const q3 = `SELECT * FROM bowlstats_summer25 WHERE id = ?`;
-    const q4 = `SELECT * FROM fieldstats_summer25 WHERE id = ?`;
+    const q1 = `SELECT * FROM batstats_summer25 WHERE id = ?`;
+    const q2 = `SELECT * FROM bowlstats_summer25 WHERE id = ?`;
+    const q3 = `SELECT * FROM fieldstats_summer25 WHERE id = ?`;
 
     const stats = {};
 
-    db.query(q2, userId, (err, batStatsResults) => {
+    db.query(q1, userId, (err, batStatsResults) => {
         if (err) return callback(err);
         if (batStatsResults.length === 0) return callback(null, null, "Batting Stats Not Found");
         stats.batStats = batStatsResults[0];
 
-        db.query(q3, userId, (err, bowlStatsResults) => {
+        db.query(q2, userId, (err, bowlStatsResults) => {
             if (err) return callback(err);
             stats.bowlStats = bowlStatsResults[0] || null;
 
-            db.query(q4, userId, (err, fieldStatsResults) => {
+            db.query(q3, userId, (err, fieldStatsResults) => {
                 if (err) return callback(err);
                 stats.fieldStats = fieldStatsResults[0] || null;
 
