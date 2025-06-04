@@ -349,3 +349,8 @@ body {
     margin-top: 10px;
     margin-bottom: 20px;
 }
+.over-display {
+  font-size: 26px; /* or 14px for even smaller */
+  color: #444;     /* optional: a softer color */
+  margin-left: 10px; /* spacing from the score */
+}
