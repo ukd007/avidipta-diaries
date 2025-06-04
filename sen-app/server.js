@@ -63,6 +63,16 @@ app.post('/start-match', (req, res) => {
 const batsman2 = "B";
 const bowler = "C";
 
+let battingTeam;
+
+if (tossDecision.toLowerCase() === "bat") {
+  // Toss winner chose to bat
+  battingTeam = tossWinner;
+} else {
+  // Toss winner chose to bowl, so batting team is the other team
+  battingTeam = (tossWinner === team1) ? team2 : team1;
+}
+
   // Pass data to scoresheet.ejs
  res.render('admin/scoresheet', {
     layout: 'partials/bootstrap',
@@ -72,7 +82,8 @@ const bowler = "C";
     tossDecision,
     batsman1,
     batsman2,
-    bowler
+    bowler,
+    battingTeam,
   });
 });
 // Start Server
