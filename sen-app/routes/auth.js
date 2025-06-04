@@ -4,7 +4,7 @@ const db = require('../config/db');
 const { isAdmin } = require('../middleware/auth');
 
 router.get('/', (req, res) => {
-    res.render('loginpage');
+    res.render('loginpage', { error: null });
 });
 
 router.post('/', (req, res) => {
@@ -44,10 +44,30 @@ router.get('/admin/dashboard', isAdmin, (req, res) => {
         title: 'Admin Dashboard',
     });
 });
-
 router.get('/users/home', (req, res) => {
-    return res.render('home', { layout: false, user: req.session.user })
+  const loggedInUsername = req.session.user.username;
+const q =`SELECT id, username, profile_pic FROM users WHERE username NOT IN ('admin')`
+  db.query(q, (err, allUsers) => {
+    if (err) {
+      return res.status(500).send('Error fetching users');
+    }
+
+    // Move the logged-in user to the end of the array
+    const filteredUsers = allUsers.filter(user => user.username !== loggedInUsername);
+    const currentUser = allUsers.find(user => user.username === loggedInUsername);
+
+    if (currentUser) {
+      filteredUsers.push(currentUser); // push logged-in user at the end
+    }
+
+    res.render('home', {
+      user: req.session.user,
+      allUsers: filteredUsers,
+      layout:false
+    });
+  });
 });
+
 
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => {

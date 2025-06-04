@@ -43,6 +43,8 @@ app.use('/', authRoutes);
 //ADMIN ONLY
 const adminRoutes = require('./routes/adminRoutes');
 app.use('/', adminRoutes);
+const userRoutes = require('./routes/userRoutes');
+app.use('/', userRoutes);
 const updateRoutes=require('./routes/manualStatsUpdate');
 app.use('/',updateRoutes);
 // Scorer App Page (uses layout)
