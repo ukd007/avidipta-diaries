@@ -356,7 +356,6 @@
 <script>
 let batsman1 = { name: "<%= batsman1 %>", runs: 0, balls: 0, fours: 0, sixes: 0 };
 let batsman2 = { name: "<%= batsman2 %>", runs: 0, balls: 0, fours: 0, sixes: 0 };
-
 let onStrike = batsman1;
 let nonStriker = batsman2;
 
@@ -365,11 +364,12 @@ let overBalls = 0;
 let totalRuns = 0;
 let wickets = 0;
 let pendingWicket = false;
+let pendingBowlerModal = false;
+
 let bowlers = {
   [currentBowler]: { overs: 0, runs: 0 }
 };
 
-document.querySelector(".bowler-name").textContent = currentBowler;
 const historyStack = [];
 
 function updateBatsmanUI() {
@@ -377,7 +377,6 @@ function updateBatsmanUI() {
   document.querySelector(".bat2-name").textContent = batsman2 === onStrike ? batsman2.name + "*" : batsman2.name;
 
   const rows = document.querySelectorAll(".score-table tbody tr");
-
   rows[0].children[1].textContent = batsman1.runs;
   rows[0].children[2].textContent = batsman1.balls;
   rows[0].children[3].textContent = batsman1.fours;
@@ -397,12 +396,18 @@ function updateScoreboard() {
   document.querySelector(".over-display").textContent = `(${Math.floor(totalOvers)}.${overBalls % 6})`;
 }
 
+function updateCRR() {
+  const totalBalls = Object.values(bowlers).reduce((acc, b) => acc + b.overs * 6, 0) + overBalls;
+  const oversFaced = totalBalls / 6;
+  const crr = oversFaced > 0 ? (totalRuns / oversFaced).toFixed(2) : "0.00";
+  document.getElementById("crrValue").textContent = crr;
+}
+
 function updateBowlerStats() {
   const stats = bowlers[currentBowler];
   document.querySelector(".bowler-name").textContent = currentBowler;
   document.querySelector(".bow-runs").textContent = stats.runs;
   document.querySelector(".bow-overs").textContent = `${stats.overs}.${overBalls}`;
-
   const totalBalls = stats.overs * 6 + overBalls;
   const economy = (stats.runs / (totalBalls / 6)).toFixed(1);
   document.querySelector(".bow-eco").textContent = isNaN(economy) ? "0.0" : economy;
@@ -425,20 +430,16 @@ function saveState() {
 function restoreState() {
   if (historyStack.length === 0) return alert("Nothing to undo!");
   const prev = historyStack.pop();
-
   batsman1 = { ...prev.batsman1 };
   batsman2 = { ...prev.batsman2 };
   onStrike = batsman1.name === prev.onStrikeName ? batsman1 : batsman2;
   nonStriker = onStrike === batsman1 ? batsman2 : batsman1;
-
   totalRuns = prev.totalRuns;
   wickets = prev.wickets;
   overBalls = prev.overBalls;
   currentBowler = prev.currentBowler;
   bowlers = JSON.parse(JSON.stringify(prev.bowlers));
-
   document.getElementById("over-summary").innerHTML = prev.overHTML;
-
   updateBatsmanUI();
   updateScoreboard();
   updateBowlerStats();
@@ -460,32 +461,23 @@ function handleRun(run) {
     totalRuns += extra + run;
     bowlers[currentBowler].runs += extra + run;
     onStrike.runs += run;
-
-    if (run > 0) {
-      if (run === 4) onStrike.fours++;
-      if (run === 6) onStrike.sixes++;
-    }
-
+    if (run === 4) onStrike.fours++;
+    if (run === 6) onStrike.sixes++;
     ballText = (isWide ? "Wd" : "Nb") + (run > 0 ? "+" + run : "");
   } else {
     totalRuns += run;
     onStrike.runs += run;
     onStrike.balls++;
     bowlers[currentBowler].runs += run;
-
     if (run === 4) onStrike.fours++;
     if (run === 6) onStrike.sixes++;
-
     overBalls++;
     ballText = isWicket ? "W" : run;
-
-    if (run % 2 === 1) {
-      [onStrike, nonStriker] = [nonStriker, onStrike];
-    }
-
+    if (run % 2 === 1) [onStrike, nonStriker] = [nonStriker, onStrike];
     if (isWicket) {
       wickets++;
       pendingWicket = true;
+      pendingBowlerModal = false;
       setTimeout(() => {
         const modal = new bootstrap.Modal(document.getElementById("wicketModal"));
         modal.show();
@@ -502,9 +494,12 @@ function handleRun(run) {
     overBalls = 0;
     bowlers[currentBowler].overs++;
     [onStrike, nonStriker] = [nonStriker, onStrike];
-
-    const newBowlerModal = new bootstrap.Modal(document.getElementById("newBowlerModal"));
-    newBowlerModal.show();
+    if (pendingWicket) {
+      pendingBowlerModal = true;
+    } else {
+      const newBowlerModal = new bootstrap.Modal(document.getElementById("newBowlerModal"));
+      newBowlerModal.show();
+    }
   }
 
   document.getElementById("defaultCheck1").checked = false;
@@ -532,73 +527,60 @@ document.getElementById("wicketForm").addEventListener("submit", function (e) {
   if (!newBatsmanName) return alert("Please enter a new batsman name.");
 
   const outInfo = helper ? `${wicketType} (${helper})` : wicketType;
-console.log(`${onStrike.name} is out: ${outInfo}`);
+  console.log(`${onStrike.name} is out: ${outInfo}`);
 
-if (wicketType === "runout") {
-  const whoOut = prompt("Who was run out? Type 'striker' or 'non-striker':");
-  if (whoOut !== "striker" && whoOut !== "non-striker") {
-    alert("Invalid input. Must be 'striker' or 'non-striker'.");
-    return;
-  }
-
-  const outBatsman = whoOut === "striker" ? onStrike : nonStriker;
-  if (outBatsman === batsman1) {
-    batsman1 = { name: newBatsmanName, runs: 0, balls: 0, fours: 0, sixes: 0 };
+  if (wicketType === "runout") {
+    const whoOut = prompt("Who was run out? Type 'striker' or 'non-striker':");
+    if (whoOut !== "striker" && whoOut !== "non-striker") return alert("Invalid input.");
+    const outBatsman = whoOut === "striker" ? onStrike : nonStriker;
+    if (outBatsman === batsman1) batsman1 = { name: newBatsmanName, runs: 0, balls: 0, fours: 0, sixes: 0 };
+    else batsman2 = { name: newBatsmanName, runs: 0, balls: 0, fours: 0, sixes: 0 };
+    if (whoOut === "striker") onStrike = batsman1.name === newBatsmanName ? batsman1 : batsman2;
+    else nonStriker = batsman1.name === newBatsmanName ? batsman1 : batsman2;
   } else {
-    batsman2 = { name: newBatsmanName, runs: 0, balls: 0, fours: 0, sixes: 0 };
+    if (onStrike === batsman1) {
+      batsman1 = { name: newBatsmanName, runs: 0, balls: 0, fours: 0, sixes: 0 };
+      onStrike = batsman1;
+    } else {
+      batsman2 = { name: newBatsmanName, runs: 0, balls: 0, fours: 0, sixes: 0 };
+      onStrike = batsman2;
+    }
+    nonStriker = onStrike === batsman1 ? batsman2 : batsman1;
   }
 
-  if (whoOut === "striker") {
-    onStrike = batsman1.name === newBatsmanName ? batsman1 : batsman2;
-  } else {
-    nonStriker = batsman1.name === newBatsmanName ? batsman1 : batsman2;
-  }
-
-} else {
-  // For bowled, LBW, catch, etc.
-  if (onStrike === batsman1) {
-    batsman1 = { name: newBatsmanName, runs: 0, balls: 0, fours: 0, sixes: 0 };
-    onStrike = batsman1;
-  } else {
-    batsman2 = { name: newBatsmanName, runs: 0, balls: 0, fours: 0, sixes: 0 };
-    onStrike = batsman2;
-  }
-  nonStriker = onStrike === batsman1 ? batsman2 : batsman1;
-}
   updateBatsmanUI();
   bootstrap.Modal.getInstance(document.getElementById("wicketModal")).hide();
   document.getElementById("wicketForm").reset();
   document.getElementById("helperField").classList.add("d-none");
+  pendingWicket = false;
+
+  if (pendingBowlerModal) {
+    pendingBowlerModal = false;
+    const newBowlerModal = new bootstrap.Modal(document.getElementById("newBowlerModal"));
+    newBowlerModal.show();
+  }
 });
 
 document.getElementById("newBowlerForm").addEventListener("submit", function (e) {
   e.preventDefault();
   const newNameInput = document.getElementById("newBowlerInput");
   const newName = newNameInput.value.trim();
-
   if (newName !== "") {
     currentBowler = newName;
-    if (!bowlers[currentBowler]) {
-      bowlers[currentBowler] = { overs: 0, runs: 0 };
-    }
-
+    if (!bowlers[currentBowler]) bowlers[currentBowler] = { overs: 0, runs: 0 };
     overBalls = 0;
     document.getElementById("over-summary").innerHTML = "";
     newNameInput.value = "";
     bootstrap.Modal.getInstance(document.getElementById("newBowlerModal")).hide();
-
     updateBowlerStats();
   }
 });
 
 document.querySelectorAll(".run-btn").forEach((button) => {
-  button.addEventListener("click", () => {
-    handleRun(parseInt(button.dataset.run));
-  });
+  button.addEventListener("click", () => handleRun(parseInt(button.dataset.run)));
 });
 
 document.querySelector(".undo-btn").addEventListener("click", restoreState);
-
 document.querySelector(".swap-btn").addEventListener("click", () => {
   saveState();
   [onStrike, nonStriker] = [nonStriker, onStrike];
@@ -619,14 +601,4 @@ updateBatsmanUI();
 updateScoreboard();
 updateBowlerStats();
 updateCRR();
-function updateCRR() {
-  const totalBalls = Object.values(bowlers).reduce((acc, b) => acc + b.overs * 6, 0) + overBalls;
-  const oversFaced = totalBalls / 6;
-  const crr = oversFaced > 0 ? (totalRuns / oversFaced).toFixed(2) : "0.00";
-  document.getElementById("crrValue").textContent = crr;
-}
-
 </script>
-
-
-
