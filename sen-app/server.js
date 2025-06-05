@@ -31,7 +31,9 @@ app.use(session({
   }
 }));
 // ROUTES
-
+app.get('/cricket ' , (req, res) => {
+  res.render('cricket'); 
+});
 // login page
 app.get('/', (req, res) => {
   res.render('loginpage', { layout: false });
