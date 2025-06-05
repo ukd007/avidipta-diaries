@@ -22,12 +22,14 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "cloudinary": "^1.41.3",
+    "axios": "^1.9.0",
+    "cloudinary": "^2.6.1",
     "cropperjs": "^2.0.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.18.1",
+    "fs-extra": "^11.3.0",
     "multer": "^2.0.0",
     "multer-storage-cloudinary": "^4.0.0",
     "mysql2": "^3.14.1"

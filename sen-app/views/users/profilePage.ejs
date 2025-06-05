@@ -104,7 +104,7 @@
                 <td><input class="form-control" value="<%= bowlStats.wickets_taken %>" readonly disabled /></td>
                 <td><input class="form-control" value="<%= bowlStats.overs_bowled %>" readonly disabled /></td>
                 <td><input class="form-control" value="<%= bowlStats.maidens %>" readonly disabled /></td>
-                <td><input class="form-control" value="<%= (ballsBowled ? (bowlStats.runs_conceded * 6 / balls_Bowled ).toFixed(2) : '0.00') %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= (balls_Bowled ? (bowlStats.runs_conceded * 6 / balls_Bowled ).toFixed(2) : '0.00') %>" readonly disabled /></td>
                 <td><input class="form-control" value="<%= (bowlStats.wickets_taken ? (balls_Bowled / bowlStats.wickets_taken).toFixed(2) : '0.00') %>" readonly disabled /></td>
                 <td><input class="form-control" value="<%= (bowlStats.wickets_taken ? (bowlStats.runs_conceded / bowlStats.wickets_taken).toFixed(2) : '0.00') %>" readonly disabled /></td>
               </tr>
