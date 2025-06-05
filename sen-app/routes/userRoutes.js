@@ -1,40 +1,47 @@
-// routes/profile.js
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
-
-//Utility Functions
-const getprofileStats = require('../utils/profileStats');
+const getProfileStats = require('../utils/profileStats');
 
 router.get('/users/profile/:id', (req, res) => {
-    const userId = parseInt(req.params.id, 10);
-    const tests = ['summer25', 'winter24', 'summer24']
+  const userId = req.params.id;
+  const seasons = ['s25', 's24', 'w24'];
+  const allStats = {};
 
-    const q = `SELECT * from users WHERE id=?`
+  // Step 1: Get user info from the database
+  db.query('SELECT id, username, profile_pic FROM users WHERE id = ?', [userId], (err, results) => {
+    if (err || results.length === 0) {
+      console.error('User not found or DB error:', err?.message || 'No user');
+      return res.status(404).send('User not found');
+    }
 
-    db.query(q, userId, async (err, userResults) => {
-        if (err || userResults.length === 0) return res.send("User Not Found");
+    const user = results[0];
 
-        const user = userResults[0];
+    // Step 2: Get stats for all seasons
+    let pending = seasons.length;
 
-        const stats = {};
+    seasons.forEach(season => {
+      getProfileStats(userId, season, (err, stats) => {
+        if (err) {
+          console.error(`Error for ${season}:`, err.message);
+          allStats[season] = {
+            bat: {}, bowl: {}, field: {}
+          };
+        } else {
+          allStats[season] = stats[season];
+        }
 
-        let pending = tests.length;
-
-        tests.forEach((testName) => {
-            getprofileStats(userId, testName, (err, data) => {
-                stats[testName] = data || {};
-                console.log(stats);
-            if (--pending === 0) {
-                return res.render('profilePage', {
-                    layout: false,
-                    user,
-                    stats
-                });
-            }
-        });
+        // Step 3: Render after all async calls are complete
+        if (--pending === 0) {
+          res.render('profilePage', {
+            user,          // ← fetched user info
+            stats: allStats,
+            layout: false
+          });
+        }
+      });
     });
-});
+  });
 });
 
 module.exports = router;

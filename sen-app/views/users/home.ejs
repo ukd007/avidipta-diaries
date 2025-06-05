@@ -74,7 +74,8 @@
           <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
             <div class="row justify-content-center g-4">
               <% allUsers.slice(i, i + 4).forEach(user=> { %>
-                <div class="col-md-3">
+                <div class="col-6 col-sm-4 col-md-3">
+
                   <div class="card text-center h-100">
                     <a href="/users/profile/<%= user.id %>" class="text-decoration-none text-dark">
                       <img src="<%= user.profile_pic %>" class="card-img-top rounded-circle mx-auto mt-3"

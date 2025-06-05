@@ -24,3 +24,68 @@
 table {
     margin-bottom: 2rem;
 }
+
+body {
+    background: linear-gradient(to right, #f0f4ff, #e0ffe8);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #198754;
+    object-fit: cover;
+}
+
+.username {
+    color: #343a40;
+}
+
+.nav-tabs .nav-link {
+    font-weight: 500;
+    color: #495057;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #198754;
+    color: white;
+    border-color: #198754 #198754 #fff;
+}
+
+h4,
+h5 {
+    color: #0d6efd;
+    margin-top: 20px;
+}
+
+.table thead {
+    background-color: #198754;
+    color: white;
+}
+
+input.form-control[readonly] {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    color: #495057;
+    font-weight: 500;
+}
+
+.btn-outline-secondary {
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+@media (max-width: 576px) {
+    .profile-pic {
+        width: 60px;
+        height: 60px;
+    }
+}

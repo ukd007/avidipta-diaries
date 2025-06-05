@@ -1,32 +1,44 @@
-// utils/summer25Stats.js
+// utils/getProfileStats.js
 const db = require('../config/db');
 
-function getProfileStats(userId, testName, callback) {
-    if (!/^[a-z0-9]+$/i.test(testName)) {
+function getProfileStats(userId, test, callback) {
+    if (!/^[a-z0-9_]+$/i.test(test)) {
         return callback(new Error('Invalid test name'));
     }
 
-    const batTable = `batstats_${testName}`;
-    const bowlTable = `bowlstats_${testName}`;
-    const fieldTable = `fieldstats_${testName}`;
+    const tableName = `${test}_stats`; // e.g., s25_stats
+    const query = `SELECT * FROM \`${tableName}\` WHERE id = ?`;
 
-    let stats = {};
-    q1 = `SELECT * FROM ?? WHERE id = ?`
-    db.query(q1, [batTable, userId], (err1, batRows) => {
-        if (err1) return callback(err1);
-        stats.bat = batRows[0] || {};  // ✅ use `bat` instead of `batStats`
+    db.query(query, [userId], (err, results) => {
+        if (err) return callback(err);
+        if (!results || results.length === 0) return callback(new Error('No stats found'));
 
+        const row = results[0];
 
-        db.query(`SELECT * FROM ?? WHERE id = ?`, [bowlTable, userId], (err2, bowlRows) => {
-            if (err2) return callback(err2);
-            stats.bowl = bowlRows[0] || {};  // ✅ use `bowl` instead of `bowlStats`
+        const stats = {
+            bat: {
+                runs: row.runs,
+                balls_played: row.balls_played,
+                wickets_played: row.wickets_played,
+                fours: row.fours,
+                fifties: row.fifties,
+                hundreds: row.hundreds
+            },
+            bowl: {
+                wickets_taken: row.wickets_taken,
+                overs_bowled: (row.total_balls_bowled / 6).toFixed(1), // Convert balls to overs like 20.3
+                maidens: row.maidens,
+                runs_conceded: row.runs_conceded
+            },
+            field: {
+                catches: row.catches,
+                runouts: row.runouts,
+                stumpings: row.stumpings
+            }
+        };
 
-            db.query(`SELECT * FROM ?? WHERE id = ?`, [fieldTable, userId], (err3, fieldRows) => {
-                if (err3) return callback(err3);
-                stats.field = fieldRows[0] || {};
-                callback(null, stats);
-            });
-
+        return callback(null, {
+            [test]: stats // Return under test key, e.g., 's25'
         });
     });
 }
