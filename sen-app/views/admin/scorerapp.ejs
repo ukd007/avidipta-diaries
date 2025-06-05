@@ -6,38 +6,54 @@
     </div>
 </nav>
   <div class="form-wrapper">
-<h2>Enter Match Details</h2>
-<form action="/start-match" method="post">
-  <label for="team1">Team 1 Name:</label><br>
-  <input type="text" id="team1" name="team1" oninput="updateTossOptions()" required><br><br>
+  <h2>Enter Match Details</h2>
+  <form action="/start-match" method="post" onsubmit="return startMatchSetup();">
+    <label for="team1">Team 1 Name:</label><br>
+    <input type="text" id="team1" name="team1" oninput="updateTossOptions()" required><br><br>
 
-  <label for="team2">Team 2 Name:</label><br>
-  <input type="text" id="team2" name="team2" oninput="updateTossOptions()" required><br><br>
+    <label for="team2">Team 2 Name:</label><br>
+    <input type="text" id="team2" name="team2" oninput="updateTossOptions()" required><br><br>
 
-  <label for="tossWinner">Toss Won By:</label><br>
-  <select id="tossWinner" name="tossWinner" onchange="showDecisionSection()" required>
-    <option value="">-- Select a team --</option>
-  </select><br><br>
+    <label for="tossWinner">Toss Won By:</label><br>
+    <select id="tossWinner" name="tossWinner" onchange="showDecisionSection()" required>
+      <option value="">-- Select a team --</option>
+    </select><br><br>
 
-  <div id="decisionSection" style="display: none;">
-    <span id="tossWinnerName"></span> elected to:
-    <br>
-    <input type="radio" id="bat" name="tossDecision" value="Bat" required>
-    <label for="bat">Bat</label><br>
-    <input type="radio" id="bowl" name="tossDecision" value="Bowl" required>
-    <label for="bowl">Bowl</label><br><br>
-  </div>
+    <div id="decisionSection" style="display: none;">
+      <span id="tossWinnerName"></span> elected to:
+      <br>
+      <input type="radio" id="bat" name="tossDecision" value="Bat" required>
+      <label for="bat">Bat</label><br>
+      <input type="radio" id="bowl" name="tossDecision" value="Bowl" required>
+      <label for="bowl">Bowl</label><br><br>
+    </div>
 
-  <button type="submit">Start Match</button>
-</form>
+    <!-- New Fields for Striker/Non-Striker/Bowler -->
+   <label for="strikerName">Striker Name:</label><br>
+<input type="text" id="strikerName" name="batsman1" required><br><br>
+
+<label for="nonStrikerName">Non-Striker Name:</label><br>
+<input type="text" id="nonStrikerName" name="batsman2" required><br><br>
+
+<label for="bowlerName">Opening Bowler Name:</label><br>
+<input type="text" id="bowlerName" name="bowler" required><br><br>
+
+
+    <button type="submit">Start Match</button>
+  </form>
 </div>
+
 
 <script>
   function updateTossOptions() {
-    const team1 = document.getElementById("team1").value;
-    const team2 = document.getElementById("team2").value;
+    const team1 = document.getElementById("team1").value.trim();
+    const team2 = document.getElementById("team2").value.trim();
     const tossSelect = document.getElementById("tossWinner");
 
+    // Save current selection if possible
+    const currentSelection = tossSelect.value;
+
+    // Clear options
     tossSelect.innerHTML = '<option value="">-- Select a team --</option>';
 
     if (team1) {
@@ -47,7 +63,12 @@
       tossSelect.add(new Option(team2, team2));
     }
 
-    document.getElementById("decisionSection").style.display = "none"; // hide on name change
+    // Try to reselect previously selected value if it's still valid
+    if (currentSelection === team1 || currentSelection === team2) {
+      tossSelect.value = currentSelection;
+    }
+
+    document.getElementById("decisionSection").style.display = "none";
   }
 
   function showDecisionSection() {
