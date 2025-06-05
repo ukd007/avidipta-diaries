@@ -1,9 +1,9 @@
-
+/* Reset + prevent horizontal overflow */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Optional: prevent scrollbars */
+  overflow-x: hidden;
 }
 
 /* Fullscreen video background */
@@ -14,25 +14,58 @@ html, body {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  z-index: -1; /* Behind everything */
+  z-index: -1;
 }
 
 .video-background video {
-  min-width: 100%;
-  min-height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
+/* Profile pictures */
 .profile-pic-small {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
   border-radius: 50%;
 }
 
 .profile-pic-large {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 10px auto;
+}
+
+/* Card user image */
+.card-img-top {
   width: 80px;
   height: 80px;
   object-fit: cover;
   border-radius: 50%;
+  margin-top: 10px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .card-img-top {
+    width: 60px;
+    height: 60px;
+  }
+
+  .profile-pic-large {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-pic-small {
+    width: 32px;
+    height: 32px;
+  }
+
+  .navbar-brand {
+    font-size: 1rem;
+  }
 }

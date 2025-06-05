@@ -46,10 +46,10 @@
         const batStats = stats[test].bat;
         const bowlStats = stats[test].bowl;
         const fieldStats = stats[test].field;
-
-        const ballsBowled = bowlStats.total_balls_bowled || 0;
-        const oversDisplay = Math.floor(ballsBowled / 6) + "." + (ballsBowled % 6);
-      %>
+        overs=bowlStats.overs_bowled;
+        ballsArr=overs.split('.')
+        balls_Bowled=(parseInt(ballsArr[0])*6)+parseInt(ballsArr[1]);
+        %>
         <div
           class="tab-pane fade <%= i === 0 ? 'show active' : '' %>"
           id="<%= test %>"
@@ -102,10 +102,10 @@
             <tbody>
               <tr>
                 <td><input class="form-control" value="<%= bowlStats.wickets_taken %>" readonly disabled /></td>
-                <td><input class="form-control" value="<%= oversDisplay %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= bowlStats.overs_bowled %>" readonly disabled /></td>
                 <td><input class="form-control" value="<%= bowlStats.maidens %>" readonly disabled /></td>
-                <td><input class="form-control" value="<%= (ballsBowled ? (bowlStats.runs_conceded / (ballsBowled / 6)).toFixed(2) : '0.00') %>" readonly disabled /></td>
-                <td><input class="form-control" value="<%= (bowlStats.wickets_taken ? (ballsBowled / bowlStats.wickets_taken).toFixed(2) : '0.00') %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= (ballsBowled ? (bowlStats.runs_conceded * 6 / balls_Bowled ).toFixed(2) : '0.00') %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= (bowlStats.wickets_taken ? (balls_Bowled / bowlStats.wickets_taken).toFixed(2) : '0.00') %>" readonly disabled /></td>
                 <td><input class="form-control" value="<%= (bowlStats.wickets_taken ? (bowlStats.runs_conceded / bowlStats.wickets_taken).toFixed(2) : '0.00') %>" readonly disabled /></td>
               </tr>
             </tbody>
