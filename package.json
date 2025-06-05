@@ -33,6 +33,10 @@
     "multer": "^2.0.0",
     "multer-storage-cloudinary": "^4.0.0",
     "mysql2": "^3.14.1",
+<<<<<<< HEAD
     "streamifier": "^0.1.1"
+=======
+    "nodemon": "^3.1.10"
+>>>>>>> 22ec71dd001809016ba99bdd6115aabca9e580ef
   }
 }

@@ -31,7 +31,9 @@ app.use(session({
   }
 }));
 // ROUTES
-
+app.get('/cricket' , (req, res) => {
+res.render('cricket', { layout: false });
+});
 // login page
 app.get('/', (req, res) => {
   res.render('loginpage', { layout: false });
@@ -55,7 +57,6 @@ app.get('/admin/scorerapp', (req, res) => {
     title: 'Scorer App'
   });
 });
-
 //Match Start
 app.post('/start-match', (req, res) => {
   const { team1, team2, tossWinner, tossDecision, batsman1, batsman2,  bowler } = req.body;
@@ -85,6 +86,7 @@ if (tossDecision.toLowerCase() === "bat") {
 app.get('/scorecard', (req, res) => {
   res.render('scorecard');  // This will render scorecard.ejs
 });
+
 // Start Server
 app.listen(8080, () => {
   console.log('Server listening on http://localhost:8080');

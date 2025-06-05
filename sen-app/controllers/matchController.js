@@ -12,5 +12,10 @@ async function createMatch(match_id,team1,team2,type){
         winner:null
     };
     const uploadResult=await uploadJsonBuffer(`scores/match_${match_id}`,scoreData);
-    
+
+    await db.query(
+    `INSERT INTO matches (match_id, team1, team2, type, cloudinary_url, cloudinary_public_id)
+     VALUES (?, ?, ?, ?, ?, ?)`,
+    [match_id, team1, team2, type, uploadResult.secure_url, uploadResult.public_id]
+  );
 }
