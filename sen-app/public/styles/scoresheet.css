@@ -3,7 +3,7 @@ html,
 body {
     margin: 0;
     background-color: rgb(255, 255, 255);
-    /*overscroll-behavior: none;*/
+    overscroll-behavior: none;
 }
 /* Arrow and Bar Images */
 .arrow {

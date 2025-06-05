@@ -58,12 +58,7 @@ app.get('/admin/scorerapp', (req, res) => {
 
 //Match Start
 app.post('/start-match', (req, res) => {
-  const { team1, team2, tossWinner, tossDecision } = req.body;
-
-  const batsman1 = "A";
-const batsman2 = "B";
-const bowler = "C";
-
+  const { team1, team2, tossWinner, tossDecision, batsman1, batsman2,  bowler } = req.body;
 let battingTeam;
 
 if (tossDecision.toLowerCase() === "bat") {
