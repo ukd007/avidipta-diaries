@@ -81,6 +81,9 @@ if (tossDecision.toLowerCase() === "bat") {
     battingTeam,
   });
 });
+app.get('/scorecard', (req, res) => {
+  res.render('scorecard');  // This will render scorecard.ejs
+});
 // Start Server
 app.listen(8080, () => {
   console.log('Server listening on http://localhost:8080');
