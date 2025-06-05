@@ -19,263 +19,119 @@
       <div class="username fs-3 fw-semibold"><%= user.username %></div>
     </div>
 
-    <!-- Form for updating stats -->
-    <form method="POST" action="/update-profile-stats">
-      <!-- Tabs -->
-      <ul class="nav nav-tabs justify-content-center" id="profileTabs" role="tablist">
-        <% const tests = { s25: 'Summer 2025', w24: 'Winter 2024', s24: 'Summer 2024' }; %>
-        <% Object.keys(tests).forEach((test, i) => { %>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link <%= i === 0 ? 'active' : '' %>"
-              id="<%= test %>-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#<%= test %>"
-              type="button"
-              role="tab"
-              aria-controls="<%= test %>"
-              aria-selected="<%= i === 0 %>"
-            >
-              <%= tests[test] %>
-            </button>
-          </li>
-        <% }) %>
-      </ul>
-
-      <!-- Tab Content -->
-      <div class="tab-content" id="profileTabsContent">
-        <% Object.keys(tests).forEach((test, i) => {
-          const batStats = stats[test].bat;
-          const bowlStats = stats[test].bowl;
-          const fieldStats = stats[test].field;
-
-          const ballsBowled = bowlStats.total_balls_bowled || 0;
-          const oversDisplay = Math.floor(ballsBowled / 6) + "." + (ballsBowled % 6);
-        %>
-          <div
-            class="tab-pane fade <%= i === 0 ? 'show active' : '' %>"
-            id="<%= test %>"
-            role="tabpanel"
-            aria-labelledby="<%= test %>-tab"
-            tabindex="0"
+    <!-- Tabs -->
+    <ul class="nav nav-tabs justify-content-center" id="profileTabs" role="tablist">
+      <% const tests = { s25: 'Summer 2025', w24: 'Winter 2024', s24: 'Summer 2024' }; %>
+      <% Object.keys(tests).forEach((test, i) => { %>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link <%= i === 0 ? 'active' : '' %>"
+            id="<%= test %>-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#<%= test %>"
+            type="button"
+            role="tab"
+            aria-controls="<%= test %>"
+            aria-selected="<%= i === 0 %>"
           >
-            <h4 class="mt-4 mb-3"><%= tests[test] %> Stats</h4>
+            <%= tests[test] %>
+          </button>
+        </li>
+      <% }) %>
+    </ul>
 
-            <!-- Batting -->
-            <h5>Batting</h5>
-            <table class="table table-bordered table-striped">
-              <thead class="table-dark">
-                <tr>
-                  <th>Runs Scored</th>
-                  <th>Wickets Played</th>
-                  <th>Batting Average</th>
-                  <th>Strike Rate</th>
-                  <th>4s Hit</th>
-                  <th>50s</th>
-                  <th>100s</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bat[<%= test %>][runs]"
-                      value="<%= batStats.runs %>"
-                      min="0"
-                      step="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bat[<%= test %>][wickets_played]"
-                      value="<%= batStats.wickets_played %>"
-                      min="0"
-                      step="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bat[<%= test %>][average]"
-                      value="<%= (batStats.wickets_played ? (batStats.runs / batStats.wickets_played).toFixed(2) : '0.00') %>"
-                      readonly
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bat[<%= test %>][strike_rate]"
-                      value="<%= (batStats.balls_played ? ((batStats.runs * 100) / batStats.balls_played).toFixed(2) : '0.00') %>"
-                      readonly
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bat[<%= test %>][fours]"
-                      value="<%= batStats.fours %>"
-                      min="0"
-                      step="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bat[<%= test %>][fifties]"
-                      value="<%= batStats.fifties %>"
-                      min="0"
-                      step="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bat[<%= test %>][hundreds]"
-                      value="<%= batStats.hundreds %>"
-                      min="0"
-                      step="1"
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+    <!-- Tab Content -->
+    <div class="tab-content" id="profileTabsContent">
+      <% Object.keys(tests).forEach((test, i) => {
+        const batStats = stats[test].bat;
+        const bowlStats = stats[test].bowl;
+        const fieldStats = stats[test].field;
 
-            <!-- Bowling -->
-            <h5>Bowling</h5>
-            <table class="table table-bordered table-striped">
-              <thead class="table-dark">
-                <tr>
-                  <th>Wickets Taken</th>
-                  <th>Overs Bowled</th>
-                  <th>Maidens</th>
-                  <th>Economy</th>
-                  <th>Strike Rate</th>
-                  <th>Bowling Average</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bowl[<%= test %>][wickets_taken]"
-                      value="<%= bowlStats.wickets_taken %>"
-                      min="0"
-                      step="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="bowl[<%= test %>][overs_bowled]"
-                      value="<%= oversDisplay %>"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bowl[<%= test %>][maidens]"
-                      value="<%= bowlStats.maidens %>"
-                      min="0"
-                      step="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bowl[<%= test %>][economy]"
-                      value="<%= (ballsBowled ? (bowlStats.runs_conceded / (ballsBowled / 6)).toFixed(2) : '0.00') %>"
-                      readonly
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bowl[<%= test %>][strike_rate]"
-                      value="<%= (bowlStats.wickets_taken ? (ballsBowled / bowlStats.wickets_taken).toFixed(2) : '0.00') %>"
-                      readonly
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="bowl[<%= test %>][bowling_average]"
-                      value="<%= (bowlStats.wickets_taken ? (bowlStats.runs_conceded / bowlStats.wickets_taken).toFixed(2) : '0.00') %>"
-                      readonly
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        const ballsBowled = bowlStats.total_balls_bowled || 0;
+        const oversDisplay = Math.floor(ballsBowled / 6) + "." + (ballsBowled % 6);
+      %>
+        <div
+          class="tab-pane fade <%= i === 0 ? 'show active' : '' %>"
+          id="<%= test %>"
+          role="tabpanel"
+          aria-labelledby="<%= test %>-tab"
+          tabindex="0"
+        >
+          <h4 class="mt-4 mb-3"><%= tests[test] %> Stats</h4>
 
-            <!-- Fielding -->
-            <h5>Fielding</h5>
-            <table class="table table-bordered table-striped">
-              <thead class="table-dark">
-                <tr>
-                  <th>Catches</th>
-                  <th>Runouts</th>
-                  <th>Stumpings</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="field[<%= test %>][catches]"
-                      value="<%= fieldStats.catches %>"
-                      min="0"
-                      step="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="field[<%= test %>][runouts]"
-                      value="<%= fieldStats.runouts %>"
-                      min="0"
-                      step="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="field[<%= test %>][stumpings]"
-                      value="<%= fieldStats.stumpings %>"
-                      min="0"
-                      step="1"
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        <% }) %>
-      </div>
+          <!-- Batting -->
+          <h5>Batting</h5>
+          <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+              <tr>
+                <th>Runs Scored</th>
+                <th>Wickets Played</th>
+                <th>Batting Average</th>
+                <th>Strike Rate</th>
+                <th>4s Hit</th>
+                <th>50s</th>
+                <th>100s</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input class="form-control" value="<%= batStats.runs %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= batStats.wickets_played %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= (batStats.wickets_played ? (batStats.runs / batStats.wickets_played).toFixed(2) : '0.00') %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= (batStats.balls_played ? ((batStats.runs * 100) / batStats.balls_played).toFixed(2) : '0.00') %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= batStats.fours %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= batStats.fifties %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= batStats.hundreds %>" readonly disabled /></td>
+              </tr>
+            </tbody>
+          </table>
 
-      <div class="text-center my-4">
-        <button type="submit" class="btn btn-success btn-lg">Save All Stats</button>
-      </div>
-    </form>
+          <!-- Bowling -->
+          <h5>Bowling</h5>
+          <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+              <tr>
+                <th>Wickets Taken</th>
+                <th>Overs Bowled</th>
+                <th>Maidens</th>
+                <th>Economy</th>
+                <th>Strike Rate</th>
+                <th>Bowling Average</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input class="form-control" value="<%= bowlStats.wickets_taken %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= oversDisplay %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= bowlStats.maidens %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= (ballsBowled ? (bowlStats.runs_conceded / (ballsBowled / 6)).toFixed(2) : '0.00') %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= (bowlStats.wickets_taken ? (ballsBowled / bowlStats.wickets_taken).toFixed(2) : '0.00') %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= (bowlStats.wickets_taken ? (bowlStats.runs_conceded / bowlStats.wickets_taken).toFixed(2) : '0.00') %>" readonly disabled /></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Fielding -->
+          <h5>Fielding</h5>
+          <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+              <tr>
+                <th>Catches</th>
+                <th>Runouts</th>
+                <th>Stumpings</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input class="form-control" value="<%= fieldStats.catches %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= fieldStats.runouts %>" readonly disabled /></td>
+                <td><input class="form-control" value="<%= fieldStats.stumpings %>" readonly disabled /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      <% }) %>
+    </div>
   </div>
 
   <!-- Bootstrap JS Bundle (Popper + Bootstrap) -->
