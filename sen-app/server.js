@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
-
 const app = express();
 
 
@@ -56,9 +55,7 @@ app.get('/match-data', (req, res) => {
 
 
 
-app.get('/cricket' , (req, res) => {
-res.render('cricket', { layout: false });
-});
+
 // login page
 app.get('/', (req, res) => {
   res.render('loginpage', { layout: false });
@@ -74,6 +71,8 @@ const userRoutes = require('./routes/userRoutes');
 app.use('/', userRoutes);
 const statsRoutes = require('./routes/profileData/stats');
 app.use('/', statsRoutes);
+const cricketRoutes= require('./routes/blogs/cricket');
+app.use('/',cricketRoutes);
 
 // Scorer App Page (uses layout)
 app.get('/admin/scorerapp', (req, res) => {
