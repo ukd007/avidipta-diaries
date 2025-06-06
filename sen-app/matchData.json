@@ -1,0 +1,21 @@
+{
+  "score": 19,
+  "wickets": 0,
+  "overs": "1.0",
+  "batsman1": {
+    "name": "Anyone",
+    "runs": 0,
+    "balls": 0,
+    "fours": 0,
+    "sixes": 0
+  },
+  "batsman2": {
+    "name": "Anyone 2",
+    "runs": 0,
+    "balls": 0,
+    "fours": 0,
+    "sixes": 0
+  },
+  "bowler": "papai",
+  "balls": []
+}
