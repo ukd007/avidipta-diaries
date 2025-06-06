@@ -91,6 +91,7 @@ function restoreState() {
   updateCRR();
 }
 
+
 function handleRun(run) {
   saveState();
 
@@ -156,6 +157,7 @@ function handleRun(run) {
   updateBowlerStats();
   updateCRR();
 }
+
 
 document.getElementById("wicketType").addEventListener("change", function () {
   const needsHelper = ["catch", "stumping"].includes(this.value);
@@ -241,6 +243,8 @@ document.querySelector(".retire-btn").addEventListener("click", () => {
   [onStrike, nonStriker] = [nonStriker, onStrike];
   updateBatsmanUI();
 });
+
+
 
 updateBatsmanUI();
 updateScoreboard();

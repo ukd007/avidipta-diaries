@@ -5,6 +5,21 @@ const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 
+
+// NEW CODE 1
+let matchState = {}; // global variable
+
+app.post('/update-match', (req, res) => {
+  matchState = req.body;  // store the latest state
+  res.sendStatus(200);
+});
+
+app.get('/match-data', (req, res) => {
+  res.json(matchState);
+});
+
+
+
 // View Engine Setup
 app.set("view engine", "ejs");
 app.use(expressLayouts);
@@ -31,6 +46,16 @@ app.use(session({
   }
 }));
 // ROUTES
+
+
+
+//NEW CODE 2
+app.get('/match-data', (req, res) => {
+  res.json(matchState);
+});
+
+
+
 app.get('/cricket' , (req, res) => {
 res.render('cricket', { layout: false });
 });
@@ -86,6 +111,8 @@ if (tossDecision.toLowerCase() === "bat") {
 app.get('/scorecard', (req, res) => {
   res.render('scorecard');  // This will render scorecard.ejs
 });
+
+
 
 // Start Server
 app.listen(8080, () => {
