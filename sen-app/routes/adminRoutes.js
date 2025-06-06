@@ -92,12 +92,12 @@ router.post('/admin/users/:id/edit', upload.single('croppedImage'), (req, res) =
     return res.redirect(`/admin/users/${req.params.id}/edit`);
   }
 
-  if (!req.file || !req.file.path) {
+  if (!req.file || (!req.file.path && !req.file.secure_url)) {
     req.session.error = 'No image uploaded';
     return res.redirect(`/admin/users/${req.params.id}/edit`);
   }
 
-  const profilePicUrl = req.file.path;
+  const profilePicUrl = req.file.secure_url || req.file.path;
 
   const q = `
     UPDATE users
@@ -105,14 +105,13 @@ router.post('/admin/users/:id/edit', upload.single('croppedImage'), (req, res) =
     WHERE id = ?
   `;
 
-  db.query(q, [profilePicUrl, userId], (err, result) => {
+  db.query(q, [profilePicUrl, userId], (err) => {
     if (err) {
       console.error(err);
       req.session.error = 'Database Error';
       return res.redirect(`/admin/users/${req.params.id}/edit`);
     }
 
-    // If you want to handle test param here (optional)
     const test = req.query.test && tests.includes(req.query.test) ? req.query.test : 'summer25';
 
     req.session.message = 'Image updated successfully';
