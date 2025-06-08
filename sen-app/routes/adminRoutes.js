@@ -73,8 +73,10 @@ router.get('/admin/users/:id/edit', (req, res) => {
   });
 });
 
+
 router.post('/admin/users/:id/edit', parser.single('croppedImage'), (req, res) => {
   const userId = parseInt(req.params.id, 10);
+  
   res.json(req.file);
 })
 

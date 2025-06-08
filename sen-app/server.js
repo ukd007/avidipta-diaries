@@ -32,7 +32,6 @@ function loadMatchData() {
 }
 
 
-
 // View Engine Setup
 app.set("view engine", "ejs");
 app.use(expressLayouts);
@@ -89,8 +88,6 @@ app.use(cors());
 app.get('/match-data', (req, res) => {
   res.json(matchState);
 });
-
-
 
 
 // login page
@@ -178,9 +175,6 @@ io.on('connection', (socket) => {
     console.log('Client disconnected:', socket.id);
   });
 });
-
-
-
 
 // Start Server
 server.listen(8080, () => {
