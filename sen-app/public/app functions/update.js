@@ -14,6 +14,7 @@ window.updateBatsmanUI = function(){
     rows[1].children[3].textContent = batsman2.fours;
     rows[1].children[4].textContent = batsman2.sixes;
     rows[1].children[5].textContent = batsman2.balls > 0 ? ((batsman2.runs / batsman2.balls) * 100).toFixed(1) : "0.0";
+    console.log("✅ updateBatsmanUI called");
 };
 
 window.updateScoreboard() = function(){
