@@ -1,9 +1,12 @@
 const express = require('express');
-const path = require('path');
-const session = require('express-session');
-const expressLayouts = require('express-ejs-layouts');
 const app = express();
+const expressLayouts = require('express-ejs-layouts');
+
+const path = require('path');
+require('dotenv').config();
+const cookieSession = require('cookie-session');
 const cors = require('cors');
+
 const http = require('http');
 const { Server } = require('socket.io');
 const server = http.createServer(app);
@@ -49,13 +52,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
-  secret: 'anudayenduanaranyapartnership',     // replace with a real secret string
-  resave: false,                 // recommended false to avoid unnecessary saves
-  saveUninitialized: false,      // recommended false to not save empty sessions
-  cookie: {
-    secure: false                // set to true if using HTTPS (SSL)
-  }
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESSION_KEY_1, process.env.SESSION_KEY_2],
+  maxAge: 24 * 60 * 60 * 1000,  // 24 hours
+  httpOnly: true,              // Prevent JavaScript access
+  secure: false                // Set to true if you're using HTTPS
 }));
 
 
