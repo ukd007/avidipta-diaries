@@ -9,8 +9,8 @@ const tests = ['summer25', 'winter24', 'summer24'];
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params:{
-    folder:'profile_pics',
+  params: {
+    folder: 'profile_pics',
   }
 });
 
@@ -74,10 +74,36 @@ router.get('/admin/users/:id/edit', (req, res) => {
 });
 
 
-router.post('/admin/users/:id/edit', parser.single('croppedImage'), (req, res) => {
+router.post('/admin/users/:id/edit', parser.single('croppedImage'),async  (req, res) => {
   const userId = parseInt(req.params.id, 10);
-  
-  res.json(req.file);
+
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    // Upload file to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: 'user_avatars', // optional folder
+      public_id: `user_${userId}`,
+      overwrite: true
+    });
+
+    // Optionally remove the temp file if using diskStorage
+    fs.unlink(req.file.path, (err) => {
+      if (err) console.error('Failed to delete temp file:', err);
+    });
+
+    res.json({
+      message: 'Image uploaded successfully',
+      imageUrl: result.secure_url,
+      cloudinaryId: result.public_id
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Upload failed' });
+  }
 })
 
 module.exports = router;

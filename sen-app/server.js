@@ -12,6 +12,15 @@ const { Server } = require('socket.io');
 const server = http.createServer(app);
 const io = new Server(server);
 
+//MIDDLEWARE
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESSION_KEY_1, process.env.SESSION_KEY_2],
+  maxAge: 24 * 60 * 60 * 1000,  // 24 hours
+  httpOnly: true,              // Prevent JavaScript access
+  secure: false                // Set to true if you're using HTTPS
+}));
 
 // NEW CODE: File System for JSON
 const fs = require('fs');
@@ -50,15 +59,7 @@ app.set('views', viewsArray);
 // Static Files
 app.use(express.static(path.join(__dirname, 'public')));
 
-//MIDDLEWARE
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieSession({
-  name: 'session',
-  keys: [process.env.SESSION_KEY_1, process.env.SESSION_KEY_2],
-  maxAge: 24 * 60 * 60 * 1000,  // 24 hours
-  httpOnly: true,              // Prevent JavaScript access
-  secure: false                // Set to true if you're using HTTPS
-}));
+
 
 
 // NEW CODE: Functions to load/save match data
