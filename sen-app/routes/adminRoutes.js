@@ -7,15 +7,6 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 const tests = ['summer25', 'winter24', 'summer24'];
 
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'profile_pics',
-  }
-});
-
-const parser = multer({ storage: storage });
-
 router.get('/admin/users', (req, res) => {
   const q = `SELECT * FROM users`;
   db.query(q, (err, users) => {
@@ -73,37 +64,35 @@ router.get('/admin/users/:id/edit', (req, res) => {
   });
 });
 
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'profile_pics',
+  }
+});
 
-router.post('/admin/users/:id/edit', parser.single('croppedImage'),async  (req, res) => {
-  const userId = parseInt(req.params.id, 10);
+const parser = multer({ storage: storage });
 
+router.post("/admin/users/:id/update-picture", parser.single('croppedImage'), async (req, res) => {
   try {
+    console.log("Request params:", req.params);
+    console.log("Request file:", req.file);
+    console.log("Headers:", req.headers);
+console.log("Body:", req.body);
+
+
     if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
+      console.log("No file received in request");
+      return res.status(400).json({ success: false, message: 'No file uploaded' });
     }
 
-    // Upload file to Cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: 'user_avatars', // optional folder
-      public_id: `user_${userId}`,
-      overwrite: true
-    });
-
-    // Optionally remove the temp file if using diskStorage
-    fs.unlink(req.file.path, (err) => {
-      if (err) console.error('Failed to delete temp file:', err);
-    });
-
-    res.json({
-      message: 'Image uploaded successfully',
-      imageUrl: result.secure_url,
-      cloudinaryId: result.public_id
-    });
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Upload failed' });
+    const uploadedFileUrl = req.file.path;
+    res.json({ success: true, url: uploadedFileUrl, message: 'Profile picture updated successfully' });
+  } catch (error) {
+    console.error("Upload route error:", error);
+    res.status(500).json({ success: false, message: 'Server error during upload', error: error.message });
   }
-})
+});
+
 
 module.exports = router;

@@ -50,7 +50,6 @@ router.get('/admin/dashboard', isAdmin, (req, res) => {
 
 // User home page
 router.get('/users/home', (req, res) => {
-  console.log(req.session.user)
   if (!req.session.user) {
     return res.redirect('/?error=not_logged_in');
   }
