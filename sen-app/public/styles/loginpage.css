@@ -20,7 +20,7 @@ html, body {
 .video-background video {
   min-width: 100%;
   min-height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 .form-wrapper {
   position: absolute;
@@ -78,13 +78,6 @@ button:hover {
   opacity: 0.8;
 }
 
-/* Cancel button */
-.cancelbtn {
-  width: auto;
-  padding: 10px 18px;
-  background-color: #f44336;
-  border-radius: 5px;
-}
 
 /* Forgot password */
 span.psw {
@@ -100,9 +93,6 @@ span.psw {
 @media screen and (max-width: 400px) {
   form {
     padding: 20px;
-  }
-  .cancelbtn {
-    width: 100%;
   }
   span.psw {
     display: block;

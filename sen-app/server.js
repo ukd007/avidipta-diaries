@@ -3,6 +3,7 @@ const path = require('path');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
+const cors = require('cors');
 
 
 // NEW CODE 1
@@ -44,6 +45,8 @@ app.use(session({
     secure: false                // set to true if using HTTPS (SSL)
   }
 }));
+
+app.use(cors());
 // ROUTES
 
 

@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
             return res.status(500).send('Database error');
         }
         if (results.length === 0) {
-            return res.render('loginpage', { error: "Invalid Credentials" });
+            return res.render('loginpage', { error: "Invalid Credentials",layout:false });
         }
 
         const user = results[0];
