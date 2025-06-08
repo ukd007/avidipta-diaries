@@ -4,19 +4,32 @@ const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
 const cors = require('cors');
+const http = require('http');
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+const io = new Server(server);
 
 
-// NEW CODE 1
-let matchState = {}; // global variable
-
-app.post('/update-match', (req, res) => {
-  matchState = req.body;  // store the latest state
-  res.sendStatus(200);
-});
-
-app.get('/match-data', (req, res) => {
-  res.json(matchState);
-});
+// NEW CODE: File System for JSON
+const fs = require('fs');
+const matchDataPath = path.join(__dirname, 'matchData.json');
+function loadMatchData() {
+  try {
+    const data = fs.readFileSync('matchData.json', 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    console.log('No previous match data found, starting fresh.');
+    return {
+      score: 0,
+      wickets: 0,
+      overs: 0.0,
+      batsman1: "",
+      batsman2: "",
+      bowler: "",
+      balls: [],
+    };
+  }
+}
 
 
 
@@ -45,6 +58,27 @@ app.use(session({
     secure: false                // set to true if using HTTPS (SSL)
   }
 }));
+
+
+// NEW CODE: Functions to load/save match data
+function loadMatchData() {
+  try {
+    const raw = fs.readFileSync(matchDataPath);
+    return JSON.parse(raw);
+  } catch (err) {
+    console.error('Failed to read match data:', err);
+    return {};
+  }
+}
+
+function saveMatchData(data) {
+  try {
+    fs.writeFileSync(matchDataPath, JSON.stringify(data, null, 2));
+  } catch (err) {
+    console.error('Failed to write match data:', err);
+  }
+}
+
 
 app.use(cors());
 // ROUTES
@@ -111,12 +145,44 @@ if (tossDecision.toLowerCase() === "bat") {
   });
 });
 app.get('/scorecard', (req, res) => {
-  res.render('scorecard');  // This will render scorecard.ejs
+  res.render('scorecard');
+});
+
+
+// New Code: Set up match state
+let matchState = {
+  score: 0,
+  wickets: 0,
+  overs: 0.0,
+  batsman1: 'Player 1',
+  batsman2: 'Player 2',
+  bowler: 'Bowler 1',
+  balls: []
+};
+
+
+// New Code: Socket.IO logic
+io.on('connection', (socket) => {
+  console.log('Client connected:', socket.id);
+
+  // Send current match state to new client
+  socket.emit('update', matchState);
+
+  // Listen for updates and broadcast
+  socket.on('update', (data) => {
+    matchState = { ...matchState, ...data }; // update shared state
+    socket.broadcast.emit('update', matchState); // notify others
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected:', socket.id);
+  });
 });
 
 
 
+
 // Start Server
-app.listen(8080, () => {
+server.listen(8080, () => {
   console.log('Server listening on http://localhost:8080');
 });

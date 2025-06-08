@@ -1,4 +1,47 @@
-//FUNCTIONALITY
+// ===== NEW CODE: Socket.IO connection and update emitter =====
+const socket = io();
+
+let localMatchState = {
+  score: 0,
+  wickets: 0,
+  overs: 0.0,
+  batsman1: window.matchData?.batsman1 || 'Player 1',
+  batsman2: window.matchData?.batsman2 || 'Player 2',
+  bowler: window.matchData?.bowler || 'Bowler 1',
+  balls: []
+};
+
+function emitUpdate() {
+  const totalOvers = Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0) + overBalls / 6;
+  socket.emit('update', {
+    score: totalRuns,
+    wickets,
+    overs: Math.floor(totalOvers) + '.' + (overBalls % 6),
+    batsman1: batsman1.name + (onStrike === batsman1 ? '*' : ''),
+    batsman2: batsman2.name + (onStrike === batsman2 ? '*' : ''),
+    bowler: currentBowler,
+    balls: Array.from(document.querySelectorAll('#over-summary .ball')).map(b => b.textContent)
+  });
+}
+
+socket.on('update', (data) => {
+  document.querySelector('.score-display').textContent = `${data.score}/${data.wickets}`;
+  document.querySelector('.over-display').textContent = `(${data.overs})`;
+  document.querySelector('.bat1-name').textContent = data.batsman1;
+  document.querySelector('.bat2-name').textContent = data.batsman2;
+  document.querySelector('.bowler-name').textContent = data.bowler;
+
+  const summaryEl = document.getElementById('over-summary');
+  summaryEl.innerHTML = '';
+  data.balls.forEach((ball) => {
+    const span = document.createElement('span');
+    span.className = 'mx-1';
+    span.textContent = ball;
+    summaryEl.appendChild(span);
+  });
+});
+// ===== END OF NEW CODE =====
+
 let batsman1 = { name: window.matchData.batsman1, runs: 0, balls: 0, fours: 0, sixes: 0 };
 let batsman2 = { name: window.matchData.batsman2, runs: 0, balls: 0, fours: 0, sixes: 0 };
 let currentBowler = window.matchData.bowler;
@@ -89,6 +132,15 @@ function restoreState() {
   updateScoreboard();
   updateBowlerStats();
   updateCRR();
+
+  localMatchState.batsman1 = { ...batsman1 };
+localMatchState.batsman2 = {...batsman2};
+localMatchState.bowler = {...currentBowler};
+localMatchState.score = {...totalRuns};
+localMatchState.wickets = {...wickets};
+localMatchState.overs = parseFloat(`${Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0)}.${overBalls}`);
+localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
+  emitUpdate(); // ===== NEW CODE =====
 }
 
 
@@ -156,8 +208,15 @@ function handleRun(run) {
   updateScoreboard();
   updateBowlerStats();
   updateCRR();
+  localMatchState.batsman1 = batsman1.name;
+localMatchState.batsman2 = batsman2.name;
+localMatchState.bowler = currentBowler;
+localMatchState.score = totalRuns;
+localMatchState.wickets = wickets;
+localMatchState.overs = parseFloat(`${Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0)}.${overBalls}`);
+localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
+  emitUpdate(); // ===== NEW CODE =====
 }
-
 
 document.getElementById("wicketType").addEventListener("change", function () {
   const needsHelper = ["catch", "stumping"].includes(this.value);
@@ -206,6 +265,14 @@ document.getElementById("wicketForm").addEventListener("submit", function (e) {
     const newBowlerModal = new bootstrap.Modal(document.getElementById("newBowlerModal"));
     newBowlerModal.show();
   }
+  localMatchState.batsman1 = batsman1.name;
+localMatchState.batsman2 = batsman2.name;
+localMatchState.bowler = currentBowler;
+localMatchState.score = totalRuns;
+localMatchState.wickets = wickets;
+localMatchState.overs = parseFloat(`${Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0)}.${overBalls}`);
+localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
+  emitUpdate(); // ===== NEW CODE =====
 });
 
 document.getElementById("newBowlerForm").addEventListener("submit", function (e) {
@@ -220,6 +287,14 @@ document.getElementById("newBowlerForm").addEventListener("submit", function (e)
     newNameInput.value = "";
     bootstrap.Modal.getInstance(document.getElementById("newBowlerModal")).hide();
     updateBowlerStats();
+    localMatchState.batsman1 = batsman1.name;
+localMatchState.batsman2 = batsman2.name;
+localMatchState.bowler = currentBowler;
+localMatchState.score = totalRuns;
+localMatchState.wickets = wickets;
+localMatchState.overs = parseFloat(`${Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0)}.${overBalls}`);
+localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
+    emitUpdate(); // ===== NEW CODE =====
   }
 });
 
@@ -228,10 +303,20 @@ document.querySelectorAll(".run-btn").forEach((button) => {
 });
 
 document.querySelector(".undo-btn").addEventListener("click", restoreState);
+
 document.querySelector(".swap-btn").addEventListener("click", () => {
   saveState();
   [onStrike, nonStriker] = [nonStriker, onStrike];
   updateBatsmanUI();
+
+  localMatchState.batsman1 = batsman1.name;
+localMatchState.batsman2 = batsman2.name;
+localMatchState.bowler = currentBowler;
+localMatchState.score = totalRuns;
+localMatchState.wickets = wickets;
+localMatchState.overs = parseFloat(`${Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0)}.${overBalls}`);
+localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
+  emitUpdate(); // ===== NEW CODE =====
 });
 
 document.querySelector(".retire-btn").addEventListener("click", () => {
@@ -242,12 +327,19 @@ document.querySelector(".retire-btn").addEventListener("click", () => {
   onStrike.sixes = 0;
   [onStrike, nonStriker] = [nonStriker, onStrike];
   updateBatsmanUI();
+
+  localMatchState.batsman1 = batsman1.name;
+localMatchState.batsman2 = batsman2.name;
+localMatchState.bowler = currentBowler;
+localMatchState.score = totalRuns;
+localMatchState.wickets = wickets;
+localMatchState.overs = parseFloat(`${Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0)}.${overBalls}`);
+localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
+  emitUpdate(); // ===== NEW CODE =====
 });
-
-
 
 updateBatsmanUI();
 updateScoreboard();
 updateBowlerStats();
 updateCRR();
-
+emitUpdate(); // ===== NEW CODE =====
