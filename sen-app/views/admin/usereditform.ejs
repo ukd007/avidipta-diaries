@@ -20,164 +20,164 @@
 </head>
 
 <body>
-  <main class="container mt-5">
-    <!-- Optional back button -->
-    <a href="/admin/dashboard" class="btn btn-outline-secondary mb-4">
-      <span class="material-icons">arrow_back</span> Back
-    </a>
+  <% if (message) { %>
+    <div class="alert alert-<%= message.type %> alert-dismissible fade show" role="alert">
+      <%= message.text %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
 
-    <section aria-labelledby="profile-pic-heading" class="mb-5">
-      <h2 id="profile-pic-heading" class="mb-3">Edit Profile Picture for <%= user.username %>
-      </h2>
-
-      <!-- 
-  ===================================================================
-  1. THE FORM TAG:
-     - The 'id' can be anything, but let's call it 'editUserForm' for clarity.
-     - The 'action' MUST point to your final database update route.
-     - 'enctype' is no longer needed since the file is sent via fetch, not this form.
-  ===================================================================
--->
-      <form id="editUserForm" action="/admin/users/<%= user.id %>/update-picture" method="POST">
-
-        <!-- IMPORTANT: Make sure your name, email, and the hidden profile_pic_url inputs are also inside this form! -->
-
-
-        <!-- The HIDDEN input for the URL is essential -->
-        <input type="hidden" id="profilePicUrlInput" name="profile_pic_url" value="<%= user.profile_pic_url %>">
-
-        <hr>
-        <h4>Change Profile Picture</h4>
-
-        <!-- 
-      ===================================================================
-      2. THE FILE INPUT:
-         - The 'name' attribute is removed. It's not needed and prevents confusion.
-         - The 'id' is what our JavaScript uses to find this element.
-      ===================================================================
-    -->
-        <div class="mb-3">
-          <label for="fileInput" class="form-label">Choose Image</label>
-          <input type="file" id="fileInput" name="croppedImage" accept="image/*" class="form-control" />
-          Select an image to crop. The changes will be saved when you click "Save
-          Changes".
+      <% if (error) { %>
+        <div class="alert alert-<%= error.type || 'danger' %> alert-dismissible fade show" role="alert">
+          <%= error.text || error %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        </div>
+        <% } %>
 
-        <!-- The preview container remains the same -->
-        <div id="previewContainer" style="display:none; max-width: 500px; height: 500px;">
-          <img id="previewImage" src="#" alt="Image Preview" style="max-width:100%;" />
-        </div>
 
-        <!-- 
-      ===================================================================
-      3. THE BUTTON:
-         - 'type' is changed from "submit" to "button". THIS IS THE KEY CHANGE.
-         - 'onclick' is added to trigger our special JavaScript function.
-         - The text is changed to "Save Changes" for better clarity.
-         - The button should not be disabled by default. Our JS will handle it.
-      ===================================================================
-    -->
-        <button type="button" class="btn btn-primary mt-3" id="saveChangesBtn" onclick="saveChangesWithImageUpload()">
-          Save Changes
-        </button>
-      </form>
-    </section>
+          <main class="container mt-5">
+            <!-- Optional back button -->
+            <a href="/admin/users" class="btn btn-outline-secondary mb-4">
+              <span class="material-icons">arrow_back</span> Back
+            </a>
 
-    <section class="container-fluid mt-4">
-      <div class="row">
-        <!-- LEFT PANEL: Edit Stats Form -->
-        <div class="col-md-8">
-          <h3>Update Stats for <%= user.username %>
-          </h3>
+            <section aria-labelledby="profile-pic-heading" class="mb-5">
+              <h2 id="profile-pic-heading" class="mb-3">Edit Profile Picture for <%= user.username %>
+              </h2>
 
-          <form action="/update-player/<%= user.id %>?table=<%= table %>" method="POST">
-            <div class="row">
-              <% [ 'runs' , 'balls_played' , 'wickets_played' , 'fours' , 'fifties' , 'hundreds' , 'wickets_taken'
-                , 'total_balls_bowled' , 'maidens' , 'runs_conceded' , 'catches' , 'runouts' , 'stumpings'
-                ].forEach(field=> { %>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">
-                    <%= field.replace(/_/g, ' ' ) %>
-                  </label>
-                  <input type="number" class="form-control" name="<%= field %>" value="<%= user[field] || 0 %>"
-                    id="<%= field %>" min="0" />
+              <form id="editUserForm" method="POST">
+                <!-- Hidden input for existing profile pic URL -->
+                <input type="hidden" id="profilePicUrlInput" name="profile_pic_url" value="<%= user.profile_pic_url %>">
+
+                <hr>
+                <h4>Change Profile Picture</h4>
+
+                <div class="mb-3">
+                  <label for="fileInput" class="form-label">Choose Image</label>
+                  <input type="file" id="fileInput" name="croppedImage" accept="image/*" class="form-control" />
+                  <small class="form-text text-muted">Select an image to crop. The changes will be saved when you click
+                    "Save
+                    Changes".</small>
                 </div>
-                <% }) %>
-            </div>
-            <button type="submit" class="btn btn-primary">✅ Update Stats</button>
-          </form>
-        </div>
 
-        <!-- RIGHT PANEL: Sticky Notes -->
-        <div class="col-md-4">
-          <h4>📒 Notes / PDF Jot</h4>
-          <textarea class="form-control" rows="30" style="resize: vertical; max-height: 600px;"
-            placeholder="Write your calculations or notes here while reading the PDFs..."></textarea>
-        </div>
-      </div>
-    </section>
-  </main>
+                <!-- Image Preview -->
+                <div id="previewContainer" style="display:none; max-width: 500px; height: 500px;">
+                  <img id="previewImage" src="#" alt="Image Preview" style="max-width:100%;" />
+                </div>
 
-  <!-- JS Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    let cropper;
-    const fileInput = document.getElementById("fileInput");
-    const previewImage = document.getElementById("previewImage");
-    const previewContainer = document.getElementById("previewContainer");
+                <!-- Save Button -->
+                <button type="button" class="btn btn-primary mt-3" id="saveChangesBtn"
+                  onclick="saveChangesWithImageUpload()">
+                  Save Changes
+                </button>
+              </form>
+            </section>
 
-    fileInput.addEventListener("change", function (e) {
-      const file = e.target.files[0];
-      if (!file) return;
+            <section class="container-fluid mt-4">
+              <div class="row">
+                <!-- LEFT PANEL: Edit Stats Form -->
+                <div class="col-md-8">
+                  <h3>Update Stats for <%= user.username %>
+                  </h3>
 
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        previewImage.src = event.target.result;
-        previewContainer.style.display = "block";
+                  <form action="/update-player/<%= user.id %>?table=<%= table %>" method="POST">
+                    <div class="row">
+                      <% [ 'runs' , 'balls_played' , 'wickets_played' , 'fours' , 'fifties' , 'hundreds'
+                        , 'wickets_taken' , 'total_balls_bowled' , 'maidens' , 'runs_conceded' , 'catches' , 'runouts'
+                        , 'stumpings' ].forEach(field=> { %>
+                        <div class="col-md-4 mb-3">
+                          <label class="form-label">
+                            <%= field.replace(/_/g, ' ' ) %>
+                          </label>
+                          <input type="number" class="form-control" name="<%= field %>" value="<%= user[field] || 0 %>"
+                            id="<%= field %>" min="0" />
+                        </div>
+                        <% }) %>
+                    </div>
+                    <button type="submit" class="btn btn-primary">✅ Update Stats</button>
+                  </form>
+                </div>
 
-        if (cropper) cropper.destroy();
-        cropper = new Cropper(previewImage, {
-          aspectRatio: 1,
-          viewMode: 1,
-        });
-      };
-      reader.readAsDataURL(file);
-    });
+                <!-- RIGHT PANEL: Sticky Notes -->
+                <div class="col-md-4">
+                  <h4>📒 Notes / PDF Jot</h4>
+                  <textarea class="form-control" rows="30" style="resize: vertical; max-height: 600px;"
+                    placeholder="Write your calculations or notes here while reading the PDFs..."></textarea>
+                </div>
+              </div>
+            </section>
+          </main>
 
-    function saveChangesWithImageUpload() {
-      if (!cropper) {
-        alert("Please select and crop an image first.");
-        return;
-      }
+          <!-- JS Libraries -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+          <script>
+            const userId = <%= user.id %>;
+            let cropper;
+            const fileInput = document.getElementById('fileInput');
+            const previewImage = document.getElementById('previewImage');
+            const previewContainer = document.getElementById('previewContainer');
 
-      cropper.getCroppedCanvas().toBlob(blob => {
-        const formData = new FormData();
-        formData.append("croppedImage", blob, `profile_user_${userId}.png`);
+            fileInput.addEventListener('change', e => {
+              const file = e.target.files[0];
+              if (!file) return;
 
-        fetch(`/admin/users/${userId}/update-picture`, {
-          method: 'POST',
-          body: formData
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) {
-              alert(data.message);
-              // Put the uploaded image URL in hidden input
-              document.getElementById("profilePicUrlInput").value = data.url;
-              // Submit the rest of the form data (including the URL)
-              document.getElementById("editUserForm").submit();
-            } else {
-              alert("Upload failed: " + data.message);
+              const reader = new FileReader();
+              reader.onload = function (event) {
+                previewImage.src = event.target.result;
+                previewContainer.style.display = 'block';
+
+                if (cropper) cropper.destroy();
+                cropper = new Cropper(previewImage, { aspectRatio: 1, viewMode: 1 });
+              };
+              reader.readAsDataURL(file);
+            });
+
+            async function saveChangesWithImageUpload() {
+              if (!cropper) {
+                // No alert here, just return
+                return;
+              }
+
+              cropper.getCroppedCanvas().toBlob(async blob => {
+                if (!blob) {
+                  // No alert here, maybe console.error if you want
+                  return;
+                }
+
+                const formData = new FormData();
+                formData.append('croppedImage', blob, `profile_user_${userId}.png`);
+
+                try {
+                  const res = await fetch(`/admin/users/${userId}/update-picture`, {
+                    method: 'POST',
+                    body: formData
+                  });
+
+                  if (!res.ok) {
+                    // Silently fail, maybe console.error
+                    return;
+                  }
+
+                  const data = await res.json();
+
+                  if (!data.success) {
+                    // Silently fail, maybe console.error
+                    return;
+                  }
+
+                  // Update hidden input with new image URL
+                  document.getElementById('profilePicUrlInput').value = data.url;
+
+                  // Submit the whole form normally (which POSTs to /edit)
+                  document.getElementById('editUserForm').submit();
+                } catch (err) {
+                  // Silently fail or console.error
+                }
+              });
             }
-          })
-          .catch(err => {
-            alert("Upload error: " + err.message);
-          });
-      });
-    }
-  </script>
+          </script>
+
 </body>
 
 </html>

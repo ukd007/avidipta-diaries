@@ -41,9 +41,10 @@ router.get('/admin/users/:id/edit', (req, res) => {
     }
 
     const user = results[0];
+
+    // Get flash messages from session and clear them
     const message = req.session.message || null;
     const error = req.session.error || null;
-
     req.session.message = null;
     req.session.error = null;
 
@@ -75,24 +76,47 @@ const parser = multer({ storage: storage });
 
 router.post("/admin/users/:id/update-picture", parser.single('croppedImage'), async (req, res) => {
   try {
-    console.log("Request params:", req.params);
-    console.log("Request file:", req.file);
-    console.log("Headers:", req.headers);
-console.log("Body:", req.body);
-
-
     if (!req.file) {
-      console.log("No file received in request");
-      return res.status(400).json({ success: false, message: 'No file uploaded' });
+      // Since this route returns JSON only, keep it consistent
+      return res.status(400).json({ success: false, message: "No file uploaded" });
     }
 
     const uploadedFileUrl = req.file.path;
-    res.json({ success: true, url: uploadedFileUrl, message: 'Profile picture updated successfully' });
+
+    return res.status(200).json({
+      success: true,
+      url: uploadedFileUrl,
+      message: "Profile picture updated successfully"
+    });
+
   } catch (error) {
-    console.error("Upload route error:", error);
-    res.status(500).json({ success: false, message: 'Server error during upload', error: error.message });
+    return res.status(500).json({
+      success: false,
+      message: "Server error during upload"
+    });
   }
 });
 
+router.post('/admin/users/:id/edit', (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+  const { profile_pic_url /*, other fields */ } = req.body;
+
+  console.log("Body is " + JSON.stringify(req.body));
+  console.log("UserId: ", userId);
+
+  const sql = 'UPDATE users SET profile_pic = ? WHERE id = ?';
+  const params = [profile_pic_url, userId];
+
+  db.query(sql, params, (err) => {
+    if (err) {
+      console.error('Update error:', err);
+      req.session.error = { type: 'danger', text: 'Failed to update user.' };
+      return res.redirect(`/admin/users/${userId}/edit`);
+    }
+
+    req.session.message = { type: 'success', text: 'Profile updated successfully.' };
+    res.redirect(`/admin/users/${userId}/edit`);
+  });
+});
 
 module.exports = router;
