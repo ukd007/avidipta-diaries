@@ -17,20 +17,20 @@ window.updateBatsmanUI = function(){
     console.log("✅ updateBatsmanUI called");
 };
 
-window.updateScoreboard() = function(){
+window.updateScoreboard= function(){
     const totalOvers = Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0) + overBalls / 6;
     document.querySelector(".score-display").textContent = `${totalRuns} - ${wickets}`;
     document.querySelector(".over-display").textContent = `(${Math.floor(totalOvers)}.${overBalls % 6})`;
 };
 
-window.updateCRR() = function() {
+window.updateCRR = function() {
     const totalBalls = Object.values(bowlers).reduce((acc, b) => acc + b.overs * 6, 0) + overBalls;
     const oversFaced = totalBalls / 6;
     const crr = oversFaced > 0 ? (totalRuns / oversFaced).toFixed(2) : "0.00";
     document.getElementById("crrValue").textContent = crr;
 }
 
-window.updateBowlerStats() = function() {
+window.updateBowlerStats = function() {
     const stats = bowlers[currentBowler];
     document.querySelector(".bowler-name").textContent = currentBowler;
     document.querySelector(".bow-runs").textContent = stats.runs;
