@@ -14,12 +14,13 @@ const io = new Server(server);
 
 //MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
+const isProduction = process.env.NODE_ENV === 'production';
 app.use(cookieSession({
   name: 'session',
-  keys: [process.env.SESSION_KEY_1, process.env.SESSION_KEY_2],
-  maxAge: 24 * 60 * 60 * 1000,  // 24 hours
-  httpOnly: true,              // Prevent JavaScript access
-  secure: false                // Set to true if you're using HTTPS
+  keys: [process.env.SESSION_KEY_1 || 'devkey1', process.env.SESSION_KEY_2 || 'devkey2'],
+  maxAge: 24 * 60 * 60 * 1000,
+  httpOnly: true,
+  secure: isProduction
 }));
 
 
