@@ -69,3 +69,49 @@ html, body {
     font-size: 1rem;
   }
 }
+
+/* Carousel Container Fix */
+#userCarousel {
+  position: relative; /* Needed for button positioning */
+}
+
+/* Carousel Navigation Buttons */
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Push buttons outside the carousel content */
+.carousel-control-prev {
+  left: -60px; /* Adjust as needed */
+}
+
+.carousel-control-next {
+  right: -60px;
+}
+
+/* Make sure the arrows/icons are visible */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1); /* White icons */
+}
+
+/* Optional: Keep things tidy on small screens */
+@media (max-width: 768px) {
+  .carousel-control-prev {
+    left: -30px;
+  }
+  .carousel-control-next {
+    right: -30px;
+  }
+}
