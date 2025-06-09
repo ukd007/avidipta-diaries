@@ -1,11 +1,14 @@
 // ===== NEW CODE: Socket.IO connection and update emitter =====
-const socket = io();
+/*const socket = io();*/
 
 /**
  * Loads match data from localStorage.
  * @returns {object|null} The parsed match data or null if not found/corrupted.
  */
-function loadMatchData() {
+
+// statemanager.js - NEW FILE
+
+/*function loadMatchData() {
     const storedData = localStorage.getItem('cricketMatchData'); // Using a specific key
     if (storedData) {
         try {
@@ -22,7 +25,7 @@ function loadMatchData() {
 /**
  * Saves the current match state to localStorage.
  * This function now captures ALL relevant game state variables.
- */
+ 
 function saveMatchData() {
     const dataToSave = {
         batsman1: batsman1,
@@ -50,10 +53,11 @@ if (initialMatchState) {
     console.log("Match data loaded from localStorage:", initialMatchState);
 } else {
     console.log("No match data found in localStorage. Starting with defaults.");
-}
+} */
 
 
 // --- Initialize game state variables using loaded data or defaults ---
+window.addEventListener("load", () => {
 let batsman1 = initialMatchState ? initialMatchState.batsman1 : { name: 'Player 1', runs: 0, balls: 0, fours: 0, sixes: 0 };
 let batsman2 = initialMatchState ? initialMatchState.batsman2 : { name: 'Player 2', runs: 0, balls: 0, fours: 0, sixes: 0 };
 let currentBowler = initialMatchState ? initialMatchState.currentBowler : 'Bowler 1';
@@ -96,8 +100,21 @@ let localMatchState = {
 
 // --- END: MODIFIED/ADDED CODE FOR LOCAL STORAGE PERSISTENCE ---
 
+// Initial UI updates and emission after script loads and data is initialized
+updateBatsmanUI();
+updateScoreboard();
+updateBowlerStats();
+updateCRR();
+emitUpdate(); // Emit initial state for Socket.IO clients (important for new connections)
 
-function emitUpdate() {
+initControlButtons();
+setupSocketListeners(); 
+});
+
+//socket.js <-- NEW FILE
+
+
+/*function emitUpdate() {
     const currentTotalOvers = Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0);
     const displayedOvers = `${Math.floor(currentTotalOvers + overBalls / 6)}.${overBalls % 6}`;
 
@@ -169,13 +186,17 @@ socket.on('update', (data) => {
         span.textContent = ball;
         summaryEl.appendChild(span);
     });
-});
+});*/
 
 
 
 // const historyStack = []; // This is now initialized from `initialMatchState`
 
-function updateBatsmanUI() {
+
+
+//update.js <-- FILE CHANGE
+
+/*function updateBatsmanUI() {
     document.querySelector(".bat1-name").textContent = batsman1 === onStrike ? batsman1.name + "*" : batsman1.name;
     document.querySelector(".bat2-name").textContent = batsman2 === onStrike ? batsman2.name + "*" : batsman2.name;
 
@@ -214,9 +235,12 @@ function updateBowlerStats() {
     const totalBalls = stats.overs * 6 + overBalls;
     const economy = (stats.runs / (totalBalls / 6)).toFixed(1);
     document.querySelector(".bow-eco").textContent = isNaN(economy) ? "0.0" : economy;
-}
+} */
 
-function saveState() {
+
+//statemanager.js  <-- FILE CHANGE
+
+/*function saveState() {
     historyStack.push({
         batsman1: { ...batsman1 },
         batsman2: { ...batsman2 },
@@ -261,9 +285,12 @@ function restoreState() {
     localMatchState.overs = parseFloat(`${Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0)}.${overBalls % 6}`); // Corrected overs calculation
     localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
     emitUpdate();
-}
+}*/
 
 
+//runhandler.js  <-- NEW FILE
+
+/*
 function handleRun(run) {
     saveState();
 
@@ -339,9 +366,12 @@ function handleRun(run) {
     localMatchState.overs = parseFloat(`${Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0)}.${overBalls % 6}`); // Corrected overs calculation
     localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
     emitUpdate(); // ===== NEW CODE =====
-}
+}*/
 
-document.getElementById("wicketType").addEventListener("change", function () {
+
+//wickethandler.js  <--NEW FILE
+
+/*document.getElementById("wicketType").addEventListener("change", function () {
     const needsHelper = ["catch", "stumping"].includes(this.value);
     document.getElementById("helperField").classList.toggle("d-none", !needsHelper);
 });
@@ -414,9 +444,12 @@ document.getElementById("wicketForm").addEventListener("submit", function (e) {
     localMatchState.overs = parseFloat(`${Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0)}.${overBalls % 6}`); // Corrected overs calculation
     localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
     emitUpdate(); // ===== NEW CODE =====
-});
+});*/
 
-document.getElementById("newBowlerForm").addEventListener("submit", function (e) {
+
+//bowlerHandler.js  <-- NEW FILE
+
+/*document.getElementById("newBowlerForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const newNameInput = document.getElementById("newBowlerInput");
     const newName = newNameInput.value.trim();
@@ -438,9 +471,12 @@ document.getElementById("newBowlerForm").addEventListener("submit", function (e)
         localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
         emitUpdate(); // ===== NEW CODE =====
     }
-});
+});*/
 
-document.querySelectorAll(".run-btn").forEach((button) => {
+
+//controlbuttons.js  <--NEW FILE
+
+/*document.querySelectorAll(".run-btn").forEach((button) => {
     button.addEventListener("click", () => handleRun(parseInt(button.dataset.run)));
 });
 
@@ -480,12 +516,5 @@ document.querySelector(".retire-btn").addEventListener("click", () => {
     localMatchState.overs = parseFloat(`${Object.values(bowlers).reduce((acc, b) => acc + b.overs, 0)}.${overBalls % 6}`); // Corrected overs calculation
     localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
     emitUpdate(); // ===== NEW CODE =====
-});
+});*/
 
-// Initial UI updates and emission after script loads and data is initialized
-updateBatsmanUI();
-updateScoreboard();
-updateBowlerStats();
-updateCRR();
-// No need to saveMatchData here, as initial load handles it implicitly (if data was loaded)
-emitUpdate(); // Emit initial state for Socket.IO clients (important for new connections)
