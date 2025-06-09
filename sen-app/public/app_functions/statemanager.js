@@ -64,7 +64,7 @@ window.saveState = function()  {
     });
 };
 
-window.restoreState() = function(){
+window.restoreState = function(){
     if (historyStack.length === 0) {
         alert("Nothing to undo!");
         return;
