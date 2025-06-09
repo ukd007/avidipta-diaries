@@ -1,14 +1,8 @@
-<link
-  href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap"
-  rel="stylesheet"
-/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/styles/scoresheet.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- Bootstrap CSS -->
-<link
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-  rel="stylesheet"
-/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -20,16 +14,9 @@
         <div class="top-bar"></div>
 
         <!-- Overlay content on top of the bar -->
-        <div
-          class="d-flex justify-content-between align-items-center px-3 py-2 top-bar-content position-relative"
-        >
+        <div class="d-flex justify-content-between align-items-center px-3 py-2 top-bar-content position-relative">
           <a href="javascript:history.back()" class="ms-0">
-            <img
-              src="images/arrow.png"
-              class="img-fluid arrow"
-              style="width: 30px"
-              alt="Back"
-            />
+            <img src="images/arrow.png" class="img-fluid arrow" style="width: 30px" alt="Back" />
           </a>
 
           <div class="team-title text-center flex-grow-1">
@@ -51,7 +38,9 @@
         <div class="grid text-center">
           <!--Team Left -->
           <div class="g-col-6 g-col-md-4">
-            <span><%= battingTeam %></span>
+            <span>
+              <%= battingTeam %>
+            </span>
           </div>
           <!-- Runs Wickets Centered -->
           <div class="g-col-6 g-col-md-4">
@@ -59,7 +48,7 @@
           </div>
           <!-- Overs -->
           <div class="g-col-6 g-col-md-4">
-           <h1> <span class="over-display"> (0.0) </span></h1>
+            <h1> <span class="over-display"> (0.0) </span></h1>
           </div>
           <!-- CRR (aligned right) -->
           <div class="g-col-6 g-col-md-4">
@@ -72,9 +61,7 @@
         <!--THIRD SECTION [BATTING & BOWLING]-->
 
         <div class="col-12 mb-4">
-          <table
-            class="table table-bordered table-striped text-center score-table"
-          >
+          <table class="table table-bordered table-striped text-center score-table">
             <thead>
               <tr>
                 <th>Batsman</th>
@@ -87,16 +74,20 @@
             </thead>
             <tbody>
               <tr>
-                  <td><strong class="bat1-name"><%= batsman1%></strong></td>
-                  <td class="bat-runs">0</td>
-                  <td class="bat-balls">0</td>
-                  <td class="bat-4s">0</td>
-                  <td class="bat-6s">0</td>
-                  <td class="bat-sr">0.0</td>
-                </tr>
+                <td><strong class="bat1-name">
+                    <%= batsman1%>
+                  </strong></td>
+                <td class="bat-runs">0</td>
+                <td class="bat-balls">0</td>
+                <td class="bat-4s">0</td>
+                <td class="bat-6s">0</td>
+                <td class="bat-sr">0.0</td>
+              </tr>
 
               <tr>
-                <td><strong class="bat2-name"><%= batsman2 %></strong></td>
+                <td><strong class="bat2-name">
+                    <%= batsman2 %>
+                  </strong></td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
@@ -108,9 +99,7 @@
         </div>
 
         <div class="col-12 mb-4">
-          <table
-            class="table table-bordered table-striped text-center ball-table"
-          >
+          <table class="table table-bordered table-striped text-center ball-table">
             <thead>
               <tr>
                 <th>Bowler</th>
@@ -123,7 +112,9 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong class="bowler-name"><%= bowler %></strong></td>
+                <td><strong class="bowler-name">
+                    <%= bowler %>
+                  </strong></td>
                 <td class="bow-overs">0</td>
                 <td class="bow-maidens">0</td>
                 <td class="bow-runs">0</td>
@@ -138,9 +129,9 @@
 
         <!-- FOURTH SECTION STARTS [THIS OVER]-->
         <div class="over-container d-flex flex-wrap align-items-center justify-content-center">
-  <div class="label me-3">This Over:</div>
-  <div class="balls d-flex flex-wrap" id="over-summary"></div>
-</div>
+          <div class="label me-3">This Over:</div>
+          <div class="balls d-flex flex-wrap" id="over-summary"></div>
+        </div>
 
 
         <!--FOURTH SECTIONS ENDS-->
@@ -149,9 +140,7 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-12 mb-2">
-              <div
-                class="d-flex button-group-horizontal justify-content-center gap-4"
-              >
+              <div class="d-flex button-group-horizontal justify-content-center gap-4">
                 <button type="button" class="btn btn-info undo-btn">
                   Undo
                 </button>
@@ -165,15 +154,13 @@
             </div>
           </div>
         </div>
-<!--FIFTH SECTION ENDS-->
+        <!--FIFTH SECTION ENDS-->
 
-<!--SIXTH SECTION STARTS-->
+        <!--SIXTH SECTION STARTS-->
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-12 mb-2">
-              <div
-                class="d-flex button-group-horizontal justify-content-center gap-4"
-              >
+              <div class="d-flex button-group-horizontal justify-content-center gap-4">
                 <div class="wicket-box"></div>
               </div>
             </div>
@@ -183,74 +170,39 @@
             <div class="row">
               <div class="col-6 col-md-4 col-lg-3">
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="defaultCheck1"
-                  />
-                  <label class="form-check-label" for="defaultCheck1"
-                    >Wicket</label
-                  >
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                  <label class="form-check-label" for="defaultCheck1">Wicket</label>
                 </div>
               </div>
               <div class="col-6 col-md-4 col-lg-3">
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="defaultCheck2"
-                  />
-                  <label class="form-check-label" for="defaultCheck2"
-                    >Wide</label
-                  >
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
+                  <label class="form-check-label" for="defaultCheck2">Wide</label>
                 </div>
               </div>
               <div class="col-6 col-md-4 col-lg-3">
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="defaultCheck3"
-                  />
-                  <label class="form-check-label" for="defaultCheck3"
-                    >No ball</label
-                  >
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" />
+                  <label class="form-check-label" for="defaultCheck3">No ball</label>
                 </div>
               </div>
               <div class="col-6 col-md-4 col-lg-3">
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="defaultCheck4"
-                  />
-                  <label class="form-check-label" for="defaultCheck4"
-                    >Six Out</label
-                  >
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" />
+                  <label class="form-check-label" for="defaultCheck4">Six Out</label>
                 </div>
               </div>
               <div class="col-6 col-md-4 col-lg-3">
                 <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="defaultCheck5"
-                  />
-                  <label class="form-check-label" for="defaultCheck5"
-                    >Bow. Ret.</label
-                  >
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" />
+                  <label class="form-check-label" for="defaultCheck5">Bow. Ret.</label>
                 </div>
               </div>
             </div>
           </div>
-<!--SIXTH SECTION ENDS-->
+          <!--SIXTH SECTION ENDS-->
 
-<!--LAST SECTION STARTS-->
+          <!--LAST SECTION STARTS-->
           <div class="container">
             <div class="run-button-overall-wrapper">
               <div class="row justify-content-center g-2">
@@ -278,7 +230,7 @@
               </div>
               <div class="row justify-content-center g-2 mt-2">
                 <div class="col-auto">
-                 <button class="btn btn-outline-primary run-btn" data-run="7">7</button>
+                  <button class="btn btn-outline-primary run-btn" data-run="7">7</button>
                 </div>
                 <div class="col-auto">
                   <button class="btn btn-outline-primary run-btn" data-run="8">8</button>

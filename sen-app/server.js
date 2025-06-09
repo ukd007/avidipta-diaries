@@ -103,8 +103,8 @@ const userRoutes = require('./routes/userRoutes');
 app.use('/', userRoutes);
 const statsRoutes = require('./routes/profileData/stats');
 app.use('/', statsRoutes);
-const cricketRoutes= require('./routes/blogs/cricket');
-app.use('/',cricketRoutes);
+const cricketRoutes = require('./routes/blogs/cricket');
+app.use('/', cricketRoutes);
 
 // Scorer App Page (uses layout)
 app.get('/admin/scorerapp', (req, res) => {
@@ -115,19 +115,19 @@ app.get('/admin/scorerapp', (req, res) => {
 });
 //Match Start
 app.post('/start-match', (req, res) => {
-  const { team1, team2, tossWinner, tossDecision, batsman1, batsman2,  bowler } = req.body;
-let battingTeam;
+  const { team1, team2, tossWinner, tossDecision, batsman1, batsman2, bowler } = req.body;
+  let battingTeam;
 
-if (tossDecision.toLowerCase() === "bat") {
-  // Toss winner chose to bat
-  battingTeam = tossWinner;
-} else {
-  // Toss winner chose to bowl, so batting team is the other team
-  battingTeam = (tossWinner === team1) ? team2 : team1;
-}
+  if (tossDecision.toLowerCase() === "bat") {
+    // Toss winner chose to bat
+    battingTeam = tossWinner;
+  } else {
+    // Toss winner chose to bowl, so batting team is the other team
+    battingTeam = (tossWinner === team1) ? team2 : team1;
+  }
 
   // Pass data to scoresheet.ejs
- res.render('admin/scoresheet', {
+  res.render('admin/scoresheet', {
     layout: 'partials/bootstrap',
     team1,
     team2,
