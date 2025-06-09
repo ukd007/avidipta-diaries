@@ -55,7 +55,6 @@ router.get('/admin/users/:id/edit', (req, res) => {
 
     res.render('usereditform', {
       layout: 'partials/bootstrap',
-      pageCSS: '/styles/usereditform.css',
       user,
       message,
       error,

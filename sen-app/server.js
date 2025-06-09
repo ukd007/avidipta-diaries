@@ -22,6 +22,22 @@ app.use(cookieSession({
   secure: false                // Set to true if you're using HTTPS
 }));
 
+
+// View Engine Setup
+app.set("view engine", "ejs");
+app.use(expressLayouts);
+
+const viewsArray = [
+  path.join(__dirname, 'views'),
+  path.join(__dirname, 'views/users'),
+  path.join(__dirname, 'views/admin'),
+  path.join(__dirname, 'views/partials')
+];
+app.set('views', viewsArray);
+
+// Static Files
+app.use(express.static(path.join(__dirname, 'public')));
+
 // NEW CODE: File System for JSON
 const fs = require('fs');
 const matchDataPath = path.join(__dirname, 'matchData.json');
@@ -43,25 +59,6 @@ function loadMatchData() {
   }
 }
 
-
-// View Engine Setup
-app.set("view engine", "ejs");
-app.use(expressLayouts);
-
-const viewsArray = [
-  path.join(__dirname, 'views'),
-  path.join(__dirname, 'views/users'),
-  path.join(__dirname, 'views/admin'),
-  path.join(__dirname, 'views/partials')
-];
-app.set('views', viewsArray);
-
-// Static Files
-app.use(express.static(path.join(__dirname, 'public')));
-
-
-
-
 // NEW CODE: Functions to load/save match data
 function loadMatchData() {
   try {
@@ -81,11 +78,8 @@ function saveMatchData(data) {
   }
 }
 
-
 app.use(cors());
 // ROUTES
-
-
 
 //NEW CODE 2
 app.get('/match-data', (req, res) => {
