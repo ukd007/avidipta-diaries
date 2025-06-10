@@ -4,11 +4,11 @@ const fs = require('fs');
 const caCert = fs.readFileSync('./config/ca.pem');
 
 const connection = mysql.createConnection({
-    host: 'mysql-3cce6bb-our-60c4.g.aivencloud.com',
-    port: 21893,
-    user: 'avnadmin',
-    password: 'AVNS_mRuJWqpte6kVpPA6zT1',
-    database: 'avidipta_diaries',
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB1,
     ssl: {
         ca: caCert
     }
