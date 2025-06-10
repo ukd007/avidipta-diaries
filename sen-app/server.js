@@ -39,47 +39,9 @@ app.set('views', viewsArray);
 // Static Files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// NEW CODE: File System for JSON
-const fs = require('fs');
-const matchDataPath = path.join(__dirname, 'matchData.json');
-function loadMatchData() {
-  try {
-    const data = fs.readFileSync('matchData.json', 'utf8');
-    return JSON.parse(data);
-  } catch (err) {
-    console.log('No previous match data found, starting fresh.');
-    return {
-      score: 0,
-      wickets: 0,
-      overs: 0.0,
-      batsman1: "",
-      batsman2: "",
-      bowler: "",
-      balls: [],
-    };
-  }
-}
-
-// NEW CODE: Functions to load/save match data
-function loadMatchData() {
-  try {
-    const raw = fs.readFileSync(matchDataPath);
-    return JSON.parse(raw);
-  } catch (err) {
-    console.error('Failed to read match data:', err);
-    return {};
-  }
-}
-
-function saveMatchData(data) {
-  try {
-    fs.writeFileSync(matchDataPath, JSON.stringify(data, null, 2));
-  } catch (err) {
-    console.error('Failed to write match data:', err);
-  }
-}
-
 app.use(cors());
+
+app.use(express.static('public'));
 // ROUTES
 
 //NEW CODE 2
@@ -139,6 +101,9 @@ app.post('/start-match', (req, res) => {
     battingTeam,
   });
 });
+
+
+
 app.get('/scorecard', (req, res) => {
   res.render('scorecard');
 });

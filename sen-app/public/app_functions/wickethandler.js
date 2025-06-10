@@ -1,4 +1,4 @@
-window.handleWicket = function(wicketType) {
+
 document.getElementById("wicketType").addEventListener("change", function () {
     const needsHelper = ["catch", "stumping"].includes(this.value);
     document.getElementById("helperField").classList.toggle("d-none", !needsHelper);
@@ -73,4 +73,4 @@ document.getElementById("wicketForm").addEventListener("submit", function (e) {
     localMatchState.balls = Array.from(document.querySelectorAll("#over-summary .ball")).map(el => el.textContent);
     emitUpdate(); // ===== NEW CODE =====
 });
-};
+

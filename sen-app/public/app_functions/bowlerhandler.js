@@ -1,4 +1,4 @@
-window.handleBowling = function(bowlerName) {
+
     document.getElementById("newBowlerForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const newNameInput = document.getElementById("newBowlerInput");
@@ -22,4 +22,5 @@ window.handleBowling = function(bowlerName) {
             emitUpdate(); // ===== NEW CODE =====
         }
     });
+    window.handleBowling = function(bowlerName) {
 };

@@ -1,7 +1,10 @@
 // ===== NEW CODE: Socket.IO connection and update emitter =====
 /*const socket = io();*/
 
-
+/**
+ * Loads match data from localStorage.
+ * @returns {object|null} The parsed match data or null if not found/corrupted.
+ */ 
 // statemanager.js - NEW FILE
 
 /*function loadMatchData() {
