@@ -12,6 +12,8 @@ const { Server } = require('socket.io');
 const server = http.createServer(app);
 const io = new Server(server);
 
+const fs = require('fs');
+
 //MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
 const isProduction = process.env.NODE_ENV === 'production';
@@ -38,10 +40,10 @@ app.set('views', viewsArray);
 
 // Static Files
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(cors());
-
 app.use(express.static('public'));
+
+
 // ROUTES
 
 //NEW CODE 2
@@ -49,6 +51,22 @@ app.get('/match-data', (req, res) => {
   res.json(matchState);
 });
 
+let matchState = {};
+// Load match data from file at startup
+if (fs.existsSync('matchData.json')) {
+  matchState = JSON.parse(fs.readFileSync('matchData.json'));
+  console.log('Match data loaded from file');
+} else {
+  matchState = {
+    score: 0,
+    wickets: 0,
+    overs: "0.0",
+    batsman1: {},
+    batsman2: {},
+    bowler: {}
+  };
+  console.log('Starting with fresh match state');
+}
 
 // login page
 app.get('/', (req, res) => {
@@ -75,6 +93,8 @@ app.get('/admin/scorerapp', (req, res) => {
     title: 'Scorer App'
   });
 });
+
+
 //Match Start
 app.post('/start-match', (req, res) => {
   const { team1, team2, tossWinner, tossDecision, batsman1, batsman2, bowler } = req.body;
@@ -108,17 +128,6 @@ app.get('/scorecard', (req, res) => {
   res.render('scorecard');
 });
 
-
-// New Code: Set up match state
-let matchState = {
-  score: 0,
-  wickets: 0,
-  overs: 0.0,
-  batsman1: 'Player 1',
-  batsman2: 'Player 2',
-  bowler: 'Bowler 1',
-  balls: []
-};
 
 
 // New Code: Socket.IO logic
