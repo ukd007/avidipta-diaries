@@ -40,6 +40,8 @@ app.set('views', viewsArray);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors());
+
+app.use(express.static('public'));
 // ROUTES
 
 //NEW CODE 2
@@ -99,6 +101,9 @@ if (tossDecision.toLowerCase() === "bat") {
     battingTeam,
   });
 });
+
+
+
 app.get('/scorecard', (req, res) => {
   res.render('scorecard');
 });
