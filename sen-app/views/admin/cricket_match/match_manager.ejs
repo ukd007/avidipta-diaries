@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Match Manager</title>
+    <link rel="stylesheet" href="/styles/match_manager.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Match Manager</h1>
+
+        <% if (matches && matches.length > 0) { %>
+            <h3>Resume Saved Matches</h3>
+            <div class="cards-wrapper">
+                <% matches.forEach(function(match) { %>
+                    <% if (match.status === 'in_progress') { %>
+                        <div class="match-card">
+                            <div class="match-header">
+                                <%= match.team1 %> vs <%= match.team2 %>
+                            </div>
+
+                            <div class="match-detail"><span>Match ID:</span> <span class="match-detail-value"><%= match.match_id %></span></div>
+                            <div class="match-detail"><span>Score:</span> <span class="match-detail-value"><%= match.score %> / <%= match.wickets %></span></div>
+                            <div class="match-detail"><span>On Strike:</span> <span class="match-detail-value"><%= match.batsman1 %></span></div>
+                            <div class="match-detail"><span>Non-Striker:</span> <span class="match-detail-value"><%= match.batsman2 %></span></div>
+                            <div class="match-detail"><span>Overs:</span> <span class="match-detail-value"><%= match.overs %></span></div>
+                            <div class="match-detail"><span>Status:</span> <span class="match-detail-value"><%= match.status %></span></div>
+
+                            <form action="/resume" method="POST" style="display:inline;">
+                                <input type="hidden" name="matchId" value="<%= match.match_id %>">
+                                <button type="submit" class="resume-btn">Resume Match</button>
+                            </form>
+
+                            <form action="/delete-match" method="POST" style="display:inline;">
+                                <input type="hidden" name="matchId" value="<%= match.match_id %>">
+                                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this match?')">Delete Match</button>
+                            </form>
+                        </div>
+                    <% } %>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p>No saved matches found.</p>
+        <% } %>
+
+        <form action="/new" method="post">
+            <button type="submit" class="new-match-btn">Start New Match</button>
+        </form>
+
+        <!-- Completed Matches -->
+        <h3 style="margin-top: 50px;">Completed Matches</h3>
+        <div class="cards-wrapper">
+            <% matches.forEach(function(match) { %>
+                <% if (match.status === 'completed') { %>
+                    <div class="match-card completed">
+                        <div class="match-header">
+                            <%= match.team1 %> vs <%= match.team2 %>
+                        </div>
+
+                        <div class="match-detail"><span>Match ID:</span> <span class="match-detail-value"><%= match.match_id %></span></div>
+                        <div class="match-detail"><span>Final Score:</span> <span class="match-detail-value"><%= match.score %> / <%= match.wickets %></span></div>
+                        <div class="match-detail"><span>Overs:</span> <span class="match-detail-value"><%= match.overs %></span></div>
+                        <div class="match-detail"><span>Status:</span> <span class="match-detail-value"><%= match.status %></span></div>
+
+                        <a href="/scoresheet/<%= match.match_id %>" class="view-scoresheet-btn">View Scoresheet</a>
+
+                        <form action="/delete-match" method="POST" style="display:inline;">
+                            <input type="hidden" name="matchId" value="<%= match.match_id %>">
+                            <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this match?')">Delete Match</button>
+                        </form>
+                    </div>
+                <% } %>
+            <% }) %>
+        </div>
+    </div>
+</body>
+
+</html>
