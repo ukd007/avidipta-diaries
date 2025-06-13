@@ -15,15 +15,15 @@ const io = new Server(server);
 const fs = require('fs');
 
 //MIDDLEWARE
-app.use(express.urlencoded({ extended: true }));
-const isProduction = process.env.NODE_ENV === 'production';
 app.use(cookieSession({
   name: 'session',
-  keys: [process.env.SESSION_KEY_1 || 'devkey1', process.env.SESSION_KEY_2 || 'devkey2'],
+  keys: [process.env.SESSION_KEY_1, process.env.SESSION_KEY_2],
   maxAge: 24 * 60 * 60 * 1000,
   httpOnly: true,
-  secure: isProduction
+  secure: true,
+  sameSite: 'none'
 }));
+
 
 
 // View Engine Setup
