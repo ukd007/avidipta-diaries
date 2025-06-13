@@ -16,14 +16,17 @@ const fs = require('fs');
 
 //MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
-const isProduction = process.env.NODE_ENV === 'production';
+app.use(express.json());
+
 app.use(cookieSession({
   name: 'session',
-  keys: [process.env.SESSION_KEY_1 || 'devkey1', process.env.SESSION_KEY_2 || 'devkey2'],
+  keys: [process.env.SESSION_KEY_1, process.env.SESSION_KEY_2],
   maxAge: 24 * 60 * 60 * 1000,
   httpOnly: true,
-  secure: isProduction
+  secure: true,
+  sameSite: 'none'
 }));
+
 
 
 // View Engine Setup
@@ -69,9 +72,23 @@ if (fs.existsSync('matchData.json')) {
 }
 
 // login page
-app.get('/', (req, res) => {
-  res.render('loginpage', { layout: false });
+app.post('/', (req, res) => {
+  try {
+    const { uname, psw } = req.body;
+
+    // Example dummy check — replace with DB or actual logic
+    if (uname === 'admin' && psw === 'password') {
+      req.session.user = uname;
+      res.redirect('/dashboard');
+    } else {
+      res.render('loginpage', { layout: false, error: 'Invalid credentials' });
+    }
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).send('Server error');
+  }
 });
+
 // Authentication
 const authRoutes = require('./routes/auth');
 app.use('/', authRoutes);
