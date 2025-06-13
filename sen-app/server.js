@@ -72,9 +72,23 @@ if (fs.existsSync('matchData.json')) {
 }
 
 // login page
-app.get('/', (req, res) => {
-  res.render('loginpage', { layout: false });
+app.post('/', (req, res) => {
+  try {
+    const { uname, psw } = req.body;
+
+    // Example dummy check — replace with DB or actual logic
+    if (uname === 'admin' && psw === 'password') {
+      req.session.user = uname;
+      res.redirect('/dashboard');
+    } else {
+      res.render('loginpage', { layout: false, error: 'Invalid credentials' });
+    }
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).send('Server error');
+  }
 });
+
 // Authentication
 const authRoutes = require('./routes/auth');
 app.use('/', authRoutes);
