@@ -124,9 +124,10 @@ app.post('/start-match', (req, res) => {
 
 
 
-app.get('/scorecard', (req, res) => {
-  res.render('scorecard');
+app.get('/summary', (req, res) => {
+  res.render('summary');
 });
+
 
 
 
