@@ -1,13 +1,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/styles/scorerapp.css">
+<link rel="stylesheet" href="/styles/match_starter.css">
+
 <nav class="navbar bg-primary">
-    <div class="container-fluid justify-content-center">
-        <span class="navbar-brand mb-0 h1 text-white">Cricket Scorer</span>
-    </div>
+  <div class="container-fluid justify-content-center">
+    <span class="navbar-brand mb-0 h1 text-white">Cricket Scorer</span>
+  </div>
 </nav>
-  <div class="form-wrapper">
+
+<div class="form-wrapper">
   <h2>Enter Match Details</h2>
-  <form action="/start-match" method="post" onsubmit="return startMatchSetup();">
+
+  <!-- ✅ FIX: Correct form action -->
+  <form action="/initialize" method="post">
+
+    <!-- ✅ Pass match ID -->
+    <input type="hidden" name="match_id" value="<%= matchId %>">
+
+    <!-- ✅ Pass match type -->
+    <label for="matchType">Match Type:</label><br>
+    <input type="text" id="matchType" name="type" placeholder="e.g. ODI, T20, Test" required><br><br>
+
+
+    <!-- ✅ Optional: Placeholder for cloudinary if not used yet -->
+    <input type="hidden" name="cloudinary_url" value="">
+    <input type="hidden" name="cloudinary_public_id" value="">
+
     <label for="team1">Team 1 Name:</label><br>
     <input type="text" id="team1" name="team1" oninput="updateTossOptions()" required><br><br>
 
@@ -28,42 +45,41 @@
       <label for="bowl">Bowl</label><br><br>
     </div>
 
-    <!-- New Fields for Striker/Non-Striker/Bowler -->
-   <label for="strikerName">Striker Name:</label><br>
-<input type="text" id="strikerName" name="batsman1" required><br><br>
+    <label for="strikerName">Striker Name:</label><br>
+    <input type="text" id="strikerName" name="batsman1" required><br><br>
 
-<label for="nonStrikerName">Non-Striker Name:</label><br>
-<input type="text" id="nonStrikerName" name="batsman2" required><br><br>
+    <label for="nonStrikerName">Non-Striker Name:</label><br>
+    <input type="text" id="nonStrikerName" name="batsman2" required><br><br>
 
-<label for="bowlerName">Opening Bowler Name:</label><br>
-<input type="text" id="bowlerName" name="bowler" required><br><br>
-
+    <label for="bowlerName">Opening Bowler Name:</label><br>
+    <input type="text" id="bowlerName" name="bowler" required><br><br>
 
     <button type="submit">Start Match</button>
   </form>
+
+</div>
+<div id="loadingSection" style="display:none; text-align:center;">
+  <h2>Uploading Match Data...</h2>
+  <div class="spinner"></div>
 </div>
 
-
+<!-- JS to toggle loading -->
 <script>
+  function showLoading() {
+    document.getElementById('formSection').style.display = 'none';
+    document.getElementById('loadingSection').style.display = 'block';
+  }
   function updateTossOptions() {
     const team1 = document.getElementById("team1").value.trim();
     const team2 = document.getElementById("team2").value.trim();
     const tossSelect = document.getElementById("tossWinner");
 
-    // Save current selection if possible
     const currentSelection = tossSelect.value;
-
-    // Clear options
     tossSelect.innerHTML = '<option value="">-- Select a team --</option>';
 
-    if (team1) {
-      tossSelect.add(new Option(team1, team1));
-    }
-    if (team2) {
-      tossSelect.add(new Option(team2, team2));
-    }
+    if (team1) tossSelect.add(new Option(team1, team1));
+    if (team2) tossSelect.add(new Option(team2, team2));
 
-    // Try to reselect previously selected value if it's still valid
     if (currentSelection === team1 || currentSelection === team2) {
       tossSelect.value = currentSelection;
     }

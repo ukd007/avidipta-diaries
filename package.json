@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "axios": "^1.9.0",
+    "body-parser": "^2.2.0",
     "cloudinary": "^1.30.0",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",

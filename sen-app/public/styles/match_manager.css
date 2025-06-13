@@ -1,0 +1,91 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 2rem;
+    background-color: #f0f4f8;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.match-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.match-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.match-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.match-detail {
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.match-detail span {
+    font-weight: bold;
+    color: #555;
+}
+
+.match-detail-value {
+    color: #333;
+}
+
+.resume-btn,
+.new-match-btn,
+.delete-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+.resume-btn:hover,.delete-btn:hover {
+    background-color: #45a049;
+}
+
+.new-match-btn {
+    margin-top: 30px;
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: #2196F3;
+}
+
+.new-match-btn:hover {
+    background-color: #1976D2;
+}
