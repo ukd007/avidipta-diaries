@@ -15,6 +15,9 @@ const io = new Server(server);
 const fs = require('fs');
 
 //MIDDLEWARE
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use(cookieSession({
   name: 'session',
   keys: [process.env.SESSION_KEY_1, process.env.SESSION_KEY_2],
